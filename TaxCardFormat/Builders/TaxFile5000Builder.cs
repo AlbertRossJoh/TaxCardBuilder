@@ -12,7 +12,7 @@ public class TaxFile5000Builder: TaxFileBuilderBase
         DateTime lønperiodeStart,
         DateTime lønPeriodeSlut,
         bool erLønBagudBetalt,
-        Indkomsttype indkomsttype,
+        IndkomstType indkomstType,
         Guid indberetningId = new(),
         Guid referenceId = new(),
         GrønlandKommune? grønlandKommune = null) : base(lbnr, records)
@@ -30,7 +30,7 @@ public class TaxFile5000Builder: TaxFileBuilderBase
                 ? 'B'
                 : 'F',
             GrønlandskKommune = (int?)grønlandKommune,
-            Indkomsttype = (int)indkomsttype,
+            Indkomsttype = (int)indkomstType,
             Lb_nr = Lb_nr++,
             Rec_nr = 5000
         });

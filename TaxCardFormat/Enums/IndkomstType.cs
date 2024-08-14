@@ -1,6 +1,6 @@
 namespace TaxCardFormat.Enums;
 
-public enum Indkomsttype
+public enum IndkomstType
 {
     Aindkomst = 0,
     SU = 1,

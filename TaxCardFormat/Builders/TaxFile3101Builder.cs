@@ -8,7 +8,7 @@ public class TaxFile3101Builder: Record2101BuilderBase
     public TaxFile3101Builder(
         int lbnr, 
         List<TaxRecord> records, 
-        decimal amount,
+        decimal beløb,
         bool forudBetalt,
         DateTime periodeIndberetStart,
         DateTime periodeIndberetSlut,
@@ -19,14 +19,14 @@ public class TaxFile3101Builder: Record2101BuilderBase
     {
         switch (nulangivelse)
         {
-            case true when amount != 0:
+            case true when beløb != 0:
                 throw new ArgumentException("You cannot have an amount when doing a zero report");
             case true when feltNummer != FeltNummer.NulAngivelse:
                 throw new ArgumentException("You cannot have nulangivelse marked as true but the field number as anything else but nulangivelse");
         }
 
-        var decimals =(int)(amount - Math.Truncate(amount))*1_000_000;
-        var amnt = (int)amount;
+        var decimals =(int)(beløb - Math.Truncate(beløb))*1_000_000;
+        var amnt = (int)beløb;
         Records.Add(new Record3101
         {
             Lb_nr = Lb_nr++,
@@ -35,7 +35,7 @@ public class TaxFile3101Builder: Record2101BuilderBase
             referenceId = referenceId,
             Amount = amnt,
             Decimals = decimals,
-            Sign = amount >= 0 ? '+' : '-',
+            Sign = beløb >= 0 ? '+' : '-',
             ForudElBagud = forudBetalt
                 ? 'F'
                 : 'B',
