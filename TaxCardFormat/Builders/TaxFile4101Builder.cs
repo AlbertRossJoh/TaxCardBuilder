@@ -30,7 +30,7 @@ public class TaxFile4101Builder: TaxFileBuilderBase
 
     public TaxFile4101Builder AddRecord4101(
         bool tilbageførsel,
-        Guid indberetningId = default,
+        Guid indberetningId = new(),
         Guid? referenceId = null,
         string? cpr = null)
     {

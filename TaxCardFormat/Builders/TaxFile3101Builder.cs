@@ -14,7 +14,7 @@ public class TaxFile3101Builder: Record2101BuilderBase
         DateTime periodeIndberetSlut,
         FeltNummer feltNummer,
         bool nulangivelse,
-        Guid indberetningsId = default,
+        Guid indberetningsId = new(),
         Guid? referenceId = null) : base(lbnr, records)
     {
         switch (nulangivelse)

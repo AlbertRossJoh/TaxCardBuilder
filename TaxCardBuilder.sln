@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxCardFormat", "TaxCardFormat\TaxCardFormat.csproj", "{E6F2168C-4CCF-443A-9BE6-800B23367B5B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxCardTests", "TaxCardTests\TaxCardTests.csproj", "{78F738EF-021D-49F5-B514-0D39FFF1A514}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{E6F2168C-4CCF-443A-9BE6-800B23367B5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6F2168C-4CCF-443A-9BE6-800B23367B5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6F2168C-4CCF-443A-9BE6-800B23367B5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78F738EF-021D-49F5-B514-0D39FFF1A514}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78F738EF-021D-49F5-B514-0D39FFF1A514}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78F738EF-021D-49F5-B514-0D39FFF1A514}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78F738EF-021D-49F5-B514-0D39FFF1A514}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

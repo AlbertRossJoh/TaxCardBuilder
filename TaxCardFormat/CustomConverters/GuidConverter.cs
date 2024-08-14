@@ -17,7 +17,7 @@ public class GuidConverter: ConverterBase
     public override string FieldToString(object from)
     {
         if (from.GetType() != typeof(Guid))
-            throw new ArgumentException("When using a guid converter a guid is expected");
+            throw new ArgumentException("When using the guid converter a guid is expected");
         return ((Guid)from).ToString().Replace("-", "");
     }
 }

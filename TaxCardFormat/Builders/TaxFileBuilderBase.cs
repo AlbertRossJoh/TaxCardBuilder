@@ -15,7 +15,10 @@ public class TaxFileBuilderBase(int lbnr, List<TaxRecord> records)
             typeof(Record2001),
             typeof(Record2101),
             typeof(Record2111),
-            typeof(Record3101)
+            typeof(Record3101),
+            typeof(Record4101),
+            typeof(Record5000),
+            typeof(Record6000)
         );
         engine.WriteFile("test.txt", Records);
     }
