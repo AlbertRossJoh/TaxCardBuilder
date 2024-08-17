@@ -3,11 +3,18 @@ using FileHelpers;
 namespace TaxCardFormat.Records;
 
 [FixedLengthRecord]
-public class Record6001 : TaxRecord
+public class Record6111 : TaxRecord
 {
     [FieldFixedLength(4)]
     [FieldAlign(AlignMode.Right, '0')]
-    public required int FeltNummer;
+    public required int IndholdsType;
+
+    [FieldFixedLength(10)]
+    [FieldAlign(AlignMode.Right, '0')]
+    public required int AntalEnheder;
+
+    [FieldFixedLength(1)]
+    public required char FortegnAntalEnheder;
 
     [FieldFixedLength(10)]
     [FieldAlign(AlignMode.Right, '0')]
@@ -18,5 +25,5 @@ public class Record6001 : TaxRecord
     public required int BeløbDecimal;
 
     [FieldFixedLength(1)]
-    public required char Fortegn;
+    public required char FortegnBeløb;
 }

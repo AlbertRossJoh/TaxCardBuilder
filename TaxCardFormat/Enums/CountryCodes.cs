@@ -251,4 +251,6 @@ public enum CountryCodes
     ZM,
     ZW,
     AX,
+    X1,
+    X2,
 }
