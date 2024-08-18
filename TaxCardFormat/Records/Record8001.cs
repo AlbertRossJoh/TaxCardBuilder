@@ -7,7 +7,7 @@ public class Record8001 : TaxRecord
 {
     [FieldFixedLength(8)]
     [FieldConverter(ConverterKind.Date, "yyyyMMdd")]
-    public required DateTime FratrædelsesDato;
+    public required DateTime PersonFødselsdato;
 
     [FieldFixedLength(1)]
     public required int PersonKøn;
@@ -22,6 +22,7 @@ public class Record8001 : TaxRecord
     public required string PersonGadeAdresse;
 
     [FieldFixedLength(9)]
+    [FieldAlign(AlignMode.Left, ' ')]
     public required string PersonPostnummer;
 
     [FieldFixedLength(35)]

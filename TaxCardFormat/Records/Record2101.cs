@@ -35,9 +35,9 @@ public class Record2101 : TaxRecord
 
     [FieldFixedLength(50)]
     [FieldAlign(AlignMode.Left, ' ')]
-    public required string Suppl_opl_med_arbejdernr;
+    public string? Suppl_opl_med_arbejdernr;
 
     [FieldFixedLength(1)]
-    public required char GenRekvivering;
+    public char? GenRekvivering;
 }
 

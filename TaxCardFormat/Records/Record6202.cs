@@ -3,7 +3,7 @@ using FileHelpers;
 namespace TaxCardFormat.Records;
 
 [FixedLengthRecord]
-public class Record6102 : TaxRecord
+public class Record6202 : TaxRecord
 {
     [FieldFixedLength(10)]
     [FieldAlign(AlignMode.Right, '0')]

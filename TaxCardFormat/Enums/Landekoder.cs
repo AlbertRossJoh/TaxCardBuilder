@@ -1,6 +1,6 @@
 namespace TaxCardFormat.Enums;
 
-public enum CountryCodes
+public enum Landekoder
 {
     AF,
     AL,
