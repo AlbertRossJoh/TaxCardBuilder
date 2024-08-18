@@ -1,5 +1,6 @@
 using FileHelpers;
 using TaxCardFormat.CustomConverters;
+using TaxCardFormat.DataTypes;
 
 namespace TaxCardFormat.Records;
 
@@ -10,12 +11,12 @@ public class Record5000 : TaxRecord
     public char Rettelse_tidl_periode = ' ';
 
     [FieldFixedLength(16)]
-    [FieldConverter(typeof(GuidConverter))]
-    public required Guid IndberetningsID;
+    [FieldConverter(typeof(ShortIdConverter))]
+    public required ShortId IndberetningsID;
 
     [FieldFixedLength(16)]
-    [FieldConverter(typeof(GuidConverter))]
-    public required Guid ReferenceId;
+    [FieldConverter(typeof(ShortIdConverter))]
+    public required ShortId ReferenceId;
 
     [FieldFixedLength(8)]
     [FieldConverter(ConverterKind.Date, "yyyyMMdd")]

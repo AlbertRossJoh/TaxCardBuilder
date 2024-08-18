@@ -1,4 +1,6 @@
 using FileHelpers;
+using TaxCardFormat.DataTypes;
+using TaxCardFormat.DataTypes.IPIndholdstype;
 using TaxCardFormat.Enums;
 using TaxCardFormat.IPIndholdstype;
 using TaxCardFormat.Records;
@@ -9,6 +11,27 @@ public class TaxFileBuilder2
 {
     private int Lb_nr = 1;
     private List<TaxRecord> Records = [];
+    private MultiRecordEngine Engine = new MultiRecordEngine(
+        typeof(TaxRecord),
+        typeof(Record1000),
+        typeof(Record2001),
+        typeof(Record2101),
+        typeof(Record2111),
+        typeof(Record3101),
+        typeof(Record4101),
+        typeof(Record5000),
+        typeof(Record6000),
+        typeof(Record6001),
+        typeof(Record6002),
+        typeof(Record6003),
+        typeof(Record6004),
+        typeof(Record6005),
+        typeof(Record6102),
+        typeof(Record6202),
+        typeof(Record6111),
+        typeof(Record8001),
+        typeof(Record9999)
+    );
 
     public void AddRecord1000(
         string indberetterSeNummer,
@@ -19,7 +42,7 @@ public class TaxFileBuilder2
         DateTime? datoSendt = null,
         DateTime? klokSendt = null,
         string? edbSystem = null,
-        Guid hovedIndberetningsId = new()
+        ShortId hovedIndberetningsId = default
     )
     {
         Records.Add(
@@ -117,8 +140,8 @@ public class TaxFileBuilder2
         DateTime periodeIndberetStart,
         DateTime periodeIndberetSlut,
         FeltNummer feltNummer,
-        Guid indberetningsId = new(),
-        Guid? referenceId = null
+        ShortId indberetningsId = default,
+        ShortId? referenceId = null
     )
     {
         switch (feltNummer)
@@ -153,8 +176,8 @@ public class TaxFileBuilder2
 
     public void AddRecord4101(
         bool tilbageførsel,
-        Guid indberetningId = new(),
-        Guid? referenceId = null,
+        ShortId indberetningId = default,
+        ShortId? referenceId = null,
         string? cpr = null
     )
     {
@@ -180,8 +203,8 @@ public class TaxFileBuilder2
         DateTime lønPeriodeSlut,
         bool erLønBagudBetalt,
         IndkomstType indkomstType,
-        Guid indberetningId = new(),
-        Guid referenceId = new(),
+        ShortId indberetningId = default,
+        ShortId referenceId = default,
         GrønlandKommune? grønlandKommune = null
     )
     {
@@ -425,39 +448,31 @@ public class TaxFileBuilder2
         );
     }
 
-    private char Fortegn(decimal antal)
+    private char Fortegn(decimal antal) => antal > 0 ? '+' : '-';
+
+    private char Fortegn(int antal) => antal > 0 ? '+' : '-';
+
+    public void Build(StreamWriter writer) => Engine.WriteStream(writer, Records);
+
+    public Stream Build()
     {
-        return antal > 0 ? '+' : '-';
+        var ms = new MemoryStream();
+        var sw = new StreamWriter(ms);
+        Engine.WriteStream(sw, Records);
+        sw.Flush();
+        ms.Position = 0;
+        return ms;
     }
 
-    private char Fortegn(int antal)
+    public void Build(Stream stream)
     {
-        return antal > 0 ? '+' : '-';
+        using var sw = new StreamWriter(stream);
+        Engine.WriteStream(sw, Records);
     }
 
-    public void Build()
+    public void Build(string filePath)
     {
-        var engine = new MultiRecordEngine(
-            typeof(TaxRecord),
-            typeof(Record1000),
-            typeof(Record2001),
-            typeof(Record2101),
-            typeof(Record2111),
-            typeof(Record3101),
-            typeof(Record4101),
-            typeof(Record5000),
-            typeof(Record6000),
-            typeof(Record6001),
-            typeof(Record6002),
-            typeof(Record6003),
-            typeof(Record6004),
-            typeof(Record6005),
-            typeof(Record6102),
-            typeof(Record6202),
-            typeof(Record6111),
-            typeof(Record8001),
-            typeof(Record9999)
-        );
-        engine.WriteFile("test.txt", Records);
+        using var tw = File.CreateText(filePath);
+        Engine.WriteStream(tw, Records);
     }
 }

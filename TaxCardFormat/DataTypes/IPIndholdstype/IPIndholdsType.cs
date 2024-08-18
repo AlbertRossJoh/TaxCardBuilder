@@ -1,4 +1,4 @@
-namespace TaxCardFormat.IPIndholdstype;
+namespace TaxCardFormat.DataTypes.IPIndholdstype;
 
 public record IPIndholdsType(int kode, int? indhold)
 {

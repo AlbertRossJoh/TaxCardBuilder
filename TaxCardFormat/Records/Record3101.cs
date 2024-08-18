@@ -1,5 +1,6 @@
 using FileHelpers;
 using TaxCardFormat.CustomConverters;
+using TaxCardFormat.DataTypes;
 
 namespace TaxCardFormat.Records;
 
@@ -10,12 +11,12 @@ public class Record3101 : TaxRecord
     public required char ForudElBagud;
 
     [FieldFixedLength(16)]
-    [FieldConverter(typeof(GuidConverter))]
-    public required Guid indberetningsId;
+    [FieldConverter(typeof(ShortIdConverter))]
+    public required ShortId indberetningsId;
 
     [FieldFixedLength(16)]
-    [FieldConverter(typeof(GuidConverter))]
-    public Guid? referenceId;
+    [FieldConverter(typeof(ShortIdConverter))]
+    public ShortId? referenceId;
 
     [FieldFixedLength(8)]
     [FieldConverter(ConverterKind.Date, "yyyyMMdd")]
@@ -42,4 +43,3 @@ public class Record3101 : TaxRecord
     [FieldFixedLength(1)]
     public required char Sign;
 }
-
