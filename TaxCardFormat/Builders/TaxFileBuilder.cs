@@ -7,7 +7,7 @@ using TaxCardFormat.Records;
 
 namespace TaxCardFormat.Builders;
 
-public class TaxFileBuilder2
+public class TaxFileBuilder
 {
     private int Lb_nr = 1;
     private List<TaxRecord> Records = [];
@@ -78,8 +78,8 @@ public class TaxFileBuilder2
 
     public void AddRecord2001(
         string virksomhedSE,
-        string valutakode = "DKK",
-        bool ophørHosLSB = false
+        bool ophørHosLSB,
+        string valutakode = "DKK"
     )
     {
         Records.Add(
@@ -466,6 +466,11 @@ public class TaxFileBuilder2
         return ms;
     }
 
+    public string BuildString()
+    {
+        return Engine.WriteString(Records);
+    }
+    
     public void Build(Stream stream)
     {
         using var sw = new StreamWriter(stream);

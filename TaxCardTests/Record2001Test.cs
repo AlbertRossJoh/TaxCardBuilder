@@ -7,7 +7,7 @@ namespace TaxCardTests;
 
 public class Record2001Test
 {
-    private TaxFileBuilder2 sut = new();
+    private TaxFileBuilder sut = new();
     private FieldRanges _fieldRanges = new(typeof(Record2001));
     private string Lb_nr = "Lb_nr";
     private string Rec_nr = "Rec_nr";
