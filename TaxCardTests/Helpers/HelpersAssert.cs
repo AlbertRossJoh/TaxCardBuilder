@@ -17,7 +17,7 @@ public static class HelpersAssert
         Xunit.Assert.Equal(expected, actual[range.Start..range.End]);
     }
     
-    public static void RangeEqualsWhitespace(Range range, string actual)
+    public static void RangeWhitespace(Range range, string actual)
     {
         Xunit.Assert.Equal(Padding.WhiteSpacePad(range), actual[range.Start..range.End]);
     }

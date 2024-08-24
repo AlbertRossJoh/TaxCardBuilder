@@ -54,8 +54,8 @@ public class Record1000Test
         var lbnrRange = _fieldRanges.FieldNameToRange[Lb_nr];
         HelpersAssert.RangeEquals(lbnrRange, Padding.ZeroPad(1, lbnrRange), res);
         HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[Rec_nr], "1000", res);
-        HelpersAssert.RangeEqualsWhitespace(_fieldRanges.FieldNameToRange[Dato_sendt], res);
-        HelpersAssert.RangeEqualsWhitespace(_fieldRanges.FieldNameToRange[Klok_sendt], res);
+        HelpersAssert.RangeWhitespace(_fieldRanges.FieldNameToRange[Dato_sendt], res);
+        HelpersAssert.RangeWhitespace(_fieldRanges.FieldNameToRange[Klok_sendt], res);
         HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[Indberetter_SE_nummer], seNr, res);
         var indberetterCvrNummerRange = _fieldRanges.FieldNameToRange[Indberetter_CVR_nummer];
         HelpersAssert.RangeEquals(

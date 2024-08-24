@@ -6,13 +6,13 @@ namespace TaxCardFormat.Records;
 public class Record2101 : TaxRecord
 {
     [FieldFixedLength(10)]
-    public required string personCpr;
+    public required string PersonCpr;
 
     [FieldFixedLength(8)]
     private string filler1 = "";
 
     [FieldFixedLength(15)]
-    private string medarbejderNrLetløn = "";
+    public string? medarbejderNrLetløn;
 
     [FieldFixedLength(8)]
     [FieldConverter(ConverterKind.Date, "yyyyMMdd")]

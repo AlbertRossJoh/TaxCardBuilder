@@ -100,7 +100,8 @@ public class TaxFileBuilder2
         SkattekortType skattekortType,
         DateTime skaAndvendeFra,
         DateTime? fratrædelsesDato = null,
-        bool genrevivering = false
+        bool genrevivering = false,
+        string? medarbejderNr = null
     )
     {
         if (cpr.Length != 10)
@@ -110,11 +111,12 @@ public class TaxFileBuilder2
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 2101,
+                medarbejderNrLetløn = medarbejderNr,
                 SkaAnvendeFra = skaAndvendeFra,
                 AnsættelsesDato = AnsættelsesDato,
                 FratrædelsesDato = fratrædelsesDato,
                 GenRekvivering = genrevivering ? 'R' : ' ',
-                personCpr = cpr,
+                PersonCpr = cpr,
                 SkattekortType = (int)skattekortType,
             }
         );

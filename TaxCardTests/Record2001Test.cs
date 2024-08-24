@@ -18,7 +18,7 @@ public class Record2001Test
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void BuildTaxCard1000_ExpectDataPresent(bool ophør)
+    public void BuildTaxCard2001_ExpectDataPresent(bool ophør)
     {
         // Arrange
         using var ms = new MemoryStream();

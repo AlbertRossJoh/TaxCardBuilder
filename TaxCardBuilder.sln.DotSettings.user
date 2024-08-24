@@ -1,0 +1,9 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=cb75c3ba_002Dea90_002D47ee_002D8e21_002D5a745b9fcd7e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="BuildTaxCard1000_ExpectDataPresent" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::78F738EF-021D-49F5-B514-0D39FFF1A514::net8.0::TaxCardTests.Record1000Test.BuildTaxCard1000_ExpectDataPresent&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::78F738EF-021D-49F5-B514-0D39FFF1A514::net8.0::TaxCardTests.ShortIdTests.CheckIdForCorrectLength&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::78F738EF-021D-49F5-B514-0D39FFF1A514::net8.0::TaxCardTests.Record2101Test.BuildTaxCard2101_ExpectDataPresent&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::78F738EF-021D-49F5-B514-0D39FFF1A514::net8.0::TaxCardTests.Record2001Test&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
