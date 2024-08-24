@@ -122,7 +122,7 @@ public class TaxFileBuilder
         );
     }
 
-    public void AddRecord2111(DateTime ikræftTrædelsesDato, IPIndholdsType ipIndholdsType)
+    public void AddRecord2111(IPIndholdsType ipIndholdsType, DateTime? ikræftTrædelsesDato = null)
     {
         Records.Add(
             new Record2111
@@ -153,10 +153,7 @@ public class TaxFileBuilder
                     "Man kan ikke angive nulangivelse for et beløb forskelligt fra 0."
                 );
         }
-        var absBeløb = Math.Abs(beløb);
-        var decimals = (int)(absBeløb - Math.Truncate(absBeløb)) * 1_000_000;
-        var amnt = (int)absBeløb;
-
+        var (amnt, decimals) = ExtractDecimalParts(beløb);
         Records.Add(
             new Record3101
             {
@@ -237,6 +234,10 @@ public class TaxFileBuilder
         string? produktionEnhedsnummer = null
     )
     {
+        if (cpr.Length != 10)
+            throw new ArgumentException("Cpr length must be 10");
+        if (cvr_se.Length != 8)
+            throw new ArgumentException("Cvr se length must be 8");
         Records.Add(
             new Record6000
             {
@@ -255,10 +256,7 @@ public class TaxFileBuilder
 
     public void AddRecord6001(decimal beløb, FeltNummer feltNummer)
     {
-        var absBeløb = Math.Abs(beløb);
-        var decimals = (int)(absBeløb - Math.Truncate(absBeløb)) * 1_000_000;
-        var amnt = (int)absBeløb;
-
+        var (amnt, decimals) = ExtractDecimalParts(beløb);
         Records.Add(
             new Record6001
             {
@@ -313,15 +311,17 @@ public class TaxFileBuilder
         );
     }
 
-    public void AddRecord6005(IndkomstFelt600X indkomstFelt, int antal)
+    public void AddRecord6005(AntalsFelt6005 antalsFelt6005, decimal antal)
     {
+        var (amnt, decimals) = ExtractDecimalParts(antal);
         Records.Add(
             new Record6005
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 6005,
-                FeltNummer = (int)indkomstFelt,
-                Antal = Math.Abs(antal),
+                FeltNummer = (int)antalsFelt6005,
+                Antal = amnt,
+                AntalDecimal = decimals,
                 Fortegn = antal > 0 ? '+' : '-'
             }
         );
@@ -334,14 +334,9 @@ public class TaxFileBuilder
         DateTime fratrædelsesDato
     )
     {
-        var absBeløb = Math.Abs(beløb);
-        var decimals = (int)(absBeløb - Math.Truncate(absBeløb)) * 1_000_000;
-        var amnt = (int)absBeløb;
-
-        var absFeriedage = Math.Abs(feriedage);
-        var decimalsFeriedage = (int)(absFeriedage - Math.Truncate(absFeriedage)) * 1_000_000;
-        var amntFeriedage = (int)absFeriedage;
-
+        var (amnt, decimals) = ExtractDecimalParts(beløb);
+        var (amntFeriedage, decimalsFeriedage) = ExtractDecimalParts(feriedage);
+        
         Records.Add(
             new Record6102
             {
@@ -366,13 +361,8 @@ public class TaxFileBuilder
         DateTime fratrædelsesDato
     )
     {
-        var absBeløb = Math.Abs(beløb);
-        var decimals = (int)(absBeløb - Math.Truncate(absBeløb)) * 1_000_000;
-        var amnt = (int)absBeløb;
-
-        var absFeriedage = Math.Abs(feriedage);
-        var decimalsFeriedage = (int)(absFeriedage - Math.Truncate(absFeriedage)) * 1_000_000;
-        var amntFeriedage = (int)absFeriedage;
+        var (amnt, decimals) = ExtractDecimalParts(beløb);
+        var (amntFeriedage, decimalsFeriedage) = ExtractDecimalParts(feriedage);
 
         Records.Add(
             new Record6202
@@ -393,10 +383,7 @@ public class TaxFileBuilder
 
     public void AddRecord6111(IPIndholdsType indholdsType, int antalEnheder, decimal beløb)
     {
-        var absBeløb = Math.Abs(beløb);
-        var decimals = (int)(absBeløb - Math.Truncate(absBeløb)) * 1_000_000;
-        var amnt = (int)absBeløb;
-
+        var (amnt, decimals) = ExtractDecimalParts(beløb);
         Records.Add(
             new Record6111
             {
@@ -454,6 +441,13 @@ public class TaxFileBuilder
 
     private char Fortegn(int antal) => antal > 0 ? '+' : '-';
 
+    private (int integerPart, int decimalPart) ExtractDecimalParts(decimal amount)
+    {
+        var amountAbs = Math.Abs(amount); 
+        var truncate = (int)Math.Truncate(amountAbs);
+        var decimals = (int)((amountAbs - truncate) * 1_000_000);
+        return (truncate, decimals);
+    }
     public void Build(StreamWriter writer) => Engine.WriteStream(writer, Records);
 
     public Stream Build()

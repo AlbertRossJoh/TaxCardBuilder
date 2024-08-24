@@ -9,9 +9,14 @@ public class Record6005 : TaxRecord
     [FieldAlign(AlignMode.Right, '0')]
     public required int FeltNummer;
 
-    [FieldFixedLength(8)]
+    [FieldFixedLength(6)]
     [FieldAlign(AlignMode.Right, '0')]
     public required int Antal;
+    
+    [FieldFixedLength(2)]
+    [FieldAlign(AlignMode.Left, '0')]
+    public required int AntalDecimal;
+
 
     [FieldFixedLength(1)]
     public required char Fortegn;

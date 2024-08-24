@@ -10,5 +10,6 @@ public class Record6004 : TaxRecord
     public required int FeltNummer;
 
     [FieldFixedLength(58)]
+    [FieldAlign(AlignMode.Right, ' ')]
     public required string Fritekstfelt;
 }

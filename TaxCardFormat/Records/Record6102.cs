@@ -17,9 +17,11 @@ public class Record6102 : TaxRecord
     public required char FortegnFeriepenge;
 
     [FieldFixedLength(2)]
+    [FieldAlign(AlignMode.Right, '0')]
     public required int FeriedageHeltal;
 
     [FieldFixedLength(2)]
+    [FieldAlign(AlignMode.Left, '0')]
     public required int FeriedageDecimal;
 
     [FieldFixedLength(1)]

@@ -15,17 +15,21 @@ public class Record6000 : TaxRecord
     public string? CVR_SE;
 
     [FieldFixedLength(15)]
+    [FieldAlign(AlignMode.Right, ' ')]
     public string? MedarbejderNr;
 
     [FieldFixedLength(27)]
+    [FieldAlign(AlignMode.Right, ' ')]
     public string? TIN;
 
     [FieldFixedLength(2)]
     public string? TIN_landekode;
 
     [FieldFixedLength(4)]
+    [FieldAlign(AlignMode.Right, '0')]
     public required int Indtægtsart;
 
     [FieldFixedLength(10)]
+    [FieldAlign(AlignMode.Right, ' ')]
     public string? ProduktionEndhedsNummer;
 }

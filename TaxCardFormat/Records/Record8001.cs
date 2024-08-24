@@ -16,9 +16,11 @@ public class Record8001 : TaxRecord
     public required string PersonLand;
 
     [FieldFixedLength(40)]
+    [FieldAlign(AlignMode.Right, ' ')]
     public required string PersonNavn;
 
     [FieldFixedLength(40)]
+    [FieldAlign(AlignMode.Right, ' ')]
     public required string PersonGadeAdresse;
 
     [FieldFixedLength(9)]
@@ -26,5 +28,6 @@ public class Record8001 : TaxRecord
     public required string PersonPostnummer;
 
     [FieldFixedLength(35)]
+    [FieldAlign(AlignMode.Right, ' ')]
     public required string PersonPostby;
 }

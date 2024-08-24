@@ -13,10 +13,6 @@ public class FieldRanges
     {
         var tmp = t.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
             .ToList();
-        //foreach (var item in tmp)
-        //{
-        //    Console.WriteLine(item.Name);
-        //}
         var propertyInfos = tmp[^2..];
         propertyInfos.AddRange(tmp[..^2]);
         Total = propertyInfos.Aggregate(
@@ -35,4 +31,3 @@ public class FieldRanges
         );
     }
 }
-

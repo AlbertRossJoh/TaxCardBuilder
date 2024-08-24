@@ -10,5 +10,6 @@ public class Record6002 : TaxRecord
     public required int FeltNummer;
 
     [FieldFixedLength(10)]
+    [FieldAlign(AlignMode.Right, '0')]
     public required string KodeFelt;
 }

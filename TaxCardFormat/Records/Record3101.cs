@@ -30,13 +30,14 @@ public class Record3101 : TaxRecord
     public required char Nulangivelse;
 
     [FieldFixedLength(4)]
+    [FieldAlign(AlignMode.Right, '0')]
     public int? FeltNummer;
 
     [FieldFixedLength(10)]
     [FieldAlign(AlignMode.Right, '0')]
     public required int Amount;
 
-    [FieldFixedLength(10)]
+    [FieldFixedLength(6)]
     [FieldAlign(AlignMode.Left, '0')]
     public required int Decimals;
 
