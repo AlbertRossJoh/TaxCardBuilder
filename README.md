@@ -1,5 +1,5 @@
 # TaxCardBuilder
-This project is intended to create an easy to use api for building tax cards. This api is built on top of filehelpers for creating and parsing the fixed format files.
+This project is intended to create an easy to use api for building danish tax cards. This api is built on top of filehelpers for creating and parsing the fixed format files.
 
 Most if not all variables are written in danish, this is deliberate because of the nature of the domain. This will make it easier to refer to documentation regarding what variable are supposed to be.
 
