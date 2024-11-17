@@ -7,7 +7,7 @@ public struct ShortId
     public ShortId(string id)
     {
         if (id.Length > 16)
-            throw new ArgumentException("A ShortId can be atmost 16 characters");
+            throw new ArgumentException("A ShortId can be at most 16 characters");
         Id = id;
     }
 
