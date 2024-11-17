@@ -1,4 +1,4 @@
-using TaxCardFormat.Builders;
+using TaxCardFormat.Builder;
 using TaxCardFormat.Records;
 using TaxCardTests.Helpers;
 

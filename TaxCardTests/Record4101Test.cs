@@ -14,7 +14,7 @@ public class Record4101Test: RecordTestBase<Record4101>
         // Arrange
         var indberetningsId = new ShortId();
         var referenceId = new ShortId();
-        const char tilbageførsel = 'J';
+        const char tilbagefoersel = 'J';
         const string cpr = "1234567890";
         
         // Act
@@ -26,7 +26,7 @@ public class Record4101Test: RecordTestBase<Record4101>
         HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record4101.Rec_nr)], "4101", result);
         HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record4101.indberetningsId)], indberetningsId.ToString(), result);
         HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record4101.referenceId)], referenceId.ToString(), result);
-        HelpersAssert.PositionEquals(_fieldRanges.FieldNameToRange[nameof(Record4101.Tilbageførsel)].Start.Value, tilbageførsel, result);
+        HelpersAssert.PositionEquals(_fieldRanges.FieldNameToRange[nameof(Record4101.Tilbagefoersel)].Start.Value, tilbagefoersel, result);
         HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record4101.cpr)], cpr, result);
     }
 }

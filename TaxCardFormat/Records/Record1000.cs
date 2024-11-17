@@ -56,6 +56,6 @@ public class Record1000 : TaxRecord
     private string filler2 = "";
 
     [FieldFixedLength(1)]
-    public required char EIndkomst_Letløn;
+    public required char EIndkomst_Letloen;
 }
 

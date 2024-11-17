@@ -12,16 +12,16 @@ public class Record2101 : TaxRecord
     private string filler1 = "";
 
     [FieldFixedLength(15)]
-    public string? medarbejderNrLetløn;
+    public string? medarbejderNrLetloen;
 
     [FieldFixedLength(8)]
     [FieldConverter(ConverterKind.Date, "yyyyMMdd")]
-    public required DateTime AnsættelsesDato;
+    public required DateTime AnsaettelsesDato;
 
     [FieldFixedLength(8)]
     [FieldConverter(ConverterKind.Date, "yyyyMMdd")]
     [FieldAlign(AlignMode.Right, ' ')]
-    public DateTime? FratrædelsesDato;
+    public DateTime? FratraedelsesDato;
 
     [FieldFixedLength(24)]
     private string filler2 = "";

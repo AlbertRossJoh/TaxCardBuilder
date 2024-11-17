@@ -16,22 +16,22 @@ namespace TaxCardTests
             var indberetningsId = new ShortId();
             var referenceId = new ShortId();
             const bool rettelserTidlPeriode = true;
-            var lønperiodeStart = new DateTime(2023, 10, 1);
-            var lønperiodeSlut = new DateTime(2023, 10, 31);
-            const bool erLønBagudBetalt = true;
+            var loenperiodeStart = new DateTime(2023, 10, 1);
+            var loenperiodeSlut = new DateTime(2023, 10, 31);
+            const bool erLoenBagudBetalt = true;
             const IndkomstType indkomstType = IndkomstType.BIndkomst; 
-            GrønlandKommune? grønlandKommune = null;
+            GroenlandKommune? groenlandKommune = null;
 
             // Act
             Sut.AddRecord5000(
                 rettelserTidlPeriode,
-                lønperiodeStart,
-                lønperiodeSlut,
-                erLønBagudBetalt,
+                loenperiodeStart,
+                loenperiodeSlut,
+                erLoenBagudBetalt,
                 indkomstType,
                 indberetningsId,
                 referenceId,
-                grønlandKommune
+                groenlandKommune
             );
             var result = Sut.BuildString();
 
@@ -41,12 +41,12 @@ namespace TaxCardTests
             HelpersAssert.PositionEquals(
                 _fieldRanges.FieldNameToRange[nameof(Record5000.Rettelse_tidl_periode)].Start.Value,
                 rettelserTidlPeriode ? 'R' : '0', result);
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000.LønperiodeStart)],
-                lønperiodeStart.ToString("yyyyMMdd"), result);
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000.LønperiodeSlut)],
-                lønperiodeSlut.ToString("yyyyMMdd"), result);
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000.LoenperiodeStart)],
+                loenperiodeStart.ToString("yyyyMMdd"), result);
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000.LoenperiodeSlut)],
+                loenperiodeSlut.ToString("yyyyMMdd"), result);
             HelpersAssert.PositionEquals(_fieldRanges.FieldNameToRange[nameof(Record5000.ForudElBagud)].Start.Value,
-                erLønBagudBetalt ? 'B' : 'F', result);
+                erLoenBagudBetalt ? 'B' : 'F', result);
             var indkomstTypeRange = _fieldRanges.FieldNameToRange[nameof(Record5000.Indkomsttype)];
             HelpersAssert.RangeEquals(indkomstTypeRange, Padding.ZeroPad((int)indkomstType, indkomstTypeRange), result); 
             HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000.IndberetningsID)],
@@ -54,10 +54,10 @@ namespace TaxCardTests
             HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000.ReferenceId)],
                 referenceId.ToString(), result);
 
-            if (grønlandKommune.HasValue)
+            if (groenlandKommune.HasValue)
             {
-                HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000.GrønlandskKommune)],
-                    grønlandKommune.Value.ToString("D3"), result);
+                HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000.GroenlandskKommune)],
+                    groenlandKommune.Value.ToString("D3"), result);
             }
         }
     }

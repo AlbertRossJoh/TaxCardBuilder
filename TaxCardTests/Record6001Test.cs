@@ -21,10 +21,10 @@ namespace TaxCardTests
             // Assert
             HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6001.Lb_nr)], "0000001", result);
             HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6001.Rec_nr)], "6001", result);
-            var beløbRange = _fieldRanges.FieldNameToRange[nameof(Record6001.Beløb)];
-            HelpersAssert.RangeEquals(beløbRange, Padding.ZeroPad((int)amount, beløbRange), result);
-            var beløbDecimal = _fieldRanges.FieldNameToRange[nameof(Record6001.BeløbDecimal)];
-            HelpersAssert.RangeEquals(beløbDecimal, Padding.ZeroPad(123, beløbDecimal, false), result);
+            var beloebRange = _fieldRanges.FieldNameToRange[nameof(Record6001.Beloeb)];
+            HelpersAssert.RangeEquals(beloebRange, Padding.ZeroPad((int)amount, beloebRange), result);
+            var beloebDecimal = _fieldRanges.FieldNameToRange[nameof(Record6001.BeloebDecimal)];
+            HelpersAssert.RangeEquals(beloebDecimal, Padding.ZeroPad(123, beloebDecimal, false), result);
             var ambidragRange = _fieldRanges.FieldNameToRange[nameof(Record6001.FeltNummer)];
             HelpersAssert.RangeEquals(ambidragRange, Padding.ZeroPad((int)amBidrag, ambidragRange), result);
         }

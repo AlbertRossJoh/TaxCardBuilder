@@ -18,12 +18,12 @@ public class Record6111 : TaxRecord
 
     [FieldFixedLength(10)]
     [FieldAlign(AlignMode.Right, '0')]
-    public required int Beløb;
+    public required int Beloeb;
 
     [FieldFixedLength(6)]
     [FieldAlign(AlignMode.Left, '0')]
-    public required int BeløbDecimal;
+    public required int BeloebDecimal;
 
     [FieldFixedLength(1)]
-    public required char FortegnBeløb;
+    public required char FortegnBeloeb;
 }

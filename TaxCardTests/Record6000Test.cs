@@ -37,7 +37,7 @@ namespace TaxCardTests
             HelpersAssert.RangeEquals(tinRange, Padding.WhiteSpacePad(tin, tinRange), result);
             HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6000.TIN_landekode)],
                 tin_landekode.ToString("G"), result);
-            var indkomstArtRange = _fieldRanges.FieldNameToRange[nameof(Record6000.Indtægtsart)];
+            var indkomstArtRange = _fieldRanges.FieldNameToRange[nameof(Record6000.Indtaegtsart)];
             HelpersAssert.RangeEquals(indkomstArtRange,
                 Padding.ZeroPad((int)indkomstArt, indkomstArtRange), result); // assuming IndkomstArt has a ToString("D2") method
             var prodRange = _fieldRanges.FieldNameToRange[nameof(Record6000.ProduktionEndhedsNummer)];

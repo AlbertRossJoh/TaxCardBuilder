@@ -1,5 +1,5 @@
 // Record6111_Tests.cs
-using TaxCardFormat.Builders;
+using TaxCardFormat.Builder;
 using TaxCardFormat.DataTypes.IPIndholdstype;
 using TaxCardFormat.Records;
 using TaxCardTests.Helpers;
@@ -15,26 +15,26 @@ namespace TaxCardTests
             // Arrange
             var indholdsType = new IPIndholdsType(123, null);
             int antalEnheder = 10;
-            decimal beløb = 1234.567m;
+            decimal beloeb = 1234.567m;
             var expectedIndholdsType = Padding.ZeroPad(123, _fieldRanges.FieldNameToRange[nameof(Record6111.IndholdsType)]);
             var expectedAntalEnheder = Padding.ZeroPad(10, _fieldRanges.FieldNameToRange[nameof(Record6111.AntalEnheder)]);
             var expectedFortegnAntalEnheder = "+";
-            var (beløbIntegerPart, beløbDecimalPart) = ExtractDecimalParts(beløb);
-            var expectedBeløb = Padding.ZeroPad(beløbIntegerPart, _fieldRanges.FieldNameToRange[nameof(Record6111.Beløb)]);
-            var expectedBeløbDecimal = Padding.ZeroPad(beløbDecimalPart, _fieldRanges.FieldNameToRange[nameof(Record6111.BeløbDecimal)], false);
-            var expectedFortegnBeløb = "+";
+            var (beloebIntegerPart, beloebDecimalPart) = ExtractDecimalParts(beloeb);
+            var expectedBeloeb = Padding.ZeroPad(beloebIntegerPart, _fieldRanges.FieldNameToRange[nameof(Record6111.Beloeb)]);
+            var expectedBeloebDecimal = Padding.ZeroPad(beloebDecimalPart, _fieldRanges.FieldNameToRange[nameof(Record6111.BeloebDecimal)], false);
+            var expectedFortegnBeloeb = "+";
 
             // Act
-            Sut.AddRecord6111(indholdsType, antalEnheder, beløb);
+            Sut.AddRecord6111(indholdsType, antalEnheder, beloeb);
             var recordString = Sut.BuildString();
 
             // Assert
             HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6111.IndholdsType)], expectedIndholdsType, recordString);
             HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6111.AntalEnheder)], expectedAntalEnheder, recordString);
             HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6111.FortegnAntalEnheder)], expectedFortegnAntalEnheder, recordString);
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6111.Beløb)], expectedBeløb, recordString);
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6111.BeløbDecimal)], expectedBeløbDecimal, recordString);
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6111.FortegnBeløb)], expectedFortegnBeløb, recordString);
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6111.Beloeb)], expectedBeloeb, recordString);
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6111.BeloebDecimal)], expectedBeloebDecimal, recordString);
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6111.FortegnBeloeb)], expectedFortegnBeloeb, recordString);
         }
         
         private (int integerPart, int decimalPart) ExtractDecimalParts(decimal amount, int decimalPlaces = 6)

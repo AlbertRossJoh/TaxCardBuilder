@@ -11,17 +11,17 @@ namespace TaxCardTests
         public void AddRecord6202_ShouldAddRecordWithCorrectFields()
         {
             // Arrange
-            decimal beløb = 12345.678901m;
+            decimal beloeb = 12345.678901m;
             decimal feriedage = 10.25m;
-            int ferieår = 2024;
-            DateTime fratrædelsesDato = new DateTime(2024, 12, 31);
+            int ferieaar = 2024;
+            DateTime fratraedelsesDato = new DateTime(2024, 12, 31);
 
             // Act
-            Sut.AddRecord6202(beløb, feriedage, ferieår, fratrædelsesDato);
+            Sut.AddRecord6202(beloeb, feriedage, ferieaar, fratraedelsesDato);
             var resultString = Sut.BuildString();
 
             // Extract the integer and decimal parts
-            var (amnt, decimals) = ExtractDecimalParts(beløb);
+            var (amnt, decimals) = ExtractDecimalParts(beloeb);
             var (amntFeriedage, decimalsFeriedage) = ExtractDecimalParts(feriedage, 2);
 
             // Assert
@@ -36,18 +36,18 @@ namespace TaxCardTests
                 resultString);
 
             HelpersAssert.RangeEquals(
-                _fieldRanges.FieldNameToRange[nameof(Record6202.Beløb)], 
-                Padding.ZeroPad(amnt, _fieldRanges.FieldNameToRange[nameof(Record6202.Beløb)]), 
+                _fieldRanges.FieldNameToRange[nameof(Record6202.Beloeb)], 
+                Padding.ZeroPad(amnt, _fieldRanges.FieldNameToRange[nameof(Record6202.Beloeb)]), 
                 resultString);
 
             HelpersAssert.RangeEquals(
-                _fieldRanges.FieldNameToRange[nameof(Record6202.BeløbDecimal)], 
-                Padding.ZeroPad(decimals, _fieldRanges.FieldNameToRange[nameof(Record6202.BeløbDecimal)], leftPad: false), 
+                _fieldRanges.FieldNameToRange[nameof(Record6202.BeloebDecimal)], 
+                Padding.ZeroPad(decimals, _fieldRanges.FieldNameToRange[nameof(Record6202.BeloebDecimal)], leftPad: false), 
                 resultString);
 
             HelpersAssert.RangeEquals(
                 _fieldRanges.FieldNameToRange[nameof(Record6202.FortegnFeriepenge)], 
-                Fortegn(beløb).ToString(), 
+                Fortegn(beloeb).ToString(), 
                 resultString);
 
             HelpersAssert.RangeEquals(
@@ -66,13 +66,13 @@ namespace TaxCardTests
                 resultString);
 
             HelpersAssert.RangeEquals(
-                _fieldRanges.FieldNameToRange[nameof(Record6202.Ferieår)], 
-                Padding.ZeroPad(ferieår, _fieldRanges.FieldNameToRange[nameof(Record6202.Ferieår)]), 
+                _fieldRanges.FieldNameToRange[nameof(Record6202.Ferieaar)], 
+                Padding.ZeroPad(ferieaar, _fieldRanges.FieldNameToRange[nameof(Record6202.Ferieaar)]), 
                 resultString);
 
             HelpersAssert.RangeEquals(
-                _fieldRanges.FieldNameToRange[nameof(Record6202.FratrædelsesDato)], 
-                fratrædelsesDato.ToString("yyyyMMdd"), 
+                _fieldRanges.FieldNameToRange[nameof(Record6202.FratraedelsesDato)], 
+                fratraedelsesDato.ToString("yyyyMMdd"), 
                 resultString);
         }
 

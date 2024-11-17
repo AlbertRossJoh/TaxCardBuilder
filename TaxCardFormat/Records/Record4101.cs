@@ -19,7 +19,7 @@ public class Record4101 : TaxRecord
     private string filler1 = "";
 
     [FieldFixedLength(1)]
-    public required char Tilbageførsel;
+    public required char Tilbagefoersel;
 
     [FieldFixedLength(10)]
     public string? cpr;

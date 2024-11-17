@@ -1,6 +1,6 @@
 namespace TaxCardFormat.Enums;
 
-public enum GrønlandKommune
+public enum GroenlandKommune
 {
     UdenForKommunalInddeling = 20,
     Kujalleq = 31,

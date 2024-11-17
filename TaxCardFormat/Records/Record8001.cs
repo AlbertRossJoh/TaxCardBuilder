@@ -7,10 +7,10 @@ public class Record8001 : TaxRecord
 {
     [FieldFixedLength(8)]
     [FieldConverter(ConverterKind.Date, "yyyyMMdd")]
-    public required DateTime PersonFødselsdato;
+    public required DateTime PersonFoedselsdato;
 
     [FieldFixedLength(1)]
-    public required int PersonKøn;
+    public required int PersonKoen;
 
     [FieldFixedLength(2)]
     public required string PersonLand;

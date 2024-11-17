@@ -1,4 +1,4 @@
-using TaxCardFormat.IPIndholdstype.N0100;
+using TaxCardFormat.DataTypes.IPIndholdstype;
 using TaxCardFormat.Records;
 using TaxCardTests.Helpers;
 using Xunit;
@@ -12,7 +12,7 @@ public class Record2111Test : RecordTestBase<Record2111>
     {
         // Arrange
         var date = DateTime.Now;
-        Sut.AddRecord2111(new N0100(N0100Enum.IkkeTidsbegrænset), date);
+        Sut.AddRecord2111(new N0100(N0100Enum.IkkeTidsbegraenset), date);
 
         // Act
         var res = Sut.BuildString();
@@ -25,17 +25,17 @@ public class Record2111Test : RecordTestBase<Record2111>
         var indholdtype = _fieldRanges.FieldNameToRange[nameof(Record2111.indholdstype)];
         HelpersAssert.RangeEquals(indholdtype, Padding.ZeroPad(100, indholdtype), res);
         var medarbejderkode = _fieldRanges.FieldNameToRange[nameof(Record2111.medarbejderKode)];
-        HelpersAssert.RangeEquals(medarbejderkode, Padding.ZeroPad((int)N0100Enum.IkkeTidsbegrænset, medarbejderkode),
+        HelpersAssert.RangeEquals(medarbejderkode, Padding.ZeroPad((int)N0100Enum.IkkeTidsbegraenset, medarbejderkode),
             res);
-        var ikræftrædelsesdato = _fieldRanges.FieldNameToRange[nameof(Record2111.ikræftrædelsesDato)];
-        HelpersAssert.RangeEquals(ikræftrædelsesdato, date.ToString("yyyyMMdd"), res);
+        var ikraeftraedelsesdato = _fieldRanges.FieldNameToRange[nameof(Record2111.ikraeftraedelsesDato)];
+        HelpersAssert.RangeEquals(ikraeftraedelsesdato, date.ToString("yyyyMMdd"), res);
     }
 
     [Fact]
     public void BuildTaxCard2111_ExpectDataPresent_NoDate()
     {
         // Arrange
-        Sut.AddRecord2111(new N0100(N0100Enum.IkkeTidsbegrænset));
+        Sut.AddRecord2111(new N0100(N0100Enum.IkkeTidsbegraenset));
 
         // Act
         var res = Sut.BuildString();
@@ -48,9 +48,9 @@ public class Record2111Test : RecordTestBase<Record2111>
         var indholdtype = _fieldRanges.FieldNameToRange[nameof(Record2111.indholdstype)];
         HelpersAssert.RangeEquals(indholdtype, Padding.ZeroPad(100, indholdtype), res);
         var medarbejderkode = _fieldRanges.FieldNameToRange[nameof(Record2111.medarbejderKode)];
-        HelpersAssert.RangeEquals(medarbejderkode, Padding.ZeroPad((int)N0100Enum.IkkeTidsbegrænset, medarbejderkode),
+        HelpersAssert.RangeEquals(medarbejderkode, Padding.ZeroPad((int)N0100Enum.IkkeTidsbegraenset, medarbejderkode),
             res);
-        var ikræftrædelsesdato = _fieldRanges.FieldNameToRange[nameof(Record2111.ikræftrædelsesDato)];
-        HelpersAssert.RangeEquals(ikræftrædelsesdato, Padding.WhiteSpacePad(ikræftrædelsesdato), res);
+        var ikraeftraedelsesdato = _fieldRanges.FieldNameToRange[nameof(Record2111.ikraeftraedelsesDato)];
+        HelpersAssert.RangeEquals(ikraeftraedelsesdato, Padding.WhiteSpacePad(ikraeftraedelsesdato), res);
     }
 }

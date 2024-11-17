@@ -26,7 +26,7 @@ public class Record2101Test : RecordTestBase<Record2101>
         HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record2101.Rec_nr)], "2101", res);
         HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record2101.PersonCpr)], cpr, res);
         HelpersAssert.RangeEquals(
-            _fieldRanges.FieldNameToRange[nameof(Record2101.AnsættelsesDato)],
+            _fieldRanges.FieldNameToRange[nameof(Record2101.AnsaettelsesDato)],
             date.ToString("yyyyMMdd"),
             res
         );
@@ -37,8 +37,8 @@ public class Record2101Test : RecordTestBase<Record2101>
             res
         );
         HelpersAssert.RangeWhitespace(_fieldRanges.FieldNameToRange[nameof(Record2101.Suppl_opl_med_arbejdernr)], res);
-        HelpersAssert.RangeWhitespace(_fieldRanges.FieldNameToRange[nameof(Record2101.FratrædelsesDato)], res);
+        HelpersAssert.RangeWhitespace(_fieldRanges.FieldNameToRange[nameof(Record2101.FratraedelsesDato)], res);
         HelpersAssert.RangeWhitespace(_fieldRanges.FieldNameToRange[nameof(Record2101.GenRekvivering)], res);
-        HelpersAssert.RangeWhitespace(_fieldRanges.FieldNameToRange[nameof(Record2101.medarbejderNrLetløn)], res);
+        HelpersAssert.RangeWhitespace(_fieldRanges.FieldNameToRange[nameof(Record2101.medarbejderNrLetloen)], res);
     }
 }

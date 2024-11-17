@@ -2,16 +2,15 @@ using FileHelpers;
 using TaxCardFormat.DataTypes;
 using TaxCardFormat.DataTypes.IPIndholdstype;
 using TaxCardFormat.Enums;
-using TaxCardFormat.IPIndholdstype;
 using TaxCardFormat.Records;
 
-namespace TaxCardFormat.Builders;
+namespace TaxCardFormat.Builder;
 
 public class TaxFileBuilder
 {
     private int Lb_nr = 1;
     private List<TaxRecord> Records = [];
-    private MultiRecordEngine Engine = new MultiRecordEngine(
+    private MultiRecordEngine Engine = new(
         typeof(TaxRecord),
         typeof(Record1000),
         typeof(Record2001),
@@ -58,7 +57,7 @@ public class TaxFileBuilder
                 Edb_System = edbSystem,
                 HovedindberetingsID = hovedIndberetningsId,
                 IsTest = isTest ? 'T' : 'P',
-                EIndkomst_Letløn = GetSystem(systemUsage)
+                EIndkomst_Letloen = GetSystem(systemUsage)
             }
         );
     }
@@ -67,7 +66,7 @@ public class TaxFileBuilder
         systemUsage switch
         {
             SystemUsage.Eindkomst => 'E',
-            SystemUsage.LetLøn => 'L',
+            SystemUsage.LetLoen => 'L',
             _
                 => throw new ArgumentOutOfRangeException(
                     nameof(systemUsage),
@@ -78,7 +77,7 @@ public class TaxFileBuilder
 
     public void AddRecord2001(
         string virksomhedSE,
-        bool ophørHosLSB,
+        bool ophoerHosLSB,
         string valutakode = "DKK"
     )
     {
@@ -89,17 +88,17 @@ public class TaxFileBuilder
                 Rec_nr = 2001,
                 Valutakode = valutakode,
                 Virksomhed_SE_nummer = virksomhedSE,
-                Virksomhed_Ophør_Hos_LSB = ophørHosLSB ? 'A' : ' '
+                Virksomhed_Ophoer_Hos_LSB = ophoerHosLSB ? 'A' : ' '
             }
         );
     }
 
     public void AddRecord2101(
-        DateTime AnsættelsesDato,
+        DateTime AnsaettelsesDato,
         string cpr,
         SkattekortType skattekortType,
         DateTime skaAndvendeFra,
-        DateTime? fratrædelsesDato = null,
+        DateTime? fratraedelsesDato = null,
         bool genrevivering = false,
         string? medarbejderNr = null
     )
@@ -111,10 +110,10 @@ public class TaxFileBuilder
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 2101,
-                medarbejderNrLetløn = medarbejderNr,
+                medarbejderNrLetloen = medarbejderNr,
                 SkaAnvendeFra = skaAndvendeFra,
-                AnsættelsesDato = AnsættelsesDato,
-                FratrædelsesDato = fratrædelsesDato,
+                AnsaettelsesDato = AnsaettelsesDato,
+                FratraedelsesDato = fratraedelsesDato,
                 GenRekvivering = genrevivering ? 'R' : ' ',
                 PersonCpr = cpr,
                 SkattekortType = (int)skattekortType,
@@ -122,14 +121,14 @@ public class TaxFileBuilder
         );
     }
 
-    public void AddRecord2111(IPIndholdsType ipIndholdsType, DateTime? ikræftTrædelsesDato = null)
+    public void AddRecord2111(IPIndholdsType ipIndholdsType, DateTime? ikraeftTraedelsesDato = null)
     {
         Records.Add(
             new Record2111
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 2111,
-                ikræftrædelsesDato = ikræftTrædelsesDato,
+                ikraeftraedelsesDato = ikraeftTraedelsesDato,
                 indholdstype = ipIndholdsType.Kode,
                 medarbejderKode = ipIndholdsType.Indhold,
             }
@@ -137,7 +136,7 @@ public class TaxFileBuilder
     }
 
     public void AddRecord3101(
-        decimal beløb,
+        decimal beloeb,
         bool forudBetalt,
         DateTime periodeIndberetStart,
         DateTime periodeIndberetSlut,
@@ -148,12 +147,12 @@ public class TaxFileBuilder
     {
         switch (feltNummer)
         {
-            case FeltNummer.NulAngivelse when beløb != 0:
+            case FeltNummer.NulAngivelse when beloeb != 0:
                 throw new ArgumentException(
-                    "Man kan ikke angive nulangivelse for et beløb forskelligt fra 0."
+                    "Man kan ikke angive nulangivelse for et beloeb forskelligt fra 0."
                 );
         }
-        var (amnt, decimals) = ExtractDecimalParts(beløb);
+        var (amnt, decimals) = ExtractDecimalParts(beloeb);
         Records.Add(
             new Record3101
             {
@@ -163,7 +162,7 @@ public class TaxFileBuilder
                 referenceId = referenceId,
                 Amount = amnt,
                 Decimals = decimals,
-                Sign = beløb >= 0 ? '+' : '-',
+                Sign = beloeb >= 0 ? '+' : '-',
                 ForudElBagud = forudBetalt ? 'F' : 'B',
                 PeriodeIndberetStart = periodeIndberetStart,
                 PeriodeIndberetSlut = periodeIndberetSlut,
@@ -174,19 +173,19 @@ public class TaxFileBuilder
     }
 
     public void AddRecord4101(
-        bool tilbageførsel,
+        bool tilbagefoersel,
         ShortId indberetningId = default,
         ShortId? referenceId = null,
         string? cpr = null
     )
     {
-        if (tilbageførsel && cpr == null)
-            throw new ArgumentException("Man kan ikke angive en tilbageførsel uden cprnummer");
+        if (tilbagefoersel && cpr == null)
+            throw new ArgumentException("Man kan ikke angive en tilbagefoersel uden cprnummer");
 
         Records.Add(
             new Record4101
             {
-                Tilbageførsel = tilbageførsel ? 'J' : 'N',
+                Tilbagefoersel = tilbagefoersel ? 'J' : 'N',
                 indberetningsId = indberetningId,
                 referenceId = referenceId,
                 cpr = cpr,
@@ -198,13 +197,13 @@ public class TaxFileBuilder
 
     public void AddRecord5000(
         bool rettelser_tidl_periode,
-        DateTime lønperiodeStart,
-        DateTime lønPeriodeSlut,
-        bool erLønBagudBetalt,
+        DateTime loenperiodeStart,
+        DateTime loenPeriodeSlut,
+        bool erLoenBagudBetalt,
         IndkomstType indkomstType,
         ShortId indberetningId = default,
         ShortId referenceId = default,
-        GrønlandKommune? grønlandKommune = null
+        GroenlandKommune? groenlandKommune = null
     )
     {
         Records.Add(
@@ -213,10 +212,10 @@ public class TaxFileBuilder
                 Rettelse_tidl_periode = rettelser_tidl_periode ? 'R' : ' ',
                 IndberetningsID = indberetningId,
                 ReferenceId = referenceId,
-                LønperiodeStart = lønperiodeStart,
-                LønperiodeSlut = lønPeriodeSlut,
-                ForudElBagud = erLønBagudBetalt ? 'B' : 'F',
-                GrønlandskKommune = (int?)grønlandKommune,
+                LoenperiodeStart = loenperiodeStart,
+                LoenperiodeSlut = loenPeriodeSlut,
+                ForudElBagud = erLoenBagudBetalt ? 'B' : 'F',
+                GroenlandskKommune = (int?)groenlandKommune,
                 Indkomsttype = (int)indkomstType,
                 Lb_nr = Lb_nr++,
                 Rec_nr = 5000
@@ -246,7 +245,7 @@ public class TaxFileBuilder
                 MedarbejderNr = medarbejderNr,
                 TIN = tin,
                 TIN_landekode = tin_landekode.ToString("G"),
-                Indtægtsart = (int)indkomstArt,
+                Indtaegtsart = (int)indkomstArt,
                 ProduktionEndhedsNummer = produktionEnhedsnummer,
                 Lb_nr = Lb_nr++,
                 Rec_nr = 6000,
@@ -254,18 +253,18 @@ public class TaxFileBuilder
         );
     }
 
-    public void AddRecord6001(decimal beløb, FeltNummer feltNummer)
+    public void AddRecord6001(decimal beloeb, FeltNummer feltNummer)
     {
-        var (amnt, decimals) = ExtractDecimalParts(beløb);
+        var (amnt, decimals) = ExtractDecimalParts(beloeb);
         Records.Add(
             new Record6001
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 6001,
-                Beløb = amnt,
-                BeløbDecimal = decimals,
+                Beloeb = amnt,
+                BeloebDecimal = decimals,
                 FeltNummer = (int)feltNummer,
-                Fortegn = beløb > 0 ? '+' : '-'
+                Fortegn = beloeb > 0 ? '+' : '-'
             }
         );
     }
@@ -299,7 +298,7 @@ public class TaxFileBuilder
     public void AddRecord6004(IndkomstFelt600X indkomstFelt, string fritekstFelt)
     {
         if (fritekstFelt.Length > 58)
-            throw new ArgumentException("Fritekstfeltet må maks være 58 bogstaver langt");
+            throw new ArgumentException("Fritekstfeltet maa maks vaere 58 bogstaver langt");
         Records.Add(
             new Record6004
             {
@@ -328,13 +327,13 @@ public class TaxFileBuilder
     }
 
     public void AddRecord6102(
-        decimal beløb,
+        decimal beloeb,
         decimal feriedage,
-        int ferieår,
-        DateTime fratrædelsesDato
+        int ferieaar,
+        DateTime fratraedelsesDato
     )
     {
-        var (amnt, decimals) = ExtractDecimalParts(beløb);
+        var (amnt, decimals) = ExtractDecimalParts(beloeb);
         var (amntFeriedage, decimalsFeriedage) = ExtractDecimalParts(feriedage);
         
         Records.Add(
@@ -342,26 +341,26 @@ public class TaxFileBuilder
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 6102,
-                Beløb = amnt,
-                BeløbDecimal = decimals,
-                FortegnFeriepenge = Fortegn(beløb),
+                Beloeb = amnt,
+                BeloebDecimal = decimals,
+                FortegnFeriepenge = Fortegn(beloeb),
                 FeriedageHeltal = amntFeriedage,
                 FeriedageDecimal = decimalsFeriedage,
                 FortegnFeiedage = Fortegn(feriedage),
-                Ferieår = ferieår,
-                FratrædelsesDato = fratrædelsesDato
+                Ferieaar = ferieaar,
+                FratraedelsesDato = fratraedelsesDato
             }
         );
     }
 
     public void AddRecord6202(
-        decimal beløb,
+        decimal beloeb,
         decimal feriedage,
-        int ferieår,
-        DateTime fratrædelsesDato
+        int ferieaar,
+        DateTime fratraedelsesDato
     )
     {
-        var (amnt, decimals) = ExtractDecimalParts(beløb);
+        var (amnt, decimals) = ExtractDecimalParts(beloeb);
         var (amntFeriedage, decimalsFeriedage) = ExtractDecimalParts(feriedage);
 
         Records.Add(
@@ -369,21 +368,21 @@ public class TaxFileBuilder
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 6202,
-                Beløb = amnt,
-                BeløbDecimal = decimals,
-                FortegnFeriepenge = Fortegn(beløb),
+                Beloeb = amnt,
+                BeloebDecimal = decimals,
+                FortegnFeriepenge = Fortegn(beloeb),
                 FeriedageHeltal = amntFeriedage,
                 FeriedageDecimal = decimalsFeriedage,
                 FortegnFeiedage = Fortegn(feriedage),
-                Ferieår = ferieår,
-                FratrædelsesDato = fratrædelsesDato
+                Ferieaar = ferieaar,
+                FratraedelsesDato = fratraedelsesDato
             }
         );
     }
 
-    public void AddRecord6111(IPIndholdsType indholdsType, int antalEnheder, decimal beløb)
+    public void AddRecord6111(IPIndholdsType indholdsType, int antalEnheder, decimal beloeb)
     {
-        var (amnt, decimals) = ExtractDecimalParts(beløb);
+        var (amnt, decimals) = ExtractDecimalParts(beloeb);
         Records.Add(
             new Record6111
             {
@@ -392,16 +391,16 @@ public class TaxFileBuilder
                 IndholdsType = indholdsType.Kode,
                 AntalEnheder = antalEnheder,
                 FortegnAntalEnheder = Fortegn(antalEnheder),
-                Beløb = amnt,
-                BeløbDecimal = decimals,
-                FortegnBeløb = Fortegn(beløb)
+                Beloeb = amnt,
+                BeloebDecimal = decimals,
+                FortegnBeloeb = Fortegn(beloeb)
             }
         );
     }
 
     public void AddRecord8001(
-        DateTime fødselsdato,
-        Køn køn,
+        DateTime foedselsdato,
+        Koen koen,
         Landekoder landekoder,
         string navn,
         string adresse,
@@ -414,8 +413,8 @@ public class TaxFileBuilder
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 8001,
-                PersonFødselsdato = fødselsdato,
-                PersonKøn = (int)køn,
+                PersonFoedselsdato = foedselsdato,
+                PersonKoen = (int)koen,
                 PersonLand = landekoder.ToString("G"),
                 PersonNavn = navn,
                 PersonGadeAdresse = adresse,
@@ -437,11 +436,11 @@ public class TaxFileBuilder
         );
     }
 
-    private char Fortegn(decimal antal) => antal > 0 ? '+' : '-';
+    private static char Fortegn(decimal antal) => antal > 0 ? '+' : '-';
 
-    private char Fortegn(int antal) => antal > 0 ? '+' : '-';
+    private static char Fortegn(int antal) => antal > 0 ? '+' : '-';
 
-    private (int integerPart, int decimalPart) ExtractDecimalParts(decimal amount)
+    private static (int integerPart, int decimalPart) ExtractDecimalParts(decimal amount)
     {
         var amountAbs = Math.Abs(amount); 
         var truncate = (int)Math.Truncate(amountAbs);

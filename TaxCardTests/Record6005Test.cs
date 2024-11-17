@@ -11,7 +11,7 @@ namespace TaxCardTests
         public void BuildTaxCard6005_ExpectDataPresent()
         {
             // Arrange
-            var feltNummer = AntalsFelt6005.AntalSødage;
+            var feltNummer = AntalsFelt6005.AntalSoedage;
             var antal = -3.123M;
 
             // Act

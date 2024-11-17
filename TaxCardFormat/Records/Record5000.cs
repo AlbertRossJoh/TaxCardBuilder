@@ -20,12 +20,12 @@ public class Record5000 : TaxRecord
 
     [FieldFixedLength(8)]
     [FieldConverter(ConverterKind.Date, "yyyyMMdd")]
-    public required DateTime LønperiodeStart;
+    public required DateTime LoenperiodeStart;
 
     [FieldFixedLength(8)]
     [FieldConverter(ConverterKind.Date, "yyyyMMdd")]
     [FieldAlign(AlignMode.Right, ' ')]
-    public required DateTime LønperiodeSlut;
+    public required DateTime LoenperiodeSlut;
 
     [FieldFixedLength(8)]
     [FieldConverter(ConverterKind.Date, "yyyyMMdd")]
@@ -40,7 +40,7 @@ public class Record5000 : TaxRecord
 
     [FieldFixedLength(3)]
     [FieldAlign(AlignMode.Right, '0')]
-    public int? GrønlandskKommune;
+    public int? GroenlandskKommune;
 
     [FieldFixedLength(2)]
     [FieldAlign(AlignMode.Right, '0')]

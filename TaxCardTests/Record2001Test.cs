@@ -9,11 +9,11 @@ public class Record2001Test : RecordTestBase<Record2001>
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void BuildTaxCard2001_ExpectDataPresent(bool ophør)
+    public void BuildTaxCard2001_ExpectDataPresent(bool ophoer)
     {
         // Arrange
         var seNr = "12345678";
-        Sut.AddRecord2001(seNr, ophørHosLSB: ophør);
+        Sut.AddRecord2001(seNr, ophoerHosLSB: ophoer);
 
         // Act
         var res = Sut.BuildString();
@@ -24,8 +24,8 @@ public class Record2001Test : RecordTestBase<Record2001>
         HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record2001.Rec_nr)], "2001", res);
         HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record2001.Virksomhed_SE_nummer)], seNr, res);
         HelpersAssert.PositionEquals(
-            _fieldRanges.FieldNameToRange[nameof(Record2001.Virksomhed_Ophør_Hos_LSB)].Start.Value,
-            ophør ? 'A' : ' ',
+            _fieldRanges.FieldNameToRange[nameof(Record2001.Virksomhed_Ophoer_Hos_LSB)].Start.Value,
+            ophoer ? 'A' : ' ',
             res
         );
     }

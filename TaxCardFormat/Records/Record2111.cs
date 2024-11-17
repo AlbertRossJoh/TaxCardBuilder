@@ -15,6 +15,6 @@ public class Record2111 : TaxRecord
 
     [FieldFixedLength(8)]
     [FieldConverter(ConverterKind.Date, "yyyyMMdd")]
-    public DateTime? ikræftrædelsesDato;
+    public DateTime? ikraeftraedelsesDato;
 }
 

@@ -12,7 +12,7 @@ public class Record2001 : TaxRecord
     public required string Virksomhed_SE_nummer;
 
     [FieldFixedLength(1)]
-    public required char Virksomhed_Ophør_Hos_LSB;
+    public required char Virksomhed_Ophoer_Hos_LSB;
 
     [FieldFixedLength(3)]
     public required string Valutakode;

@@ -7,11 +7,11 @@ public class Record6202 : TaxRecord
 {
     [FieldFixedLength(10)]
     [FieldAlign(AlignMode.Right, '0')]
-    public required int Beløb;
+    public required int Beloeb;
 
     [FieldFixedLength(6)]
     [FieldAlign(AlignMode.Left, '0')]
-    public required int BeløbDecimal;
+    public required int BeloebDecimal;
 
     [FieldFixedLength(1)]
     public required char FortegnFeriepenge;
@@ -26,10 +26,10 @@ public class Record6202 : TaxRecord
     public required char FortegnFeiedage;
 
     [FieldFixedLength(4)]
-    public required int Ferieår;
+    public required int Ferieaar;
 
     [FieldFixedLength(8)]
     [FieldConverter(ConverterKind.Date, "yyyyMMdd")]
     [FieldAlign(AlignMode.Right, ' ')]
-    public required DateTime FratrædelsesDato;
+    public required DateTime FratraedelsesDato;
 }

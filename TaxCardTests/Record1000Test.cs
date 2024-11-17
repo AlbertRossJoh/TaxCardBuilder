@@ -53,6 +53,6 @@ public class Record1000Test : RecordTestBase<Record1000>
             res
         );
         HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record1000.IsTest)], "T", res);
-        HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record1000.EIndkomst_Letløn)], "E", res);
+        HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record1000.EIndkomst_Letloen)], "E", res);
     }
 }

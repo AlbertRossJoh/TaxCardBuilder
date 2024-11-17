@@ -27,7 +27,7 @@ public class Record6000 : TaxRecord
 
     [FieldFixedLength(4)]
     [FieldAlign(AlignMode.Right, '0')]
-    public required int Indtægtsart;
+    public required int Indtaegtsart;
 
     [FieldFixedLength(10)]
     [FieldAlign(AlignMode.Right, ' ')]

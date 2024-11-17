@@ -12,7 +12,7 @@ namespace TaxCardTests
         public void BuildTaxCard6004_ExpectDataPresent()
         {
             // Arrange
-            var feltNummer = IndkomstFelt600X.LønmodtagersPensionsandel;
+            var feltNummer = IndkomstFelt600X.LoenmodtagersPensionsandel;
             const string fritekstfelt = "Some free text that fits in the field";
 
             // Act

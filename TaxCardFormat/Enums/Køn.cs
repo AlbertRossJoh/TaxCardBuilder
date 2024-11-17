@@ -1,6 +1,6 @@
 namespace TaxCardFormat.Enums;
 
-public enum Køn
+public enum Koen
 {
     Mand = 1,
     Kvinde = 2,

@@ -11,15 +11,15 @@ namespace TaxCardTests
         public void AddRecord8001_ShouldAddCorrectlyFormattedRecord()
         {
             // Arrange
-            var fødselsdato = new DateTime(1990, 1, 1);
-            var køn = Køn.Mand;
+            var foedselsdato = new DateTime(1990, 1, 1);
+            var koen = Koen.Mand;
             var landekoder = Landekoder.DK;
             var navn = "Test Navn";
             var adresse = "Test Adresse 123";
             var postnummer = "1234";
             var postby = "Testby";
 
-            Sut.AddRecord8001(fødselsdato, køn, landekoder, navn, adresse, postnummer, postby);
+            Sut.AddRecord8001(foedselsdato, koen, landekoder, navn, adresse, postnummer, postby);
 
             var recordString = Sut.BuildString();
 
@@ -30,11 +30,11 @@ namespace TaxCardTests
             var expectedRecNr = Padding.ZeroPad("8001", _fieldRanges.FieldNameToRange[nameof(Record8001.Rec_nr)]);
             HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001.Rec_nr)], expectedRecNr, recordString);
 
-            var expectedFødselsdato = fødselsdato.ToString("yyyyMMdd");
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001.PersonFødselsdato)], expectedFødselsdato, recordString);
+            var expectedFoedselsdato = foedselsdato.ToString("yyyyMMdd");
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001.PersonFoedselsdato)], expectedFoedselsdato, recordString);
 
-            var expectedKøn = ((int)køn).ToString();
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001.PersonKøn)], expectedKøn, recordString);
+            var expectedKoen = ((int)koen).ToString();
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001.PersonKoen)], expectedKoen, recordString);
 
             var expectedLand = landekoder.ToString("G");
             HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001.PersonLand)], expectedLand, recordString);
