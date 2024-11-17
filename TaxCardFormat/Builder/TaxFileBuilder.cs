@@ -6,6 +6,11 @@ using TaxCardFormat.Records;
 
 namespace TaxCardFormat.Builder;
 
+/// <summary>
+/// TaxFileBuilder is a wrapper class for building tax cards for reporting to the Danish tax ministry.
+/// <br/>
+/// There is not any documentation on each individual method, as the documentation can be found here: https://info.skat.dk/data.aspx?oid=1745538
+/// </summary>
 public class TaxFileBuilder
 {
     private int Lb_nr = 1;
