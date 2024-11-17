@@ -22,7 +22,7 @@ var stream = builder.Build();
 There is still a lot to be done which includes.
 - Links to documentation on records.
 - Validation of record order.
-- Unit tests for each record type.
-- Parsing reciepts and other information from SKAT.
+  - This is a work in progress
+- Parsing receipts and other information from SKAT.
 - Creating explicit types for CVR, CPR, Address.
 - Make it into a nuget package.
