@@ -6,7 +6,7 @@ namespace TaxCardFormat.Records;
 public class Record6000 : TaxRecord
 {
     [FieldFixedLength(12)]
-    private string filler1 = "";
+    public string filler1 = "";
 
     [FieldFixedLength(10)]
     public string? CPR;

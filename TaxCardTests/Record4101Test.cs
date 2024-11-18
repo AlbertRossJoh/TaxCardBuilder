@@ -5,7 +5,7 @@ using Xunit;
 
 namespace TaxCardTests;
 
-public class Record4101Test: RecordTestBase<Record4101>
+public class Record4101Test: RecordTestBase<Record4101<object>>
 {
 
     [Fact]
@@ -22,11 +22,11 @@ public class Record4101Test: RecordTestBase<Record4101>
         var result = Sut.BuildString();
         
         // Assert
-        HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record4101.Lb_nr)], "0000001", result);
-        HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record4101.Rec_nr)], "4101", result);
-        HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record4101.indberetningsId)], indberetningsId.ToString(), result);
-        HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record4101.referenceId)], referenceId.ToString(), result);
-        HelpersAssert.PositionEquals(_fieldRanges.FieldNameToRange[nameof(Record4101.Tilbagefoersel)].Start.Value, tilbagefoersel, result);
-        HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record4101.cpr)], cpr, result);
+        HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record4101<object>.Lb_nr)], "0000001", result);
+        HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record4101<object>.Rec_nr)], "4101", result);
+        HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record4101<object>.indberetningsId)], indberetningsId.ToString(), result);
+        HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record4101<object>.referenceId)], referenceId.ToString(), result);
+        HelpersAssert.PositionEquals(_fieldRanges.FieldNameToRange[nameof(Record4101<object>.Tilbagefoersel)].Start.Value, tilbagefoersel, result);
+        HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record4101<object>.cpr)], cpr, result);
     }
 }

@@ -1,4 +1,6 @@
+using TaxCardFormat.Builder;
 using TaxCardFormat.DataTypes;
+using TaxCardFormat.DataTypes.IPIndholdstype;
 using TaxCardFormat.Enums;
 using TaxCardFormat.Records;
 using TaxCardTests.Helpers;
@@ -54,5 +56,27 @@ public class Record1000Test : RecordTestBase<Record1000>
         );
         HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record1000.IsTest)], "T", res);
         HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record1000.EIndkomst_Letloen)], "E", res);
+    }
+
+    [Fact]
+    public void TryNewApi()
+    {
+        var id = new ShortId();
+        var seNr = "12345678";
+        var indberetterType = IndberetterType.Virksomhed;
+        var system = SystemUsage.Eindkomst;
+        var sut = new TaxFileBuilder2();
+        sut.AddRecord1000(
+            seNr,
+            true,
+            system,
+            indberetterType,
+            hovedIndberetningsId: id
+        ).AddRecord2001("12345678", false)
+        .AddRecord2101(DateTime.Now, "1234567890", SkattekortType.Bikort, DateTime.Now)
+        .AddRecord2111(new N0100(N0100Enum.IkkeTidsbegraenset));
+        sut.Build_RecordList();
+        var res = sut.BuildString();
+        
     }
 }

@@ -11,7 +11,7 @@ public class FieldRanges
 
     public FieldRanges(Type t)
     {
-        var tmp = t.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+        var tmp = t.GetFields(BindingFlags.Public | BindingFlags.Instance)
             .ToList();
         var propertyInfos = tmp[^2..];
         propertyInfos.AddRange(tmp[..^2]);
@@ -19,6 +19,7 @@ public class FieldRanges
             0,
             (idx, prop) =>
             {
+                if (prop.Name == "Children") return idx;
                 var att = (FieldFixedLengthAttribute)
                     prop.GetCustomAttribute(typeof(FieldFixedLengthAttribute), false)!;
                 var newpos = idx + att.Length;

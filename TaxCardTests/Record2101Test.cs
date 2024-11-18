@@ -5,7 +5,7 @@ using Xunit;
 
 namespace TaxCardTests;
 
-public class Record2101Test : RecordTestBase<Record2101>
+public class Record2101Test : RecordTestBase<Record2101<object>>
 {
     [Fact]
     public void BuildTaxCard2101_ExpectDataPresent()
@@ -21,24 +21,24 @@ public class Record2101Test : RecordTestBase<Record2101>
         var res = Sut.BuildString();
 
         // Assert
-        var lbnr = _fieldRanges.FieldNameToRange[nameof(Record2101.Lb_nr)];
+        var lbnr = _fieldRanges.FieldNameToRange[nameof(Record2101<object>.Lb_nr)];
         HelpersAssert.RangeEquals(lbnr, Padding.ZeroPad(1, lbnr), res);
-        HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record2101.Rec_nr)], "2101", res);
-        HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record2101.PersonCpr)], cpr, res);
+        HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record2101<object>.Rec_nr)], "2101", res);
+        HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record2101<object>.PersonCpr)], cpr, res);
         HelpersAssert.RangeEquals(
-            _fieldRanges.FieldNameToRange[nameof(Record2101.AnsaettelsesDato)],
+            _fieldRanges.FieldNameToRange[nameof(Record2101<object>.AnsaettelsesDato)],
             date.ToString("yyyyMMdd"),
             res
         );
-        var taxRecordRange = _fieldRanges.FieldNameToRange[nameof(Record2101.SkattekortType)];
+        var taxRecordRange = _fieldRanges.FieldNameToRange[nameof(Record2101<object>.SkattekortType)];
         HelpersAssert.RangeEquals(
             taxRecordRange,
             Padding.ZeroPad((int)skatteKort, taxRecordRange),
             res
         );
-        HelpersAssert.RangeWhitespace(_fieldRanges.FieldNameToRange[nameof(Record2101.Suppl_opl_med_arbejdernr)], res);
-        HelpersAssert.RangeWhitespace(_fieldRanges.FieldNameToRange[nameof(Record2101.FratraedelsesDato)], res);
-        HelpersAssert.RangeWhitespace(_fieldRanges.FieldNameToRange[nameof(Record2101.GenRekvivering)], res);
-        HelpersAssert.RangeWhitespace(_fieldRanges.FieldNameToRange[nameof(Record2101.medarbejderNrLetloen)], res);
+        HelpersAssert.RangeWhitespace(_fieldRanges.FieldNameToRange[nameof(Record2101<object>.Suppl_opl_med_arbejdernr)], res);
+        HelpersAssert.RangeWhitespace(_fieldRanges.FieldNameToRange[nameof(Record2101<object>.FratraedelsesDato)], res);
+        HelpersAssert.RangeWhitespace(_fieldRanges.FieldNameToRange[nameof(Record2101<object>.GenRekvivering)], res);
+        HelpersAssert.RangeWhitespace(_fieldRanges.FieldNameToRange[nameof(Record2101<object>.medarbejderNrLetloen)], res);
     }
 }

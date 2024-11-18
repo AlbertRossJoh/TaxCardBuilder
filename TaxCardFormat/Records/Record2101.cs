@@ -1,15 +1,28 @@
 using FileHelpers;
+using TaxCardFormat.DataTypes;
+using TaxCardFormat.DataTypes.IPIndholdstype;
+using TaxCardFormat.Enums;
+using TaxCardFormat.RecordInterfaces;
+using TaxCardFormat.Utilities;
 
 namespace TaxCardFormat.Records;
 
 [FixedLengthRecord]
-public class Record2101 : TaxRecord
+public class Record2101<TPrevious> : TaxRecord, IRecord2101<TPrevious>
 {
+    [FieldHidden] private TPrevious? _previous;
+    public Record2101():this(default) {}
+
+    public Record2101(TPrevious? previousRecord)
+    {
+        _previous = previousRecord;
+    }
+    
     [FieldFixedLength(10)]
     public required string PersonCpr;
 
     [FieldFixedLength(8)]
-    private string filler1 = "";
+    public string filler1 = "";
 
     [FieldFixedLength(15)]
     public string? medarbejderNrLetloen;
@@ -24,7 +37,7 @@ public class Record2101 : TaxRecord
     public DateTime? FratraedelsesDato;
 
     [FieldFixedLength(24)]
-    private string filler2 = "";
+    public string filler2 = "";
 
     [FieldFixedLength(1)]
     public required int SkattekortType;
@@ -39,5 +52,105 @@ public class Record2101 : TaxRecord
 
     [FieldFixedLength(1)]
     public char? GenRekvivering;
+    
+    public TPrevious? GoBack() => _previous;
+    
+    public IRecord2111<IRecord2101<TPrevious>> AddRecord2111(IPIndholdsType ipIndholdsType, DateTime? ikraeftTraedelsesDato = null)
+    {
+        var child = new Record2111<IRecord2101<TPrevious>>
+        {
+            Lb_nr = Lb_nr++,
+            Rec_nr = 2111,
+            ikraeftraedelsesDato = ikraeftTraedelsesDato,
+            indholdstype = ipIndholdsType.Kode,
+            medarbejderKode = ipIndholdsType.Indhold,
+        };
+        Children.Add(child);
+        return child;
+    }
+    
+    public IRecord3101<IRecord2101<TPrevious>> AddRecord3101(
+        decimal beloeb,
+        bool forudBetalt,
+        DateTime periodeIndberetStart,
+        DateTime periodeIndberetSlut,
+        FeltNummer feltNummer,
+        ShortId indberetningsId = default,
+        ShortId? referenceId = null
+    )
+    {
+        if (feltNummer is FeltNummer.NulAngivelse && beloeb != 0)
+            throw new ArgumentException("Man kan ikke angive nulangivelse for et beloeb forskelligt fra 0.");
+        var (amnt, decimals) = NumberFormattingUtils.ExtractDecimalParts(beloeb);
+        var child = new Record3101<IRecord2101<TPrevious>>
+        {
+            Lb_nr = Lb_nr++,
+            Rec_nr = 3101,
+            indberetningsId = indberetningsId,
+            referenceId = referenceId,
+            Amount = amnt,
+            Decimals = decimals,
+            Sign = beloeb >= 0 ? '+' : '-',
+            ForudElBagud = forudBetalt ? 'F' : 'B',
+            PeriodeIndberetStart = periodeIndberetStart,
+            PeriodeIndberetSlut = periodeIndberetSlut,
+            FeltNummer = (int)feltNummer,
+            Nulangivelse = feltNummer == FeltNummer.NulAngivelse ? 'N' : ' ',
+        };
+        Children.Add(child);
+        return child;
+    }
+    
+   public Record4101<IRecord2101<TPrevious>> AddRecord4101(
+       bool tilbagefoersel,
+       ShortId indberetningId = default,
+       ShortId? referenceId = null,
+       string? cpr = null
+   )
+   {
+       if (tilbagefoersel && cpr == null)
+           throw new ArgumentException("Man kan ikke angive en tilbagefoersel uden cprnummer");
+   
+       var child = new Record4101<IRecord2101<TPrevious>>(this)
+       {
+           Tilbagefoersel = tilbagefoersel ? 'J' : 'N',
+           indberetningsId = indberetningId,
+           referenceId = referenceId,
+           cpr = cpr,
+           Lb_nr = Lb_nr++,
+           Rec_nr = 4101
+       };
+   
+       Children.Add(child);
+       return child;
+   }
+   
+   public Record5000<IRecord2101<TPrevious>> AddRecord5000(
+       bool rettelser_tidl_periode,
+       DateTime loenperiodeStart,
+       DateTime loenPeriodeSlut,
+       bool erLoenBagudBetalt,
+       IndkomstType indkomstType,
+       ShortId indberetningId = default,
+       ShortId referenceId = default,
+       GroenlandKommune? groenlandKommune = null
+   )
+   {
+       var child = new Record5000<IRecord2101<TPrevious>>
+       {
+           Rettelse_tidl_periode = rettelser_tidl_periode ? 'R' : ' ',
+           IndberetningsID = indberetningId,
+           ReferenceId = referenceId,
+           LoenperiodeStart = loenperiodeStart,
+           LoenperiodeSlut = loenPeriodeSlut,
+           ForudElBagud = erLoenBagudBetalt ? 'B' : 'F',
+           GroenlandskKommune = (int?)groenlandKommune,
+           Indkomsttype = (int)indkomstType,
+           Lb_nr = Lb_nr++,
+           Rec_nr = 5000
+       };
+       Children.Add(child);
+       return child;
+   }
 }
 

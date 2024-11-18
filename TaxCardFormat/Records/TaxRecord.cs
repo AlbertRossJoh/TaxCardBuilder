@@ -9,4 +9,8 @@ public abstract class TaxRecord
     public required int Lb_nr;
 
     [FieldFixedLength(4)] public required int Rec_nr;
+
+    [FieldHidden] protected List<TaxRecord> Children = [];
+    
+    public List<TaxRecord> ChildrenList => Children;
 }

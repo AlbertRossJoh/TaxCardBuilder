@@ -5,8 +5,17 @@ using TaxCardFormat.DataTypes;
 namespace TaxCardFormat.Records;
 
 [FixedLengthRecord]
-public class Record5000 : TaxRecord
+public class Record5000<TPrevious> : TaxRecord
 {
+    [FieldHidden] private TPrevious? _previous;
+        
+    public Record5000():this(default) {}
+    
+    public Record5000(TPrevious? previousRecord)
+    {
+        _previous = previousRecord;
+    }
+        
     [FieldFixedLength(1)]
     public char Rettelse_tidl_periode = ' ';
 
@@ -33,7 +42,7 @@ public class Record5000 : TaxRecord
     public DateTime? DispensationsDato;
 
     [FieldFixedLength(1)]
-    private char filler1 = ' ';
+    public char filler1 = ' ';
 
     [FieldFixedLength(1)]
     public char ForudElBagud = ' ';

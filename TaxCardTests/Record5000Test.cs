@@ -7,7 +7,7 @@ using Xunit;
 
 namespace TaxCardTests
 {
-    public class Record5000Test : RecordTestBase<Record5000>
+    public class Record5000Test : RecordTestBase<Record5000<object>>
     {
         [Fact]
         public void BuildTaxCard5000_ExpectDataPresent()
@@ -36,27 +36,27 @@ namespace TaxCardTests
             var result = Sut.BuildString();
 
             // Assert
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000.Lb_nr)], "0000001", result);
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000.Rec_nr)], "5000", result);
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000<object>.Lb_nr)], "0000001", result);
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000<object>.Rec_nr)], "5000", result);
             HelpersAssert.PositionEquals(
-                _fieldRanges.FieldNameToRange[nameof(Record5000.Rettelse_tidl_periode)].Start.Value,
+                _fieldRanges.FieldNameToRange[nameof(Record5000<object>.Rettelse_tidl_periode)].Start.Value,
                 rettelserTidlPeriode ? 'R' : '0', result);
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000.LoenperiodeStart)],
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000<object>.LoenperiodeStart)],
                 loenperiodeStart.ToString("yyyyMMdd"), result);
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000.LoenperiodeSlut)],
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000<object>.LoenperiodeSlut)],
                 loenperiodeSlut.ToString("yyyyMMdd"), result);
-            HelpersAssert.PositionEquals(_fieldRanges.FieldNameToRange[nameof(Record5000.ForudElBagud)].Start.Value,
+            HelpersAssert.PositionEquals(_fieldRanges.FieldNameToRange[nameof(Record5000<object>.ForudElBagud)].Start.Value,
                 erLoenBagudBetalt ? 'B' : 'F', result);
-            var indkomstTypeRange = _fieldRanges.FieldNameToRange[nameof(Record5000.Indkomsttype)];
+            var indkomstTypeRange = _fieldRanges.FieldNameToRange[nameof(Record5000<object>.Indkomsttype)];
             HelpersAssert.RangeEquals(indkomstTypeRange, Padding.ZeroPad((int)indkomstType, indkomstTypeRange), result); 
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000.IndberetningsID)],
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000<object>.IndberetningsID)],
                 indberetningsId.ToString(), result);
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000.ReferenceId)],
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000<object>.ReferenceId)],
                 referenceId.ToString(), result);
 
             if (groenlandKommune.HasValue)
             {
-                HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000.GroenlandskKommune)],
+                HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000<object>.GroenlandskKommune)],
                     groenlandKommune.Value.ToString("D3"), result);
             }
         }

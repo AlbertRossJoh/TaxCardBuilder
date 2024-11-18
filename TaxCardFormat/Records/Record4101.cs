@@ -1,12 +1,22 @@
 using FileHelpers;
 using TaxCardFormat.CustomConverters;
 using TaxCardFormat.DataTypes;
+using TaxCardFormat.Enums;
 
 namespace TaxCardFormat.Records;
 
 [FixedLengthRecord]
-public class Record4101 : TaxRecord
+public class Record4101<TPrevious> : TaxRecord
 {
+    [FieldHidden] private TPrevious? _previous;
+    
+    public Record4101():this(default) {}
+
+    public Record4101(TPrevious? previousRecord)
+    {
+        _previous = previousRecord;
+    }
+    
     [FieldFixedLength(16)]
     [FieldConverter(typeof(ShortIdConverter))]
     public required ShortId indberetningsId;
@@ -16,12 +26,66 @@ public class Record4101 : TaxRecord
     public ShortId? referenceId;
 
     [FieldFixedLength(1)]
-    private string filler1 = "";
+    public string filler1 = "";
 
     [FieldFixedLength(1)]
     public required char Tilbagefoersel;
 
     [FieldFixedLength(10)]
     public string? cpr;
+    
+    public TPrevious? GoBack() => _previous;
+    
+    public Record4101<TPrevious> AddRecord4101(
+        bool tilbagefoersel,
+        ShortId indberetningId = default,
+        ShortId? referenceId = null,
+        string? cpr = null
+    )
+    {
+        if (tilbagefoersel && cpr == null)
+            throw new ArgumentException("Man kan ikke angive en tilbagefoersel uden cprnummer");
+    
+        var child = new Record4101<TPrevious>
+        {
+            Tilbagefoersel = tilbagefoersel ? 'J' : 'N',
+            indberetningsId = indberetningId,
+            referenceId = referenceId,
+            cpr = cpr,
+            Lb_nr = Lb_nr++,
+            Rec_nr = 4101
+        };
+    
+        Children.Add(child);
+        return this;
+    }
+    
+   public Record5000<Record4101<TPrevious>> AddRecord5000(
+       bool rettelser_tidl_periode,
+       DateTime loenperiodeStart,
+       DateTime loenPeriodeSlut,
+       bool erLoenBagudBetalt,
+       IndkomstType indkomstType,
+       ShortId indberetningId = default,
+       ShortId referenceId = default,
+       GroenlandKommune? groenlandKommune = null
+   )
+   {
+       var child = new Record5000<Record4101<TPrevious>>
+       {
+           Rettelse_tidl_periode = rettelser_tidl_periode ? 'R' : ' ',
+           IndberetningsID = indberetningId,
+           ReferenceId = referenceId,
+           LoenperiodeStart = loenperiodeStart,
+           LoenperiodeSlut = loenPeriodeSlut,
+           ForudElBagud = erLoenBagudBetalt ? 'B' : 'F',
+           GroenlandskKommune = (int?)groenlandKommune,
+           Indkomsttype = (int)indkomstType,
+           Lb_nr = Lb_nr++,
+           Rec_nr = 5000
+       };
+       Children.Add(child);
+       return child;
+   }
 }
 

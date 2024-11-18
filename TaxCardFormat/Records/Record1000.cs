@@ -1,11 +1,12 @@
 using FileHelpers;
 using TaxCardFormat.CustomConverters;
 using TaxCardFormat.DataTypes;
+using TaxCardFormat.RecordInterfaces;
 
 namespace TaxCardFormat.Records;
 
 [FixedLengthRecord]
-public class Record1000 : TaxRecord
+public class Record1000 : TaxRecord, IRecord1000
 {
     [FieldFixedLength(8)]
     [FieldConverter(ConverterKind.Date, "yyyyMMdd")]
@@ -29,10 +30,10 @@ public class Record1000 : TaxRecord
     public required int IndberetterType;
 
     [FieldFixedLength(5)]
-    private string filler1 = "";
+    public string filler1 = "";
 
     [FieldFixedLength(1)]
-    private int indberetningmetode_navn = 0;
+    public int indberetningmetode_navn = 0;
 
     [FieldFixedLength(20)]
     [FieldAlign(AlignMode.Right, ' ')]
@@ -47,15 +48,33 @@ public class Record1000 : TaxRecord
     public ShortId HovedindberetingsID;
 
     [FieldFixedLength(3)]
-    private string eIndkomst_version = "2.0";
+    public string eIndkomst_version = "2.0";
 
     [FieldFixedLength(1)]
     public required char IsTest;
 
     [FieldFixedLength(32)]
-    private string filler2 = "";
+    public string filler2 = "";
 
     [FieldFixedLength(1)]
     public required char EIndkomst_Letloen;
+    
+    public IRecord2001<IRecord1000> AddRecord2001(
+        string virksomhedSE,
+        bool ophoerHosLSB,
+        string valutakode = "DKK"
+    )
+    {
+        var child = new Record2001<IRecord1000>(this)
+        {
+            Lb_nr = Lb_nr++,
+            Rec_nr = 2001,
+            Valutakode = valutakode,
+            Virksomhed_SE_nummer = virksomhedSE,
+            Virksomhed_Ophoer_Hos_LSB = ophoerHosLSB ? 'A' : ' '
+        };
+        Children.Add(child);
+        return child;
+    }
 }
 

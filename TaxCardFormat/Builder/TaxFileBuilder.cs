@@ -14,16 +14,16 @@ namespace TaxCardFormat.Builder;
 public class TaxFileBuilder
 {
     private int Lb_nr = 1;
-    private List<TaxRecord> Records = [];
+    public List<TaxRecord> Records { get; set; }= [];
     private MultiRecordEngine Engine = new(
         typeof(TaxRecord),
         typeof(Record1000),
-        typeof(Record2001),
-        typeof(Record2101),
-        typeof(Record2111),
-        typeof(Record3101),
-        typeof(Record4101),
-        typeof(Record5000),
+        typeof(Record2001<object>),
+        typeof(Record2101<object>),
+        typeof(Record2111<object>),
+        typeof(Record3101<object>),
+        typeof(Record4101<object>),
+        typeof(Record5000<object>),
         typeof(Record6000),
         typeof(Record6001),
         typeof(Record6002),
@@ -87,7 +87,7 @@ public class TaxFileBuilder
     )
     {
         Records.Add(
-            new Record2001
+            new Record2001<object>
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 2001,
@@ -111,7 +111,7 @@ public class TaxFileBuilder
         if (cpr.Length != 10)
             throw new ArgumentException("The CPR number should be 10 characters in length");
         Records.Add(
-            new Record2101
+            new Record2101<object>
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 2101,
@@ -129,7 +129,7 @@ public class TaxFileBuilder
     public void AddRecord2111(IPIndholdsType ipIndholdsType, DateTime? ikraeftTraedelsesDato = null)
     {
         Records.Add(
-            new Record2111
+            new Record2111<object>
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 2111,
@@ -159,7 +159,7 @@ public class TaxFileBuilder
         }
         var (amnt, decimals) = ExtractDecimalParts(beloeb);
         Records.Add(
-            new Record3101
+            new Record3101<object>
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 3101,
@@ -178,19 +178,19 @@ public class TaxFileBuilder
     }
 
     public void AddRecord4101(
-        bool tilbagefoersel,
+        bool tilbagefoerselSe,
         ShortId indberetningId = default,
         ShortId? referenceId = null,
         string? cpr = null
     )
     {
-        if (tilbagefoersel && cpr == null)
+        if (tilbagefoerselSe && cpr == null)
             throw new ArgumentException("Man kan ikke angive en tilbagefoersel uden cprnummer");
 
         Records.Add(
-            new Record4101
+            new Record4101<object>
             {
-                Tilbagefoersel = tilbagefoersel ? 'J' : 'N',
+                Tilbagefoersel = tilbagefoerselSe ? 'J' : 'N',
                 indberetningsId = indberetningId,
                 referenceId = referenceId,
                 cpr = cpr,
@@ -212,7 +212,7 @@ public class TaxFileBuilder
     )
     {
         Records.Add(
-            new Record5000
+            new Record5000<object>
             {
                 Rettelse_tidl_periode = rettelser_tidl_periode ? 'R' : ' ',
                 IndberetningsID = indberetningId,
