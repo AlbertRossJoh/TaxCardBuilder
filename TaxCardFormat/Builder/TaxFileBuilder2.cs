@@ -4,6 +4,7 @@ using TaxCardFormat.DataTypes.IPIndholdstype;
 using TaxCardFormat.Enums;
 using TaxCardFormat.RecordInterfaces;
 using TaxCardFormat.Records;
+using TaxCardFormat.Utilities;
 
 namespace TaxCardFormat.Builder;
 
@@ -77,20 +78,13 @@ public class TaxFileBuilder2
                 )
         };
 
-    private void RecurseBuildList(TaxRecord taxRecord)
-    {
-        Records.Add(taxRecord);
-        foreach (var record in taxRecord.ChildrenList)
-        {
-            RecurseBuildList(record);
-        }
-    }
+    
     public void Build_RecordList()
     {
         if (FirstRecord == null) 
             throw new NullReferenceException("First record is null please call AddRecord1000 before building");
         //Records = FirstRecord.ChildrenList.SelectMany(i => i.ChildrenList).ToList();
-        RecurseBuildList(FirstRecord);
+        Records = FirstRecord.Flatten((record, i) => record.Lb_nr = i+1);
         var allTypes = Records.Select(s => s.GetType()).ToArray();
         Engine = new MultiRecordEngine(allTypes);
     }
