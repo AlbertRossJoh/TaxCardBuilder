@@ -3,6 +3,7 @@ using TaxCardFormat.DataTypes;
 using TaxCardFormat.DataTypes.IPIndholdstype;
 using TaxCardFormat.Enums;
 using TaxCardFormat.RecordInterfaces;
+using TaxCardFormat.RecordInterfaces.IRecord;
 using TaxCardFormat.Records;
 using TaxCardFormat.Utilities;
 
@@ -14,27 +15,7 @@ public class TaxFileBuilder2
     private int Lb_nr = 1;
     public List<TaxRecord> Records { get; set; }= [];
     private Record1000? FirstRecord { get; set; }
-    private MultiRecordEngine Engine = new(
-        typeof(TaxRecord),
-        typeof(Record1000),
-        typeof(Record2001<object>),
-        typeof(Record2101<object>),
-        typeof(Record2111<object>),
-        typeof(Record3101<object>),
-        typeof(Record4101<object>),
-        typeof(Record5000<object>),
-        typeof(Record6000),
-        typeof(Record6001),
-        typeof(Record6002),
-        typeof(Record6003),
-        typeof(Record6004),
-        typeof(Record6005),
-        typeof(Record6102),
-        typeof(Record6202),
-        typeof(Record6111),
-        typeof(Record8001),
-        typeof(Record9999)
-    );
+    private MultiRecordEngine? Engine;
 
     public IRecord1000 AddRecord1000(
         string indberetterSeNummer,
@@ -85,7 +66,7 @@ public class TaxFileBuilder2
             throw new NullReferenceException("First record is null please call AddRecord1000 before building");
         //Records = FirstRecord.ChildrenList.SelectMany(i => i.ChildrenList).ToList();
         Records = FirstRecord.Flatten((record, i) => record.Lb_nr = i+1);
-        var allTypes = Records.Select(s => s.GetType()).ToArray();
+        var allTypes = Records.Select(s => s.GetType()).ToHashSet().ToArray();
         Engine = new MultiRecordEngine(allTypes);
     }
 

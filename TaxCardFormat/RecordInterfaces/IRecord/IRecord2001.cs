@@ -1,22 +1,14 @@
 using TaxCardFormat.DataTypes;
 using TaxCardFormat.Enums;
+using TaxCardFormat.RecordInterfaces.AddableRecords;
 using TaxCardFormat.Records;
 
-namespace TaxCardFormat.RecordInterfaces;
+namespace TaxCardFormat.RecordInterfaces.IRecord;
 
-public interface IRecord2001<TPrevious>
+public interface IRecord2001<TPrevious> : 
+    IRecord2101Addable<IRecord2001<TPrevious>>, 
+    IWalkBack<TPrevious>
 {
-    public TPrevious? GoBack();
-    
-    public IRecord2101<IRecord2001<TPrevious>> AddRecord2101(
-        DateTime AnsaettelsesDato,
-        string cpr,
-        SkattekortType skattekortType,
-        DateTime skaAndvendeFra,
-        DateTime? fratraedelsesDato = null,
-        bool genrevivering = false,
-        string? medarbejderNr = null);
-    
     public Record4101<Record2001<TPrevious>> AddRecord4101(
         bool tilbagefoersel,
         ShortId indberetningId = default,

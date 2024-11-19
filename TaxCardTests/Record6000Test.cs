@@ -5,7 +5,7 @@ using Xunit;
 
 namespace TaxCardTests
 {
-    public class Record6000Test : RecordTestBase<Record6000>
+    public class Record6000Test : RecordTestBase<Record6000<object>>
     {
         [Fact]
         public void BuildTaxCard6000_ExpectDataPresent()
@@ -26,21 +26,21 @@ namespace TaxCardTests
             var result = Sut.BuildString();
 
             // Assert
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6000.Lb_nr)], "0000001", result);
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6000.Rec_nr)], "6000", result);
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6000.CPR)], cpr, result);
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6000.CVR_SE)], cvr_se, result);
-            var medarbejderNrRange = _fieldRanges.FieldNameToRange[nameof(Record6000.MedarbejderNr)];
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6000<object>.Lb_nr)], "0000001", result);
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6000<object>.Rec_nr)], "6000", result);
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6000<object>.CPR)], cpr, result);
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6000<object>.CVR_SE)], cvr_se, result);
+            var medarbejderNrRange = _fieldRanges.FieldNameToRange[nameof(Record6000<object>.MedarbejderNr)];
             HelpersAssert.RangeEquals(medarbejderNrRange, Padding.WhiteSpacePad(medarbejderNr, medarbejderNrRange),
                 result);
-            var tinRange = _fieldRanges.FieldNameToRange[nameof(Record6000.TIN)];
+            var tinRange = _fieldRanges.FieldNameToRange[nameof(Record6000<object>.TIN)];
             HelpersAssert.RangeEquals(tinRange, Padding.WhiteSpacePad(tin, tinRange), result);
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6000.TIN_landekode)],
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6000<object>.TIN_landekode)],
                 tin_landekode.ToString("G"), result);
-            var indkomstArtRange = _fieldRanges.FieldNameToRange[nameof(Record6000.Indtaegtsart)];
+            var indkomstArtRange = _fieldRanges.FieldNameToRange[nameof(Record6000<object>.Indtaegtsart)];
             HelpersAssert.RangeEquals(indkomstArtRange,
                 Padding.ZeroPad((int)indkomstArt, indkomstArtRange), result); // assuming IndkomstArt has a ToString("D2") method
-            var prodRange = _fieldRanges.FieldNameToRange[nameof(Record6000.ProduktionEndhedsNummer)];
+            var prodRange = _fieldRanges.FieldNameToRange[nameof(Record6000<object>.ProduktionEndhedsNummer)];
             HelpersAssert.RangeEquals(prodRange, Padding.WhiteSpacePad(produktionEnhedsnummer, prodRange), result);
         }
     }

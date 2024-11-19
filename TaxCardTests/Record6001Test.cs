@@ -5,7 +5,7 @@ using Xunit;
 
 namespace TaxCardTests
 {
-    public class Record6001Test : RecordTestBase<Record6001>
+    public class Record6001Test : RecordTestBase<Record6001<object>>
     {
         [Fact]
         public void BuildTaxCard6001_ExpectDataPresent()
@@ -19,13 +19,13 @@ namespace TaxCardTests
             var result = Sut.BuildString();
             
             // Assert
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6001.Lb_nr)], "0000001", result);
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6001.Rec_nr)], "6001", result);
-            var beloebRange = _fieldRanges.FieldNameToRange[nameof(Record6001.Beloeb)];
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6001<object>.Lb_nr)], "0000001", result);
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6001<object>.Rec_nr)], "6001", result);
+            var beloebRange = _fieldRanges.FieldNameToRange[nameof(Record6001<object>.Beloeb)];
             HelpersAssert.RangeEquals(beloebRange, Padding.ZeroPad((int)amount, beloebRange), result);
-            var beloebDecimal = _fieldRanges.FieldNameToRange[nameof(Record6001.BeloebDecimal)];
+            var beloebDecimal = _fieldRanges.FieldNameToRange[nameof(Record6001<object>.BeloebDecimal)];
             HelpersAssert.RangeEquals(beloebDecimal, Padding.ZeroPad(123, beloebDecimal, false), result);
-            var ambidragRange = _fieldRanges.FieldNameToRange[nameof(Record6001.FeltNummer)];
+            var ambidragRange = _fieldRanges.FieldNameToRange[nameof(Record6001<object>.FeltNummer)];
             HelpersAssert.RangeEquals(ambidragRange, Padding.ZeroPad((int)amBidrag, ambidragRange), result);
         }
     }

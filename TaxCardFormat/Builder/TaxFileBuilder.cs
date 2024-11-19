@@ -24,16 +24,16 @@ public class TaxFileBuilder
         typeof(Record3101<object>),
         typeof(Record4101<object>),
         typeof(Record5000<object>),
-        typeof(Record6000),
-        typeof(Record6001),
-        typeof(Record6002),
-        typeof(Record6003),
+        typeof(Record6000<object>),
+        typeof(Record6001<object>),
+        typeof(Record6002<object>),
+        typeof(Record6003<object>),
         typeof(Record6004),
         typeof(Record6005),
         typeof(Record6102),
         typeof(Record6202),
         typeof(Record6111),
-        typeof(Record8001),
+        typeof(Record8001<object>),
         typeof(Record9999)
     );
 
@@ -243,7 +243,7 @@ public class TaxFileBuilder
         if (cvr_se.Length != 8)
             throw new ArgumentException("Cvr se length must be 8");
         Records.Add(
-            new Record6000
+            new Record6000<object>
             {
                 CPR = cpr,
                 CVR_SE = cvr_se,
@@ -262,7 +262,7 @@ public class TaxFileBuilder
     {
         var (amnt, decimals) = ExtractDecimalParts(beloeb);
         Records.Add(
-            new Record6001
+            new Record6001<object>
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 6001,
@@ -277,7 +277,7 @@ public class TaxFileBuilder
     public void AddRecord6002(IndkomstFelt6002 indkomstFelt, string kodeFelt)
     {
         Records.Add(
-            new Record6002
+            new Record6002<object>
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 6002,
@@ -290,7 +290,7 @@ public class TaxFileBuilder
     public void AddRecord6003(IndkomstFelt600X indkomstFelt)
     {
         Records.Add(
-            new Record6003
+            new Record6003<object>
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 6003,
@@ -414,7 +414,7 @@ public class TaxFileBuilder
     )
     {
         Records.Add(
-            new Record8001
+            new Record8001<object>
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 8001,

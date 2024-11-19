@@ -2,6 +2,7 @@ using FileHelpers;
 using TaxCardFormat.DataTypes;
 using TaxCardFormat.Enums;
 using TaxCardFormat.RecordInterfaces;
+using TaxCardFormat.RecordInterfaces.IRecord;
 using TaxCardFormat.Utilities;
 
 namespace TaxCardFormat.Records;
@@ -29,7 +30,7 @@ public class Record2111<TPrevious> : TaxRecord, IRecord2111<TPrevious>
     [FieldConverter(ConverterKind.Date, "yyyyMMdd")]
     public DateTime? ikraeftraedelsesDato;
     
-    public TPrevious? GoBack() => _previous;
+    public TPrevious GoBack() => _previous ?? throw new NullReferenceException("Previous record is null remember to set the previous record in the constructor");
     
     public IRecord3101<IRecord2111<TPrevious>> AddRecord3101(
         decimal beloeb,
@@ -44,7 +45,7 @@ public class Record2111<TPrevious> : TaxRecord, IRecord2111<TPrevious>
         if (feltNummer is FeltNummer.NulAngivelse && beloeb != 0)
             throw new ArgumentException("Man kan ikke angive nulangivelse for et beloeb forskelligt fra 0.");
         var (amnt, decimals) = NumberFormattingUtils.ExtractDecimalParts(beloeb);
-        var child = new Record3101<IRecord2111<TPrevious>>
+        var child = new Record3101<IRecord2111<TPrevious>>(this)
         {
             Lb_nr = Lb_nr++,
             Rec_nr = 3101,
@@ -63,7 +64,7 @@ public class Record2111<TPrevious> : TaxRecord, IRecord2111<TPrevious>
         return child;
     }
     
-    public Record4101<IRecord2111<TPrevious>> AddRecord4101(
+    public IRecord4101<IRecord2111<TPrevious>> AddRecord4101(
         bool tilbagefoersel,
         ShortId indberetningId = default,
         ShortId? referenceId = null,
@@ -87,7 +88,7 @@ public class Record2111<TPrevious> : TaxRecord, IRecord2111<TPrevious>
         return child;
     }
     
-    public Record5000<IRecord2111<TPrevious>> AddRecord5000(
+    public IRecord5000<IRecord2111<TPrevious>> AddRecord5000(
         bool rettelser_tidl_periode,
         DateTime loenperiodeStart,
         DateTime loenPeriodeSlut,
@@ -98,7 +99,7 @@ public class Record2111<TPrevious> : TaxRecord, IRecord2111<TPrevious>
         GroenlandKommune? groenlandKommune = null
     )
     {
-        var child = new Record5000<IRecord2111<TPrevious>>
+        var child = new Record5000<IRecord2111<TPrevious>>(this)
         {
             Rettelse_tidl_periode = rettelser_tidl_periode ? 'R' : ' ',
             IndberetningsID = indberetningId,

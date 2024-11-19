@@ -1,10 +1,19 @@
 using FileHelpers;
+using TaxCardFormat.RecordInterfaces.IRecord;
 
 namespace TaxCardFormat.Records;
 
 [FixedLengthRecord]
-public class Record8001 : TaxRecord
+public class Record8001<TPrevious> : TaxRecord, IRecord8001<TPrevious>
 {
+    [FieldHidden] private TPrevious? _previous;
+    public Record8001():this(default) {}
+    
+    public Record8001(TPrevious? previousRecord)
+    {
+        _previous = previousRecord;
+    }
+    
     [FieldFixedLength(8)]
     [FieldConverter(ConverterKind.Date, "yyyyMMdd")]
     public required DateTime PersonFoedselsdato;

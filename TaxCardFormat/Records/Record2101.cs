@@ -3,6 +3,7 @@ using TaxCardFormat.DataTypes;
 using TaxCardFormat.DataTypes.IPIndholdstype;
 using TaxCardFormat.Enums;
 using TaxCardFormat.RecordInterfaces;
+using TaxCardFormat.RecordInterfaces.IRecord;
 using TaxCardFormat.Utilities;
 
 namespace TaxCardFormat.Records;
@@ -53,11 +54,38 @@ public class Record2101<TPrevious> : TaxRecord, IRecord2101<TPrevious>
     [FieldFixedLength(1)]
     public char? GenRekvivering;
     
-    public TPrevious? GoBack() => _previous;
+    public TPrevious GoBack() => _previous ?? throw new NullReferenceException("Previous record is null remember to set the previous record in the constructor");
+    
+    public IRecord2101<TPrevious> AddRecord2101(
+            DateTime AnsaettelsesDato,
+            string cpr,
+            SkattekortType skattekortType,
+            DateTime skaAndvendeFra,
+            DateTime? fratraedelsesDato = null,
+            bool genrevivering = false,
+            string? medarbejderNr = null)
+    {
+        if (cpr.Length != 10)
+            throw new ArgumentException("The CPR number should be 10 characters in length");
+        var child = new Record2101<TPrevious>(_previous)
+        {
+            Lb_nr = Lb_nr++,
+            Rec_nr = 2101,
+            medarbejderNrLetloen = medarbejderNr,
+            SkaAnvendeFra = skaAndvendeFra,
+            AnsaettelsesDato = AnsaettelsesDato,
+            FratraedelsesDato = fratraedelsesDato,
+            GenRekvivering = genrevivering ? 'R' : ' ',
+            PersonCpr = cpr,
+            SkattekortType = (int)skattekortType,
+        };
+        Children.Add(child);
+        return this;
+    }
     
     public IRecord2111<IRecord2101<TPrevious>> AddRecord2111(IPIndholdsType ipIndholdsType, DateTime? ikraeftTraedelsesDato = null)
     {
-        var child = new Record2111<IRecord2101<TPrevious>>
+        var child = new Record2111<IRecord2101<TPrevious>>(this)
         {
             Lb_nr = Lb_nr++,
             Rec_nr = 2111,
@@ -82,7 +110,7 @@ public class Record2101<TPrevious> : TaxRecord, IRecord2101<TPrevious>
         if (feltNummer is FeltNummer.NulAngivelse && beloeb != 0)
             throw new ArgumentException("Man kan ikke angive nulangivelse for et beloeb forskelligt fra 0.");
         var (amnt, decimals) = NumberFormattingUtils.ExtractDecimalParts(beloeb);
-        var child = new Record3101<IRecord2101<TPrevious>>
+        var child = new Record3101<IRecord2101<TPrevious>>(this)
         {
             Lb_nr = Lb_nr++,
             Rec_nr = 3101,
@@ -101,7 +129,7 @@ public class Record2101<TPrevious> : TaxRecord, IRecord2101<TPrevious>
         return child;
     }
     
-   public Record4101<IRecord2101<TPrevious>> AddRecord4101(
+   public IRecord4101<IRecord2101<TPrevious>> AddRecord4101(
        bool tilbagefoersel,
        ShortId indberetningId = default,
        ShortId? referenceId = null,
@@ -125,7 +153,7 @@ public class Record2101<TPrevious> : TaxRecord, IRecord2101<TPrevious>
        return child;
    }
    
-   public Record5000<IRecord2101<TPrevious>> AddRecord5000(
+   public IRecord5000<IRecord2101<TPrevious>> AddRecord5000(
        bool rettelser_tidl_periode,
        DateTime loenperiodeStart,
        DateTime loenPeriodeSlut,
@@ -136,7 +164,7 @@ public class Record2101<TPrevious> : TaxRecord, IRecord2101<TPrevious>
        GroenlandKommune? groenlandKommune = null
    )
    {
-       var child = new Record5000<IRecord2101<TPrevious>>
+       var child = new Record5000<IRecord2101<TPrevious>>(this)
        {
            Rettelse_tidl_periode = rettelser_tidl_periode ? 'R' : ' ',
            IndberetningsID = indberetningId,
@@ -148,6 +176,32 @@ public class Record2101<TPrevious> : TaxRecord, IRecord2101<TPrevious>
            Indkomsttype = (int)indkomstType,
            Lb_nr = Lb_nr++,
            Rec_nr = 5000
+       };
+       Children.Add(child);
+       return child;
+   }
+
+
+   public IRecord8001<IRecord2101<TPrevious>> AddRecord8001(
+       DateTime foedselsdato, 
+       Koen koen, 
+       Landekoder landekoder, 
+       string navn, 
+       string adresse,
+       string postnummer, 
+       string postby)
+   {
+       var child = new Record8001<IRecord2101<TPrevious>>(this)
+       {
+           Lb_nr = Lb_nr++,
+           Rec_nr = 8001,
+           PersonFoedselsdato = foedselsdato,
+           PersonKoen = (int)koen,
+           PersonLand = landekoder.ToString("G"),
+           PersonNavn = navn,
+           PersonGadeAdresse = adresse,
+           PersonPostnummer = postnummer,
+           PersonPostby = postby,
        };
        Children.Add(child);
        return child;

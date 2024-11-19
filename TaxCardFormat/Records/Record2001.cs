@@ -2,6 +2,7 @@ using FileHelpers;
 using TaxCardFormat.DataTypes;
 using TaxCardFormat.Enums;
 using TaxCardFormat.RecordInterfaces;
+using TaxCardFormat.RecordInterfaces.IRecord;
 
 namespace TaxCardFormat.Records;
 
@@ -28,7 +29,7 @@ public class Record2001<TPrevious> : TaxRecord, IRecord2001<TPrevious>
     [FieldFixedLength(3)]
     public required string Valutakode;
 
-    public TPrevious? GoBack() => _previous;
+    public TPrevious GoBack() => _previous ?? throw new NullReferenceException("Previous record is null remember to set the previous record in the constructor");
     
     public IRecord2101<IRecord2001<TPrevious>> AddRecord2101(
             DateTime AnsaettelsesDato,
@@ -92,7 +93,7 @@ public class Record2001<TPrevious> : TaxRecord, IRecord2001<TPrevious>
        GroenlandKommune? groenlandKommune = null
    )
    {
-       var child = new Record5000<Record2001<TPrevious>>
+       var child = new Record5000<Record2001<TPrevious>>(this)
        {
            Rettelse_tidl_periode = rettelser_tidl_periode ? 'R' : ' ',
            IndberetningsID = indberetningId,

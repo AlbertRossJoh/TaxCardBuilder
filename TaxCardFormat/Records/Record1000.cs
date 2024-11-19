@@ -2,6 +2,7 @@ using FileHelpers;
 using TaxCardFormat.CustomConverters;
 using TaxCardFormat.DataTypes;
 using TaxCardFormat.RecordInterfaces;
+using TaxCardFormat.RecordInterfaces.IRecord;
 
 namespace TaxCardFormat.Records;
 

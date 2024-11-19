@@ -5,7 +5,7 @@ using TaxCardTests.Helpers;
 
 namespace TaxCardTests
 {
-    public class Record8001Tests : RecordTestBase<Record8001>
+    public class Record8001Tests : RecordTestBase<Record8001<object>>
     {
         [Fact]
         public void AddRecord8001_ShouldAddCorrectlyFormattedRecord()
@@ -24,29 +24,29 @@ namespace TaxCardTests
             var recordString = Sut.BuildString();
 
             // Assert
-            var expectedLbNr = Padding.ZeroPad("1", _fieldRanges.FieldNameToRange[nameof(Record8001.Lb_nr)]);
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001.Lb_nr)], expectedLbNr, recordString);
+            var expectedLbNr = Padding.ZeroPad("1", _fieldRanges.FieldNameToRange[nameof(Record8001<object>.Lb_nr)]);
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001<object>.Lb_nr)], expectedLbNr, recordString);
 
-            var expectedRecNr = Padding.ZeroPad("8001", _fieldRanges.FieldNameToRange[nameof(Record8001.Rec_nr)]);
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001.Rec_nr)], expectedRecNr, recordString);
+            var expectedRecNr = Padding.ZeroPad("8001", _fieldRanges.FieldNameToRange[nameof(Record8001<object>.Rec_nr)]);
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001<object>.Rec_nr)], expectedRecNr, recordString);
 
             var expectedFoedselsdato = foedselsdato.ToString("yyyyMMdd");
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001.PersonFoedselsdato)], expectedFoedselsdato, recordString);
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001<object>.PersonFoedselsdato)], expectedFoedselsdato, recordString);
 
             var expectedKoen = ((int)koen).ToString();
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001.PersonKoen)], expectedKoen, recordString);
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001<object>.PersonKoen)], expectedKoen, recordString);
 
             var expectedLand = landekoder.ToString("G");
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001.PersonLand)], expectedLand, recordString);
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001<object>.PersonLand)], expectedLand, recordString);
 
             var expectedNavn = navn;
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001.PersonNavn)], Padding.WhiteSpacePad(expectedNavn, _fieldRanges.FieldNameToRange[nameof(Record8001.PersonNavn)]),recordString);
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001<object>.PersonNavn)], Padding.WhiteSpacePad(expectedNavn, _fieldRanges.FieldNameToRange[nameof(Record8001<object>.PersonNavn)]),recordString);
 
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001.PersonGadeAdresse)], Padding.WhiteSpacePad(adresse, _fieldRanges.FieldNameToRange[nameof(Record8001.PersonGadeAdresse)]), recordString);
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001<object>.PersonGadeAdresse)], Padding.WhiteSpacePad(adresse, _fieldRanges.FieldNameToRange[nameof(Record8001<object>.PersonGadeAdresse)]), recordString);
 
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001.PersonPostnummer)], Padding.WhiteSpacePad(postnummer, _fieldRanges.FieldNameToRange[nameof(Record8001.PersonPostnummer)], false), recordString);
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001<object>.PersonPostnummer)], Padding.WhiteSpacePad(postnummer, _fieldRanges.FieldNameToRange[nameof(Record8001<object>.PersonPostnummer)], false), recordString);
 
-            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001.PersonPostby)], Padding.WhiteSpacePad(postby, _fieldRanges.FieldNameToRange[nameof(Record8001.PersonPostby)]), recordString);
+            HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record8001<object>.PersonPostby)], Padding.WhiteSpacePad(postby, _fieldRanges.FieldNameToRange[nameof(Record8001<object>.PersonPostby)]), recordString);
         }
     }
 }

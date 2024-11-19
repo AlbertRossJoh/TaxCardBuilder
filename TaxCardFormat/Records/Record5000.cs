@@ -1,11 +1,14 @@
 using FileHelpers;
 using TaxCardFormat.CustomConverters;
 using TaxCardFormat.DataTypes;
+using TaxCardFormat.Enums;
+using TaxCardFormat.RecordInterfaces;
+using TaxCardFormat.RecordInterfaces.IRecord;
 
 namespace TaxCardFormat.Records;
 
 [FixedLengthRecord]
-public class Record5000<TPrevious> : TaxRecord
+public class Record5000<TPrevious> : TaxRecord, IRecord5000<TPrevious>
 {
     [FieldHidden] private TPrevious? _previous;
         
@@ -54,4 +57,35 @@ public class Record5000<TPrevious> : TaxRecord
     [FieldFixedLength(2)]
     [FieldAlign(AlignMode.Right, '0')]
     public int? Indkomsttype;
+    
+    public TPrevious GoBack() => _previous ?? throw new NullReferenceException("Previous record is null remember to set the previous record in the constructor");
+
+    public IRecord6000<IRecord5000<TPrevious>> AddRecord6000(
+        string cpr, 
+        string cvr_se, 
+        string medarbejderNr, 
+        string tin, 
+        Landekoder tin_landekode,
+        IndkomstArt indkomstArt, 
+        string? produktionEnhedsnummer = null)
+    {
+        if (cpr.Length != 10)
+            throw new ArgumentException("Cpr length must be 10");
+        if (cvr_se.Length != 8)
+            throw new ArgumentException("Cvr se length must be 8");
+        var child = new Record6000<IRecord5000<TPrevious>>(this)
+        {
+            CPR = cpr,
+            CVR_SE = cvr_se,
+            MedarbejderNr = medarbejderNr,
+            TIN = tin,
+            TIN_landekode = tin_landekode.ToString("G"),
+            Indtaegtsart = (int)indkomstArt,
+            ProduktionEndhedsNummer = produktionEnhedsnummer,
+            Lb_nr = Lb_nr++,
+            Rec_nr = 6000,
+        };
+        Children.Add(child);
+        return child;
+    }
 }

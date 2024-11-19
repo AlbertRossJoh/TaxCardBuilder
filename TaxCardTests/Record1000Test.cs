@@ -67,14 +67,17 @@ public class Record1000Test : RecordTestBase<Record1000>
         var system = SystemUsage.Eindkomst;
         var sut = new TaxFileBuilder2();
         sut.AddRecord1000(
-            seNr,
-            true,
-            system,
-            indberetterType,
-            hovedIndberetningsId: id
-        ).AddRecord2001("12345678", false)
-        .AddRecord2101(DateTime.Now, "1234567890", SkattekortType.Bikort, DateTime.Now)
-        .AddRecord2111(new N0100(N0100Enum.IkkeTidsbegraenset));
+                seNr,
+                true,
+                system,
+                indberetterType,
+                hovedIndberetningsId: id
+            ).AddRecord2001("12345678", false)
+            .AddRecord2101(DateTime.Now, "1234567890", SkattekortType.Bikort, DateTime.Now)
+            .AddRecord2111(new N0100(N0100Enum.IkkeTidsbegraenset))
+            .GoBack()
+            .AddRecord2101(DateTime.Now, "1234567890", SkattekortType.Bikort, DateTime.Now);
+            //.AddRecord5000(false, DateTime.Now, DateTime.Now, true, IndkomstType.Aindkomst);
         sut.Build_RecordList();
         var res = sut.BuildString();
         

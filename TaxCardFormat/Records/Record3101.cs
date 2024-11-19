@@ -3,6 +3,7 @@ using TaxCardFormat.CustomConverters;
 using TaxCardFormat.DataTypes;
 using TaxCardFormat.Enums;
 using TaxCardFormat.RecordInterfaces;
+using TaxCardFormat.RecordInterfaces.IRecord;
 
 namespace TaxCardFormat.Records;
 
@@ -55,9 +56,9 @@ public class Record3101<TPrevious> : TaxRecord, IRecord3101<TPrevious>
     [FieldFixedLength(1)]
     public required char Sign;
     
-    public TPrevious? GoBack() => _previous;
+    public TPrevious GoBack() => _previous ?? throw new NullReferenceException("Previous record is null remember to set the previous record in the constructor");
     
-    public Record4101<Record3101<TPrevious>> AddRecord4101(
+    public IRecord4101<IRecord3101<TPrevious>> AddRecord4101(
         bool tilbagefoersel,
         ShortId indberetningId = default,
         ShortId? referenceId = null,
@@ -67,7 +68,7 @@ public class Record3101<TPrevious> : TaxRecord, IRecord3101<TPrevious>
         if (tilbagefoersel && cpr == null)
             throw new ArgumentException("Man kan ikke angive en tilbagefoersel uden cprnummer");
     
-        var child = new Record4101<Record3101<TPrevious>>(this)
+        var child = new Record4101<IRecord3101<TPrevious>>(this)
         {
             Tilbagefoersel = tilbagefoersel ? 'J' : 'N',
             indberetningsId = indberetningId,
@@ -81,7 +82,7 @@ public class Record3101<TPrevious> : TaxRecord, IRecord3101<TPrevious>
         return child;
     }
     
-    public Record5000<Record3101<TPrevious>> AddRecord5000(
+    public IRecord5000<IRecord3101<TPrevious>> AddRecord5000(
         bool rettelser_tidl_periode,
         DateTime loenperiodeStart,
         DateTime loenPeriodeSlut,
@@ -92,7 +93,7 @@ public class Record3101<TPrevious> : TaxRecord, IRecord3101<TPrevious>
         GroenlandKommune? groenlandKommune = null
     )
     {
-        var child = new Record5000<Record3101<TPrevious>>
+        var child = new Record5000<IRecord3101<TPrevious>>(this)
         {
             Rettelse_tidl_periode = rettelser_tidl_periode ? 'R' : ' ',
             IndberetningsID = indberetningId,

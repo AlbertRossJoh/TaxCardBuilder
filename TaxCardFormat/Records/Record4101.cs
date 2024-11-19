@@ -2,11 +2,13 @@ using FileHelpers;
 using TaxCardFormat.CustomConverters;
 using TaxCardFormat.DataTypes;
 using TaxCardFormat.Enums;
+using TaxCardFormat.RecordInterfaces;
+using TaxCardFormat.RecordInterfaces.IRecord;
 
 namespace TaxCardFormat.Records;
 
 [FixedLengthRecord]
-public class Record4101<TPrevious> : TaxRecord
+public class Record4101<TPrevious> : TaxRecord, IRecord4101<TPrevious>
 {
     [FieldHidden] private TPrevious? _previous;
     
@@ -34,9 +36,9 @@ public class Record4101<TPrevious> : TaxRecord
     [FieldFixedLength(10)]
     public string? cpr;
     
-    public TPrevious? GoBack() => _previous;
+    public TPrevious GoBack() => _previous ?? throw new NullReferenceException("Previous record is null remember to set the previous record in the constructor");
     
-    public Record4101<TPrevious> AddRecord4101(
+    public IRecord4101<TPrevious> AddRecord4101(
         bool tilbagefoersel,
         ShortId indberetningId = default,
         ShortId? referenceId = null,
@@ -60,7 +62,7 @@ public class Record4101<TPrevious> : TaxRecord
         return this;
     }
     
-   public Record5000<Record4101<TPrevious>> AddRecord5000(
+   public IRecord5000<IRecord4101<TPrevious>> AddRecord5000(
        bool rettelser_tidl_periode,
        DateTime loenperiodeStart,
        DateTime loenPeriodeSlut,
@@ -71,7 +73,7 @@ public class Record4101<TPrevious> : TaxRecord
        GroenlandKommune? groenlandKommune = null
    )
    {
-       var child = new Record5000<Record4101<TPrevious>>
+       var child = new Record5000<IRecord4101<TPrevious>>(this)
        {
            Rettelse_tidl_periode = rettelser_tidl_periode ? 'R' : ' ',
            IndberetningsID = indberetningId,
