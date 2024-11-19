@@ -78,4 +78,3 @@ public class Record1000 : TaxRecord, IRecord1000
         return child;
     }
 }
-

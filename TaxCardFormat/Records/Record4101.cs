@@ -90,4 +90,3 @@ public class Record4101<TPrevious> : TaxRecord, IRecord4101<TPrevious>
        return child;
    }
 }
-

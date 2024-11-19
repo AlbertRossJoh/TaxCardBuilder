@@ -207,4 +207,3 @@ public class Record2101<TPrevious> : TaxRecord, IRecord2101<TPrevious>
        return child;
    }
 }
-

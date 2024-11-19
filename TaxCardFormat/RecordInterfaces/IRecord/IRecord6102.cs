@@ -12,3 +12,4 @@ public interface IRecord6102<TPrevious> :
     IRecord6102Addable<IRecord6102<TPrevious>>,
     IRecord6202Addable<IRecord6102<TPrevious>>,
     IRecord6111Addable<IRecord6102<TPrevious>>;
+    

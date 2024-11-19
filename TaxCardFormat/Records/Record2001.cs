@@ -110,4 +110,3 @@ public class Record2001<TPrevious> : TaxRecord, IRecord2001<TPrevious>
        return child;
    }
 }
-
