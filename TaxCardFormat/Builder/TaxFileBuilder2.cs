@@ -97,4 +97,5 @@ public class TaxFileBuilder2
     {
         using var tw = File.CreateText(filePath);
         Engine.WriteStream(tw, Records);
-    }}
+    }
+}

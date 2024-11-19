@@ -17,4 +17,3 @@ public class ShortIdConverter : ConverterBase
         return ((ShortId)from).Id;
     }
 }
-
