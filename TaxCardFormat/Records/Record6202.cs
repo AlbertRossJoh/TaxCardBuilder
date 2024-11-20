@@ -80,10 +80,4 @@ public class Record6202<TPrevious> : Record6XXXBase<IRecord6202<TPrevious>, TPre
     {
         return base.AddRecord6111(indholdsType, antalEnheder, beloeb, this);
     }
-
-    public IRecord6202<TPrevious> AddRecord8001(DateTime foedselsdato, Koen koen, Landekoder landekoder, string navn, string adresse,
-        string postnummer, string postby)
-    {
-        return base.AddRecord8001(foedselsdato, koen, landekoder, navn, adresse, postnummer, postby, this);
-    }
 }
