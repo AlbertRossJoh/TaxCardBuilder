@@ -11,7 +11,7 @@ public class Record6002Test: RecordTestBase<Record6002<object>>
     public void BuildTaxCard6002_ExpectDataPresent()
     {
         // Arrange
-        var indkomstFelt = IndkomstFelt6002.Pinkode;
+        var indkomstFelt = Vaerdisaet6002.Pinkode;
         var kode = "12345678";
 
         // Act

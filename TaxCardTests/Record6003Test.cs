@@ -11,7 +11,7 @@ public class Record6003Test : RecordTestBase<Record6003<object>>
     public void BuildTaxCard6003_ExpectDataPresent()
     {
         // Arrange
-        var indkomstFelt = IndkomstFelt600X.Bruttoferiepenge;
+        var indkomstFelt = Vaerdisaet6003.GenbrugAfTIN;
             
         // Act
         Sut.AddRecord6003(indkomstFelt);

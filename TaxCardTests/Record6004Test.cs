@@ -11,7 +11,7 @@ public class Record6004Test : RecordTestBase<Record6004<object>>
     public void BuildTaxCard6004_ExpectDataPresent()
     {
         // Arrange
-        var feltNummer = IndkomstFelt600X.LoenmodtagersPensionsandel;
+        var feltNummer = Vaerdisaet6004.YRYdelsesperiode;
         const string fritekstfelt = "Some free text that fits in the field";
 
         // Act

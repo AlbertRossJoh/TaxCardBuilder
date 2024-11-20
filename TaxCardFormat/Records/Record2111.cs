@@ -1,5 +1,6 @@
 using FileHelpers;
 using TaxCardFormat.DataTypes;
+using TaxCardFormat.DataTypes.IPIndholdstype;
 using TaxCardFormat.Enums;
 using TaxCardFormat.RecordInterfaces;
 using TaxCardFormat.RecordInterfaces.IRecord;
@@ -114,5 +115,19 @@ public class Record2111<TPrevious> : TaxRecord, IRecord2111<TPrevious>
         };
         Children.Add(child);
         return child;
+    }
+
+    public IRecord2111<TPrevious> AddRecord2111(IPIndholdsType ipIndholdsType, DateTime? ikraeftTraedelsesDato = null)
+    {
+        var child = new Record2111<TPrevious>(_previous)
+        {
+            Lb_nr = Lb_nr++,
+            Rec_nr = 2111,
+            ikraeftraedelsesDato = ikraeftTraedelsesDato,
+            indholdstype = ipIndholdsType.Type,
+            medarbejderKode = ipIndholdsType.Indhold,
+        };
+        Children.Add(child);
+        return this;
     }
 }

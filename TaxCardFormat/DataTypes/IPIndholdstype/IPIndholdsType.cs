@@ -1,7 +1,7 @@
 namespace TaxCardFormat.DataTypes.IPIndholdstype;
 
-public record IPIndholdsType(int kode, int? indhold)
+public record IPIndholdsType(int type, int? indhold)
 {
     public int? Indhold = indhold;
-    public int Kode = kode;
+    public int Type = type;
 }

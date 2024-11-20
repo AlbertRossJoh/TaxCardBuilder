@@ -74,7 +74,7 @@ public class Record1000Test : RecordTestBase<Record1000>
                 hovedIndberetningsId: id
             ).AddRecord2001("12345678", false)
             .AddRecord2101(DateTime.Now, "1234567890", SkattekortType.Bikort, DateTime.Now)
-            .AddRecord2111(new N0100(N0100Enum.IkkeTidsbegraenset))
+            .AddRecord2111(new IPIndholdsType(0, 1))
             .GoBack()
             .AddRecord2101(DateTime.Now, "1234567890", SkattekortType.Bikort, DateTime.Now);
             //.AddRecord5000(false, DateTime.Now, DateTime.Now, true, IndkomstType.Aindkomst);

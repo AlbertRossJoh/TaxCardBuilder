@@ -5,5 +5,5 @@ namespace TaxCardFormat.RecordInterfaces.AddableRecords;
 
 public interface IRecord6001Addable<TCurrent>
 {
-    public IRecord6001<TCurrent> AddRecord6001(decimal beloeb, FeltNummer feltNummer);
+    public IRecord6001<TCurrent> AddRecord6001(decimal beloeb, Vaerdisaet6001 feltNummer);
 }

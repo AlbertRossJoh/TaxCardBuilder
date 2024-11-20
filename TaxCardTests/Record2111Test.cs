@@ -12,7 +12,7 @@ public class Record2111Test : RecordTestBase<Record2111<object>>
     {
         // Arrange
         var date = DateTime.Now;
-        Sut.AddRecord2111(new N0100(N0100Enum.IkkeTidsbegraenset), date);
+        Sut.AddRecord2111(new IP0100(N0100Enum.IkkeTidsbegraenset), date);
 
         // Act
         var res = Sut.BuildString();
@@ -35,7 +35,7 @@ public class Record2111Test : RecordTestBase<Record2111<object>>
     public void BuildTaxCard2111_ExpectDataPresent_NoDate()
     {
         // Arrange
-        Sut.AddRecord2111(new N0100(N0100Enum.IkkeTidsbegraenset));
+        Sut.AddRecord2111(new IP0100(N0100Enum.IkkeTidsbegraenset));
 
         // Act
         var res = Sut.BuildString();

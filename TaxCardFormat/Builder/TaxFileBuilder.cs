@@ -134,7 +134,7 @@ public class TaxFileBuilder
                 Lb_nr = Lb_nr++,
                 Rec_nr = 2111,
                 ikraeftraedelsesDato = ikraeftTraedelsesDato,
-                indholdstype = ipIndholdsType.Kode,
+                indholdstype = ipIndholdsType.Type,
                 medarbejderKode = ipIndholdsType.Indhold,
             }
         );
@@ -274,7 +274,7 @@ public class TaxFileBuilder
         );
     }
 
-    public void AddRecord6002(IndkomstFelt6002 indkomstFelt, string kodeFelt)
+    public void AddRecord6002(Vaerdisaet6002 indkomstFelt, string kodeFelt)
     {
         Records.Add(
             new Record6002<object>
@@ -287,7 +287,7 @@ public class TaxFileBuilder
         );
     }
 
-    public void AddRecord6003(IndkomstFelt600X indkomstFelt)
+    public void AddRecord6003(Vaerdisaet6003 indkomstFelt)
     {
         Records.Add(
             new Record6003<object>
@@ -300,7 +300,7 @@ public class TaxFileBuilder
         );
     }
 
-    public void AddRecord6004(IndkomstFelt600X indkomstFelt, string fritekstFelt)
+    public void AddRecord6004(Vaerdisaet6004 indkomstFelt, string fritekstFelt)
     {
         if (fritekstFelt.Length > 58)
             throw new ArgumentException("Fritekstfeltet maa maks vaere 58 bogstaver langt");
@@ -393,7 +393,7 @@ public class TaxFileBuilder
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 6111,
-                IndholdsType = indholdsType.Kode,
+                IndholdsType = indholdsType.Type,
                 AntalEnheder = antalEnheder,
                 FortegnAntalEnheder = Fortegn(antalEnheder),
                 Beloeb = amnt,

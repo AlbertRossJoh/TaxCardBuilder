@@ -1,4 +1,6 @@
 using FileHelpers;
+using TaxCardFormat.DataTypes.IPIndholdstype;
+using TaxCardFormat.Enums;
 using TaxCardFormat.RecordInterfaces.IRecord;
 
 namespace TaxCardFormat.Records;
@@ -39,4 +41,19 @@ public class Record8001<TPrevious> : TaxRecord, IRecord8001<TPrevious>
     [FieldFixedLength(35)]
     [FieldAlign(AlignMode.Right, ' ')]
     public required string PersonPostby;
+
+    public TPrevious GoBack() => _previous ?? throw new NullReferenceException("Previous record is null remember to set the previous record in the constructor");
+    public IRecord2111<TPrevious> AddRecord2111(IPIndholdsType ipIndholdsType, DateTime? ikraeftTraedelsesDato = null)
+    {
+        var child = new Record2111<TPrevious>(_previous)
+        {
+            Lb_nr = Lb_nr++,
+            Rec_nr = 2111,
+            ikraeftraedelsesDato = ikraeftTraedelsesDato,
+            indholdstype = ipIndholdsType.Type,
+            medarbejderKode = ipIndholdsType.Indhold,
+        };
+        Children.Add(child);
+        return child;
+    }
 }

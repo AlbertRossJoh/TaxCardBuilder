@@ -6,10 +6,10 @@ using TaxCardFormat.Utilities;
 
 namespace TaxCardFormat.Records;
 
-public abstract class Record6XXXBase<TBase, TPrevious> : TaxRecord
+public abstract class Record6XXXBase<TPrevious> : TaxRecord
 {
     
-    [FieldHidden] private TPrevious? _previous;
+    [FieldHidden] protected TPrevious? _previous;
 
     public Record6XXXBase(TPrevious? previousRecord)
     {
@@ -18,13 +18,12 @@ public abstract class Record6XXXBase<TBase, TPrevious> : TaxRecord
     
     public TPrevious GoBack() => _previous ?? throw new NullReferenceException("Previous record is null remember to set the previous record in the constructor");
     
-    protected IRecord6001<TBase> AddRecord6001(
+    public IRecord6001<TPrevious> AddRecord6001(
         decimal beloeb, 
-        FeltNummer feltNummer,
-        TBase parent)
+        Vaerdisaet6001 feltNummer)
     {
         var (amnt, decimals) = NumberFormattingUtils.ExtractDecimalParts(beloeb);
-        var child = new Record6001<TBase>(parent)
+        var child = new Record6001<TPrevious>(_previous)
         {
             Lb_nr = Lb_nr++,
             Rec_nr = 6001,
@@ -37,9 +36,9 @@ public abstract class Record6XXXBase<TBase, TPrevious> : TaxRecord
         return child;
     }
     
-    protected IRecord6002<TBase> AddRecord6002(IndkomstFelt6002 indkomstFelt, string kodeFelt, TBase parent)
+    public IRecord6002<TPrevious> AddRecord6002(Vaerdisaet6002 indkomstFelt, string kodeFelt)
     {
-        var child = new Record6002<TBase>(parent)
+        var child = new Record6002<TPrevious>(_previous)
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 6002,
@@ -50,9 +49,9 @@ public abstract class Record6XXXBase<TBase, TPrevious> : TaxRecord
         return child;
     }
     
-    public IRecord6003<TBase> AddRecord6003(IndkomstFelt600X indkomstFelt, TBase parent)
+    public IRecord6003<TPrevious> AddRecord6003(Vaerdisaet6003 indkomstFelt)
     {
-        var child = new Record6003<TBase>(parent)
+        var child = new Record6003<TPrevious>(_previous)
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 6003,
@@ -63,9 +62,9 @@ public abstract class Record6XXXBase<TBase, TPrevious> : TaxRecord
         return child;
     }
     
-    public IRecord6004<TBase> AddRecord6004(IndkomstFelt600X indkomstFelt, string fritekstFelt, TBase parent)
+    public IRecord6004<TPrevious> AddRecord6004(Vaerdisaet6004 indkomstFelt, string fritekstFelt)
     {
-        var child = new Record6004<TBase>(parent)
+        var child = new Record6004<TPrevious>(_previous)
         {
             Lb_nr = Lb_nr++,
             Rec_nr = 6004,
@@ -76,10 +75,10 @@ public abstract class Record6XXXBase<TBase, TPrevious> : TaxRecord
         return child;
     }
     
-    public IRecord6005<TBase> AddRecord6005(AntalsFelt6005 antalsFelt6005, decimal antal, TBase parent)
+    public IRecord6005<TPrevious> AddRecord6005(AntalsFelt6005 antalsFelt6005, decimal antal)
     {
         var (amnt, decimals) = NumberFormattingUtils.ExtractDecimalParts(antal);
-        var child = new Record6005<TBase>(parent)
+        var child = new Record6005<TPrevious>(_previous)
         {
             Lb_nr = Lb_nr++,
             Rec_nr = 6005,
@@ -92,12 +91,12 @@ public abstract class Record6XXXBase<TBase, TPrevious> : TaxRecord
         return child;
     }
     
-    public IRecord6102<TBase> AddRecord6102(decimal beloeb, decimal feriedage, int ferieaar, DateTime  fratraedelsesDato, TBase parent)
+    public IRecord6102<TPrevious> AddRecord6102(decimal beloeb, decimal feriedage, int ferieaar, DateTime  fratraedelsesDato)
     {
         var (amnt, decimals) = NumberFormattingUtils.ExtractDecimalParts(beloeb);
         var (amntFeriedage, decimalsFeriedage) = NumberFormattingUtils.ExtractDecimalParts(feriedage);
                 
-        var child = new Record6102<TBase>(parent)
+        var child = new Record6102<TPrevious>(_previous)
         {
             Lb_nr = Lb_nr++,
             Rec_nr = 6102,
@@ -114,12 +113,12 @@ public abstract class Record6XXXBase<TBase, TPrevious> : TaxRecord
         return child;
     }
     
-    public IRecord6202<TBase> AddRecord6202(decimal beloeb, decimal feriedage, int ferieaar, DateTime  fratraedelsesDato, TBase parent)
+    public IRecord6202<TPrevious> AddRecord6202(decimal beloeb, decimal feriedage, int ferieaar, DateTime  fratraedelsesDato)
     {
         var (amnt, decimals) = NumberFormattingUtils.ExtractDecimalParts(beloeb);
         var (amntFeriedage, decimalsFeriedage) = NumberFormattingUtils.ExtractDecimalParts(feriedage);
 
-        var child = new Record6202<TBase>(parent)
+        var child = new Record6202<TPrevious>(_previous)
         {
             Lb_nr = Lb_nr++,
             Rec_nr = 6202,
@@ -136,16 +135,16 @@ public abstract class Record6XXXBase<TBase, TPrevious> : TaxRecord
         return child;
     }
     
-    public IRecord6111<TBase> AddRecord6111(IPIndholdsType indholdsType, int antalEnheder, decimal beloeb, TBase parent)
+    public IRecord6111<TPrevious> AddRecord6111(IPIndholdsType indholdsType, int antalEnheder, decimal beloeb)
     {
         
         var (amnt, decimals) = NumberFormattingUtils.ExtractDecimalParts(beloeb);
-        var child = new Record6111<TBase>(parent)
+        var child = new Record6111<TPrevious>(_previous)
         {
             Lb_nr = Lb_nr++,
             Rec_nr = 6111,
-            IndholdsType = indholdsType.Kode,
-            AntalEnheder = antalEnheder,
+            IndholdsType = indholdsType.Type,
+            AntalEnheder = indholdsType.Indhold ?? throw new ArgumentException("Forventede "),
             FortegnAntalEnheder = NumberFormattingUtils.Fortegn(antalEnheder),
             Beloeb = amnt,
             BeloebDecimal = decimals,
@@ -155,22 +154,5 @@ public abstract class Record6XXXBase<TBase, TPrevious> : TaxRecord
         return child;
     }
     
-    public TBase AddRecord8001(DateTime foedselsdato, Koen koen, Landekoder landekoder, string  navn, string adresse,
-        string postnummer, string postby, TBase parent)
-    {
-        var child = new Record8001<TBase>(parent)
-        {
-            Lb_nr = Lb_nr++,
-            Rec_nr = 8001,
-            PersonFoedselsdato = foedselsdato,
-            PersonKoen = (int)koen,
-            PersonLand = landekoder.ToString("G"),
-            PersonNavn = navn,
-            PersonGadeAdresse = adresse,
-            PersonPostnummer = postnummer,
-            PersonPostby = postby,
-        };
-        Children.Add(child);
-        return parent;
-   }
+    
 }

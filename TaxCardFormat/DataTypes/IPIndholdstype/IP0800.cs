@@ -1,6 +1,6 @@
 namespace TaxCardFormat.DataTypes.IPIndholdstype;
 
-public record N0800(N0800Enum? N0800Enum = null):IPIndholdsType(800, (int?)N0800Enum);
+public record IP0800(N0800Enum? N0800Enum = null):IPIndholdsType(800, (int?)N0800Enum);
 
 public enum N0800Enum
 {

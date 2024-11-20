@@ -90,7 +90,7 @@ public class Record2101<TPrevious> : TaxRecord, IRecord2101<TPrevious>
             Lb_nr = Lb_nr++,
             Rec_nr = 2111,
             ikraeftraedelsesDato = ikraeftTraedelsesDato,
-            indholdstype = ipIndholdsType.Kode,
+            indholdstype = ipIndholdsType.Type,
             medarbejderKode = ipIndholdsType.Indhold,
         };
         Children.Add(child);
