@@ -18,21 +18,19 @@ public static class TaxRecordExtensions
             var curr = s.Pop();
             a(curr, i++);
             acc.Add(curr);
-            curr.ChildrenList.ForEach(s.Push);
+            for(var j = curr.ChildrenList.Count - 1; j >= 0; j--) s.Push(curr.ChildrenList[j]);
         }
         return acc;
     }
 
-    public static void Flatten(
+    public static void RecursiveFlatten(
         this TaxRecord record,
-        List<TaxRecord> acc, 
-        Action<TaxRecord, int>? action = null)
+        List<TaxRecord> acc)
     {
-        var a = action ?? ((_, _) => {});
         acc.Add(record);
         foreach (var child in record.ChildrenList)
         {
-            child.Flatten(acc, action);
+            child.RecursiveFlatten(acc);
         }
     }
     

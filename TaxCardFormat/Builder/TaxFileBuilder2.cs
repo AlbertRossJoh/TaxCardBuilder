@@ -65,7 +65,7 @@ public class TaxFileBuilder2
         if (FirstRecord == null) 
             throw new NullReferenceException("First record is null please call AddRecord1000 before building");
         //Records = FirstRecord.ChildrenList.SelectMany(i => i.ChildrenList).ToList();
-        FirstRecord.Flatten(Records, (record, i) => record.Lb_nr = i+1);
+        Records = FirstRecord.Flatten((record, i) => record.Lb_nr = i + 1);
         var allTypes = Records.Select(s => s.GetType()).ToHashSet().ToArray();
         Engine = new MultiRecordEngine(allTypes);
     }
