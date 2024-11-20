@@ -96,7 +96,7 @@ public class Record2101<TPrevious> : TaxRecordBase<TPrevious>, IRecord2101<TPrev
         DateTime periodeIndberetStart,
         DateTime periodeIndberetSlut,
         FeltNummer feltNummer,
-        ShortId indberetningsId = default,
+        ShortId indberetningsId,
         ShortId? referenceId = null
     )
     {
