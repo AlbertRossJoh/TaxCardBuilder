@@ -73,4 +73,27 @@ public static class TaxRecordExtensions
 
         return default;
     }
+    
+    public static T? GoBackUntil<T>(this IWalkBack<object> record, Func<TaxRecord, bool> action) where T: TaxRecord
+    {
+        while (action((record as TaxRecord)!))
+        {
+            var curr = record.GoBack();
+            try
+            {
+                record = (IWalkBack<object>)curr;
+            }
+            catch (InvalidCastException)
+            {
+                var isEndRecord = curr is Record1000 or IRecord1000;
+                var isGenericTypeEndrecord = (typeof(T) == typeof(Record1000) || typeof(T) == typeof(IRecord1000));
+                if (isEndRecord && isGenericTypeEndrecord) return (T)curr;
+                return default;
+            }
+        }
+
+        if (record is T res) return res;
+
+        return default;
+    }
 }
