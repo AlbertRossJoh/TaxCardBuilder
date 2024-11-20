@@ -1,5 +1,6 @@
 using TaxCardFormat.Builder;
 using TaxCardFormat.DataTypes.IPIndholdstype;
+using TaxCardFormat.DataTypes.Loenoplysninger;
 using TaxCardFormat.Enums;
 using Xunit;
 
@@ -26,7 +27,6 @@ public class BuildFileTest
             .AddRecord6004(Vaerdisaet6004.YderligereTekstoplysninger, "hej med dig")
             .AddRecord6005(AntalsFelt6005.AntalLoentimer, 2)
             .AddRecord6102(2000, 2.2m, 2024, DateTime.Now)
-            .AddRecord6111(new IP0100(N0100Enum.Tidsbegraenset), 2, 2)
-            .AddRecord6111(new IP0610(2), 2, 2);
+            .AddRecord6111(new IL0010(0, 1000));
     }
 }

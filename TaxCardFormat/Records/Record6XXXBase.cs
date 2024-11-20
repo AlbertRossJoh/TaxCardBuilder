@@ -1,5 +1,6 @@
 using FileHelpers;
 using TaxCardFormat.DataTypes.IPIndholdstype;
+using TaxCardFormat.DataTypes.Loenoplysninger;
 using TaxCardFormat.Enums;
 using TaxCardFormat.RecordInterfaces.IRecord;
 using TaxCardFormat.Utilities;
@@ -135,20 +136,20 @@ public abstract class Record6XXXBase<TPrevious> : TaxRecord
         return child;
     }
     
-    public IRecord6111<TPrevious> AddRecord6111(IPIndholdsType indholdsType, int antalEnheder, decimal beloeb)
+    public IRecord6111<TPrevious> AddRecord6111(Loenoplysninger loenoplysninger)
     {
         
-        var (amnt, decimals) = NumberFormattingUtils.ExtractDecimalParts(beloeb);
+        var (amnt, decimals) = NumberFormattingUtils.ExtractDecimalParts(loenoplysninger.Beloeb);
         var child = new Record6111<TPrevious>(_previous)
         {
             Lb_nr = Lb_nr++,
             Rec_nr = 6111,
-            IndholdsType = indholdsType.Type,
-            AntalEnheder = indholdsType.Indhold ?? throw new ArgumentException("Forventede "),
-            FortegnAntalEnheder = NumberFormattingUtils.Fortegn(antalEnheder),
+            IndholdsType = loenoplysninger.Type,
+            AntalEnheder = loenoplysninger.Enheder,
+            FortegnAntalEnheder = NumberFormattingUtils.Fortegn(loenoplysninger.Enheder),
             Beloeb = amnt,
             BeloebDecimal = decimals,
-            FortegnBeloeb = NumberFormattingUtils.Fortegn(beloeb)
+            FortegnBeloeb = NumberFormattingUtils.Fortegn(loenoplysninger.Beloeb)
         };
         Children.Add(child);
         return child;
