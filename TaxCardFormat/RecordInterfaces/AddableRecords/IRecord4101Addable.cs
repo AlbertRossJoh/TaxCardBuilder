@@ -7,8 +7,8 @@ public interface IRecord4101Addable<TCurrent>
 {
     public IRecord4101<TCurrent> AddRecord4101(
         bool tilbagefoersel,
-        ShortId indberetningId = default,
-        ShortId? referenceId = null,
+        ShortId referenceId,
+        ShortId? indberetningId = null,
         string? cpr = null
     );
 }

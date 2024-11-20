@@ -20,7 +20,7 @@ public class Record4101<TPrevious> : TaxRecordBase<TPrevious>, IRecord4101<TPrev
 
     [FieldFixedLength(16)]
     [FieldConverter(typeof(ShortIdConverter))]
-    public ShortId? referenceId;
+    public ShortId referenceId;
 
     [FieldFixedLength(1)]
     public string filler1 = "";
@@ -45,7 +45,7 @@ public class Record4101<TPrevious> : TaxRecordBase<TPrevious>, IRecord4101<TPrev
         {
             Tilbagefoersel = tilbagefoersel ? 'J' : 'N',
             indberetningsId = indberetningId,
-            referenceId = referenceId,
+            referenceId = referenceId ?? new ShortId(),
             cpr = cpr,
             Lb_nr = Lb_nr++,
             Rec_nr = 4101
@@ -61,8 +61,8 @@ public class Record4101<TPrevious> : TaxRecordBase<TPrevious>, IRecord4101<TPrev
        DateTime loenPeriodeSlut,
        bool erLoenBagudBetalt,
        IndkomstType indkomstType,
-       ShortId indberetningId = default,
-       ShortId referenceId = default,
+       ShortId indberetningId,
+       ShortId? referenceId = default,
        GroenlandKommune? groenlandKommune = null
    )
    {

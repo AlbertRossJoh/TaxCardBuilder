@@ -179,8 +179,8 @@ public class TaxFileBuilder
 
     public void AddRecord4101(
         bool tilbagefoerselSe,
+        ShortId referenceId,
         ShortId indberetningId = default,
-        ShortId? referenceId = null,
         string? cpr = null
     )
     {

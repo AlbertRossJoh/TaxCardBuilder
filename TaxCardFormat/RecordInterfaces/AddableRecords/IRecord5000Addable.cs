@@ -12,8 +12,8 @@ public interface IRecord5000Addable<TCurrent>
         DateTime loenPeriodeSlut,
         bool erLoenBagudBetalt,
         IndkomstType indkomstType,
-        ShortId indberetningId = default,
-        ShortId referenceId = default,
+        ShortId indberetningId,
+        ShortId? referenceId = null,
         GroenlandKommune? groenlandKommune = null
     );
 

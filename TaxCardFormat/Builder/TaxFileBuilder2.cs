@@ -26,7 +26,7 @@ public class TaxFileBuilder2
         DateTime? datoSendt = null,
         DateTime? klokSendt = null,
         string? edbSystem = null,
-        ShortId hovedIndberetningsId = default
+        ShortId? hovedIndberetningsId = null
     )
     {
         FirstRecord = new Record1000
@@ -39,7 +39,7 @@ public class TaxFileBuilder2
             Indberetter_CVR_nummer = cvrNummer ?? "",
             IndberetterType = (int)indberetterType,
             Edb_System = edbSystem,
-            HovedindberetingsID = hovedIndberetningsId,
+            HovedindberetingsID = hovedIndberetningsId ?? new ShortId(),
             IsTest = isTest ? 'T' : 'P',
             EIndkomst_Letloen = GetSystem(systemUsage)
         };
@@ -65,7 +65,7 @@ public class TaxFileBuilder2
         if (FirstRecord == null) 
             throw new NullReferenceException("First record is null please call AddRecord1000 before building");
         //Records = FirstRecord.ChildrenList.SelectMany(i => i.ChildrenList).ToList();
-        Records = FirstRecord.Flatten((record, i) => record.Lb_nr = i+1);
+        FirstRecord.Flatten(Records, (record, i) => record.Lb_nr = i+1);
         var allTypes = Records.Select(s => s.GetType()).ToHashSet().ToArray();
         Engine = new MultiRecordEngine(allTypes);
     }

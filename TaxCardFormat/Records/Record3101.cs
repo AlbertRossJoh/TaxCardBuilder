@@ -52,8 +52,8 @@ public class Record3101<TPrevious> : TaxRecordBase<TPrevious>, IRecord3101<TPrev
     
     public IRecord4101<IRecord3101<TPrevious>> AddRecord4101(
         bool tilbagefoersel,
-        ShortId indberetningId = default,
-        ShortId? referenceId = null,
+        ShortId referenceId,
+        ShortId? indberetningId = null,
         string? cpr = null
     )
     {
@@ -63,7 +63,7 @@ public class Record3101<TPrevious> : TaxRecordBase<TPrevious>, IRecord3101<TPrev
         var child = new Record4101<IRecord3101<TPrevious>>(this)
         {
             Tilbagefoersel = tilbagefoersel ? 'J' : 'N',
-            indberetningsId = indberetningId,
+            indberetningsId = indberetningId ?? new ShortId(),
             referenceId = referenceId,
             cpr = cpr,
             Lb_nr = Lb_nr++,
@@ -80,8 +80,8 @@ public class Record3101<TPrevious> : TaxRecordBase<TPrevious>, IRecord3101<TPrev
         DateTime loenPeriodeSlut,
         bool erLoenBagudBetalt,
         IndkomstType indkomstType,
-        ShortId indberetningId = default,
-        ShortId referenceId = default,
+        ShortId indberetningId,
+        ShortId? referenceId = null,
         GroenlandKommune? groenlandKommune = null
     )
     {

@@ -136,7 +136,7 @@ public class Record2101<TPrevious> : TaxRecordBase<TPrevious>, IRecord2101<TPrev
        {
            Tilbagefoersel = tilbagefoersel ? 'J' : 'N',
            indberetningsId = indberetningId,
-           referenceId = referenceId,
+           referenceId = referenceId ?? new ShortId(),
            cpr = cpr,
            Lb_nr = Lb_nr++,
            Rec_nr = 4101
@@ -152,8 +152,8 @@ public class Record2101<TPrevious> : TaxRecordBase<TPrevious>, IRecord2101<TPrev
        DateTime loenPeriodeSlut,
        bool erLoenBagudBetalt,
        IndkomstType indkomstType,
-       ShortId indberetningId = default,
-       ShortId referenceId = default,
+       ShortId indberetningId,
+       ShortId? referenceId = null,
        GroenlandKommune? groenlandKommune = null
    )
    {

@@ -23,7 +23,7 @@ public class Record5000<TPrevious> : TaxRecordBase<TPrevious>, IRecord5000<TPrev
 
     [FieldFixedLength(16)]
     [FieldConverter(typeof(ShortIdConverter))]
-    public required ShortId ReferenceId;
+    public required ShortId? ReferenceId;
 
     [FieldFixedLength(8)]
     [FieldConverter(ConverterKind.Date, "yyyyMMdd")]

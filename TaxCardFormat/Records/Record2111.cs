@@ -73,7 +73,7 @@ public class Record2111<TPrevious> : TaxRecordBase<TPrevious>, IRecord2111<TPrev
         {
             Tilbagefoersel = tilbagefoersel ? 'J' : 'N',
             indberetningsId = indberetningId,
-            referenceId = referenceId,
+            referenceId = referenceId ?? new ShortId(),
             cpr = cpr,
             Lb_nr = Lb_nr++,
             Rec_nr = 4101
