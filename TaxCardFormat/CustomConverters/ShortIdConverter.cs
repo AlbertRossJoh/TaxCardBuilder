@@ -12,9 +12,11 @@ public class ShortIdConverter : ConverterBase
 
     public override string FieldToString(object? from)
     {
-        if (from is null) return string.Empty;
-        if (from.GetType() != typeof(ShortId))
-            throw new ArgumentException("When using the ShortId converter a ShortId is expected");
-        return ((ShortId)from).Id ?? string.Empty;
+        return from switch
+        {
+            null => string.Empty,
+            ShortId shortId => shortId.Id ?? string.Empty,
+            _ => throw new ArgumentException("When using the ShortId converter a ShortId is expected")
+        };
     }
 }
