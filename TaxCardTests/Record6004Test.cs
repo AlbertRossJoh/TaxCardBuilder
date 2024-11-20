@@ -5,7 +5,7 @@ using Xunit;
 
 namespace TaxCardTests;
 
-public class Record6004Test : RecordTestBase<Record6004>
+public class Record6004Test : RecordTestBase<Record6004<object>>
 {
     [Fact]
     public void BuildTaxCard6004_ExpectDataPresent()
@@ -19,11 +19,11 @@ public class Record6004Test : RecordTestBase<Record6004>
         var result = Sut.BuildString();
 
         // Assert
-        HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6004.Lb_nr)], "0000001", result);
-        HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6004.Rec_nr)], "6004", result);
-        var feltNummerRange = _fieldRanges.FieldNameToRange[nameof(Record6004.FeltNummer)];
+        HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6004<object>.Lb_nr)], "0000001", result);
+        HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6004<object>.Rec_nr)], "6004", result);
+        var feltNummerRange = _fieldRanges.FieldNameToRange[nameof(Record6004<object>.FeltNummer)];
         HelpersAssert.RangeEquals(feltNummerRange, Padding.ZeroPad((int)feltNummer, feltNummerRange), result);
-        var fritekstRange = _fieldRanges.FieldNameToRange[nameof(Record6004.Fritekstfelt)];
+        var fritekstRange = _fieldRanges.FieldNameToRange[nameof(Record6004<object>.Fritekstfelt)];
         HelpersAssert.RangeEquals(fritekstRange, Padding.WhiteSpacePad(fritekstfelt, fritekstRange), result);
     }
 }

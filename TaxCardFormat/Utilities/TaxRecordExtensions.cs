@@ -2,7 +2,7 @@ using TaxCardFormat.Records;
 
 namespace TaxCardFormat.Utilities;
 
-public static class ListExtensions
+public static class TaxRecordExtensions
 {
     public static List<TaxRecord> Flatten(this TaxRecord record, Action<TaxRecord, int>? action = null)
     {

@@ -182,7 +182,7 @@ public class Record2101<TPrevious> : TaxRecord, IRecord2101<TPrevious>
    }
 
 
-   public IRecord8001<IRecord2101<TPrevious>> AddRecord8001(
+   public IRecord2101<TPrevious> AddRecord8001(
        DateTime foedselsdato, 
        Koen koen, 
        Landekoder landekoder, 
@@ -204,6 +204,6 @@ public class Record2101<TPrevious> : TaxRecord, IRecord2101<TPrevious>
            PersonPostby = postby,
        };
        Children.Add(child);
-       return child;
+       return this;
    }
 }

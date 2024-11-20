@@ -4,7 +4,7 @@ using Xunit;
 
 namespace TaxCardTests;
 
-public class Record6202Tests : RecordTestBase<Record6202>
+public class Record6202Tests : RecordTestBase<Record6202<object>>
 {
     [Fact]
     public void AddRecord6202_ShouldAddRecordWithCorrectFields()
@@ -25,52 +25,52 @@ public class Record6202Tests : RecordTestBase<Record6202>
 
         // Assert
         HelpersAssert.RangeEquals(
-            _fieldRanges.FieldNameToRange[nameof(Record6202.Lb_nr)], 
-            Padding.ZeroPad(1, _fieldRanges.FieldNameToRange[nameof(Record6202.Lb_nr)]), 
+            _fieldRanges.FieldNameToRange[nameof(Record6202<object>.Lb_nr)], 
+            Padding.ZeroPad(1, _fieldRanges.FieldNameToRange[nameof(Record6202<object>.Lb_nr)]), 
             resultString);
 
         HelpersAssert.RangeEquals(
-            _fieldRanges.FieldNameToRange[nameof(Record6202.Rec_nr)], 
+            _fieldRanges.FieldNameToRange[nameof(Record6202<object>.Rec_nr)], 
             "6202", 
             resultString);
 
         HelpersAssert.RangeEquals(
-            _fieldRanges.FieldNameToRange[nameof(Record6202.Beloeb)], 
-            Padding.ZeroPad(amnt, _fieldRanges.FieldNameToRange[nameof(Record6202.Beloeb)]), 
+            _fieldRanges.FieldNameToRange[nameof(Record6202<object>.Beloeb)], 
+            Padding.ZeroPad(amnt, _fieldRanges.FieldNameToRange[nameof(Record6202<object>.Beloeb)]), 
             resultString);
 
         HelpersAssert.RangeEquals(
-            _fieldRanges.FieldNameToRange[nameof(Record6202.BeloebDecimal)], 
-            Padding.ZeroPad(decimals, _fieldRanges.FieldNameToRange[nameof(Record6202.BeloebDecimal)], leftPad: false), 
+            _fieldRanges.FieldNameToRange[nameof(Record6202<object>.BeloebDecimal)], 
+            Padding.ZeroPad(decimals, _fieldRanges.FieldNameToRange[nameof(Record6202<object>.BeloebDecimal)], leftPad: false), 
             resultString);
 
         HelpersAssert.RangeEquals(
-            _fieldRanges.FieldNameToRange[nameof(Record6202.FortegnFeriepenge)], 
+            _fieldRanges.FieldNameToRange[nameof(Record6202<object>.FortegnFeriepenge)], 
             Fortegn(beloeb).ToString(), 
             resultString);
 
         HelpersAssert.RangeEquals(
-            _fieldRanges.FieldNameToRange[nameof(Record6202.FeriedageHeltal)], 
-            Padding.ZeroPad(amntFeriedage, _fieldRanges.FieldNameToRange[nameof(Record6202.FeriedageHeltal)]), 
+            _fieldRanges.FieldNameToRange[nameof(Record6202<object>.FeriedageHeltal)], 
+            Padding.ZeroPad(amntFeriedage, _fieldRanges.FieldNameToRange[nameof(Record6202<object>.FeriedageHeltal)]), 
             resultString);
 
         HelpersAssert.RangeEquals(
-            _fieldRanges.FieldNameToRange[nameof(Record6202.FeriedageDecimal)], 
-            Padding.ZeroPad(decimalsFeriedage, _fieldRanges.FieldNameToRange[nameof(Record6202.FeriedageDecimal)], leftPad: false), 
+            _fieldRanges.FieldNameToRange[nameof(Record6202<object>.FeriedageDecimal)], 
+            Padding.ZeroPad(decimalsFeriedage, _fieldRanges.FieldNameToRange[nameof(Record6202<object>.FeriedageDecimal)], leftPad: false), 
             resultString);
 
         HelpersAssert.RangeEquals(
-            _fieldRanges.FieldNameToRange[nameof(Record6202.FortegnFeiedage)], 
+            _fieldRanges.FieldNameToRange[nameof(Record6202<object>.FortegnFeiedage)], 
             Fortegn(feriedage).ToString(), 
             resultString);
 
         HelpersAssert.RangeEquals(
-            _fieldRanges.FieldNameToRange[nameof(Record6202.Ferieaar)], 
-            Padding.ZeroPad(ferieaar, _fieldRanges.FieldNameToRange[nameof(Record6202.Ferieaar)]), 
+            _fieldRanges.FieldNameToRange[nameof(Record6202<object>.Ferieaar)], 
+            Padding.ZeroPad(ferieaar, _fieldRanges.FieldNameToRange[nameof(Record6202<object>.Ferieaar)]), 
             resultString);
 
         HelpersAssert.RangeEquals(
-            _fieldRanges.FieldNameToRange[nameof(Record6202.FratraedelsesDato)], 
+            _fieldRanges.FieldNameToRange[nameof(Record6202<object>.FratraedelsesDato)], 
             fratraedelsesDato.ToString("yyyyMMdd"), 
             resultString);
     }

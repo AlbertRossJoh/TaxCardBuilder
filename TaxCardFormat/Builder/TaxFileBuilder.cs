@@ -28,11 +28,11 @@ public class TaxFileBuilder
         typeof(Record6001<object>),
         typeof(Record6002<object>),
         typeof(Record6003<object>),
-        typeof(Record6004),
-        typeof(Record6005),
-        typeof(Record6102),
-        typeof(Record6202),
-        typeof(Record6111),
+        typeof(Record6004<object>),
+        typeof(Record6005<object>),
+        typeof(Record6102<object>),
+        typeof(Record6202<object>),
+        typeof(Record6111<object>),
         typeof(Record8001<object>),
         typeof(Record9999)
     );
@@ -305,7 +305,7 @@ public class TaxFileBuilder
         if (fritekstFelt.Length > 58)
             throw new ArgumentException("Fritekstfeltet maa maks vaere 58 bogstaver langt");
         Records.Add(
-            new Record6004
+            new Record6004<object>
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 6004,
@@ -319,7 +319,7 @@ public class TaxFileBuilder
     {
         var (amnt, decimals) = ExtractDecimalParts(antal);
         Records.Add(
-            new Record6005
+            new Record6005<object>
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 6005,
@@ -342,7 +342,7 @@ public class TaxFileBuilder
         var (amntFeriedage, decimalsFeriedage) = ExtractDecimalParts(feriedage);
         
         Records.Add(
-            new Record6102
+            new Record6102<object>
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 6102,
@@ -369,7 +369,7 @@ public class TaxFileBuilder
         var (amntFeriedage, decimalsFeriedage) = ExtractDecimalParts(feriedage);
 
         Records.Add(
-            new Record6202
+            new Record6202<object>
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 6202,
@@ -389,7 +389,7 @@ public class TaxFileBuilder
     {
         var (amnt, decimals) = ExtractDecimalParts(beloeb);
         Records.Add(
-            new Record6111
+            new Record6111<object>
             {
                 Lb_nr = Lb_nr++,
                 Rec_nr = 6111,

@@ -5,7 +5,7 @@ namespace TaxCardFormat.RecordInterfaces.AddableRecords;
 
 public interface IRecord8001Addable<TCurrent>
 {
-    public IRecord8001<TCurrent> AddRecord8001(
+    public TCurrent AddRecord8001(
         DateTime foedselsdato,
         Koen koen,
         Landekoder landekoder,
