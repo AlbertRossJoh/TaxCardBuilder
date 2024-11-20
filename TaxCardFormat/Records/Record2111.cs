@@ -9,15 +9,11 @@ using TaxCardFormat.Utilities;
 namespace TaxCardFormat.Records;
 
 [FixedLengthRecord]
-public class Record2111<TPrevious> : TaxRecord, IRecord2111<TPrevious>
+public class Record2111<TPrevious> : TaxRecordBase<TPrevious>, IRecord2111<TPrevious>
 {
-    [FieldHidden] private TPrevious? _previous;
     public Record2111():this(default) {}
+    public Record2111(TPrevious? previousRecord): base(previousRecord){}
 
-    public Record2111(TPrevious? previousRecord)
-    {
-        _previous = previousRecord;
-    }   
     
     [FieldFixedLength(4)]
     [FieldAlign(AlignMode.Right, '0')]
@@ -30,8 +26,6 @@ public class Record2111<TPrevious> : TaxRecord, IRecord2111<TPrevious>
     [FieldFixedLength(8)]
     [FieldConverter(ConverterKind.Date, "yyyyMMdd")]
     public DateTime? ikraeftraedelsesDato;
-    
-    public TPrevious GoBack() => _previous ?? throw new NullReferenceException("Previous record is null remember to set the previous record in the constructor");
     
     public IRecord3101<IRecord2111<TPrevious>> AddRecord3101(
         decimal beloeb,

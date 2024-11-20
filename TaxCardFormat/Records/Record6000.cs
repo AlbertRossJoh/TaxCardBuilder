@@ -7,8 +7,6 @@ namespace TaxCardFormat.Records;
 [FixedLengthRecord]
 public class Record6000<TPrevious> : Record6XXXBase<TPrevious>, IRecord6000<TPrevious>
 { 
-    [FieldHidden] private TPrevious? _previous;
-            
     public Record6000(): this(default) {}
     
     public Record6000(TPrevious? previousRecord) : base(previousRecord)

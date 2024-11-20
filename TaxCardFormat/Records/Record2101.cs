@@ -9,15 +9,10 @@ using TaxCardFormat.Utilities;
 namespace TaxCardFormat.Records;
 
 [FixedLengthRecord]
-public class Record2101<TPrevious> : TaxRecord, IRecord2101<TPrevious>
+public class Record2101<TPrevious> : TaxRecordBase<TPrevious>, IRecord2101<TPrevious>
 {
-    [FieldHidden] private TPrevious? _previous;
     public Record2101():this(default) {}
-
-    public Record2101(TPrevious? previousRecord)
-    {
-        _previous = previousRecord;
-    }
+    public Record2101(TPrevious? previousRecord) : base(previousRecord){}
     
     [FieldFixedLength(10)]
     public required string PersonCpr;
@@ -53,8 +48,6 @@ public class Record2101<TPrevious> : TaxRecord, IRecord2101<TPrevious>
 
     [FieldFixedLength(1)]
     public char? GenRekvivering;
-    
-    public TPrevious GoBack() => _previous ?? throw new NullReferenceException("Previous record is null remember to set the previous record in the constructor");
     
     public IRecord2101<TPrevious> AddRecord2101(
             DateTime AnsaettelsesDato,

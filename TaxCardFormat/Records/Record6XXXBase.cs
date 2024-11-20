@@ -7,18 +7,10 @@ using TaxCardFormat.Utilities;
 
 namespace TaxCardFormat.Records;
 
-public abstract class Record6XXXBase<TPrevious> : TaxRecord
+public abstract class Record6XXXBase<TPrevious> : TaxRecordBase<TPrevious>
 {
-    
-    [FieldHidden] protected TPrevious? _previous;
+    public Record6XXXBase(TPrevious? previousRecord) : base(previousRecord) {}
 
-    public Record6XXXBase(TPrevious? previousRecord)
-    {
-        _previous = previousRecord;
-    }
-    
-    public TPrevious GoBack() => _previous ?? throw new NullReferenceException("Previous record is null remember to set the previous record in the constructor");
-    
     public IRecord6001<TPrevious> AddRecord6001(
         decimal beloeb, 
         Vaerdisaet6001 feltNummer)

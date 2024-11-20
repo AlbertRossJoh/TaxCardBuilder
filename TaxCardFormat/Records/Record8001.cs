@@ -6,15 +6,10 @@ using TaxCardFormat.RecordInterfaces.IRecord;
 namespace TaxCardFormat.Records;
 
 [FixedLengthRecord]
-public class Record8001<TPrevious> : TaxRecord, IRecord8001<TPrevious>
+public class Record8001<TPrevious> : TaxRecordBase<TPrevious>, IRecord8001<TPrevious>
 {
-    [FieldHidden] private TPrevious? _previous;
     public Record8001():this(default) {}
-    
-    public Record8001(TPrevious? previousRecord)
-    {
-        _previous = previousRecord;
-    }
+    public Record8001(TPrevious? previousRecord): base(previousRecord) {}
     
     [FieldFixedLength(8)]
     [FieldConverter(ConverterKind.Date, "yyyyMMdd")]
@@ -42,8 +37,6 @@ public class Record8001<TPrevious> : TaxRecord, IRecord8001<TPrevious>
     [FieldAlign(AlignMode.Right, ' ')]
     public required string PersonPostby;
 
-    public TPrevious GoBack() => _previous ?? throw new NullReferenceException("Previous record is null remember to set the previous record in the constructor");
-    
     public IRecord2111<TPrevious> AddRecord2111(IPIndholdsType ipIndholdsType, DateTime? ikraeftTraedelsesDato = null)
     {
         var child = new Record2111<TPrevious>(_previous)

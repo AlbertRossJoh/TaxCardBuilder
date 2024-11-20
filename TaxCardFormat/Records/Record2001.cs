@@ -7,15 +7,11 @@ using TaxCardFormat.RecordInterfaces.IRecord;
 namespace TaxCardFormat.Records;
 
 [FixedLengthRecord]
-public class Record2001<TPrevious> : TaxRecord, IRecord2001<TPrevious>
+public class Record2001<TPrevious> : TaxRecordBase<TPrevious>, IRecord2001<TPrevious>
 {
-    [FieldHidden] private TPrevious? _previous;
     public Record2001():this(default) {}
 
-    public Record2001(TPrevious? previousRecord)
-    {
-        _previous = previousRecord;
-    }
+    public Record2001(TPrevious? previousRecord): base(previousRecord){}
     
     [FieldFixedLength(16)]
     public string filler1 = "";
@@ -29,8 +25,6 @@ public class Record2001<TPrevious> : TaxRecord, IRecord2001<TPrevious>
     [FieldFixedLength(3)]
     public required string Valutakode;
 
-    public TPrevious GoBack() => _previous ?? throw new NullReferenceException("Previous record is null remember to set the previous record in the constructor");
-    
     public IRecord2101<IRecord2001<TPrevious>> AddRecord2101(
             DateTime AnsaettelsesDato,
             string cpr,

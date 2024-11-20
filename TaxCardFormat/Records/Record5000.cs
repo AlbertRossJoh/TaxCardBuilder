@@ -8,16 +8,11 @@ using TaxCardFormat.RecordInterfaces.IRecord;
 namespace TaxCardFormat.Records;
 
 [FixedLengthRecord]
-public class Record5000<TPrevious> : TaxRecord, IRecord5000<TPrevious>
+public class Record5000<TPrevious> : TaxRecordBase<TPrevious>, IRecord5000<TPrevious>
 {
-    [FieldHidden] private TPrevious? _previous;
-        
     public Record5000():this(default) {}
+    public Record5000(TPrevious? previousRecord): base(previousRecord) {}
     
-    public Record5000(TPrevious? previousRecord)
-    {
-        _previous = previousRecord;
-    }
         
     [FieldFixedLength(1)]
     public char Rettelse_tidl_periode = ' ';

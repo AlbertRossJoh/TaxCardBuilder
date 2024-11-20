@@ -8,16 +8,11 @@ using TaxCardFormat.RecordInterfaces.IRecord;
 namespace TaxCardFormat.Records;
 
 [FixedLengthRecord]
-public class Record4101<TPrevious> : TaxRecord, IRecord4101<TPrevious>
+public class Record4101<TPrevious> : TaxRecordBase<TPrevious>, IRecord4101<TPrevious>
 {
-    [FieldHidden] private TPrevious? _previous;
-    
     public Record4101():this(default) {}
-
-    public Record4101(TPrevious? previousRecord)
-    {
-        _previous = previousRecord;
-    }
+    public Record4101(TPrevious? previousRecord): base(previousRecord) {}
+    
     
     [FieldFixedLength(16)]
     [FieldConverter(typeof(ShortIdConverter))]
@@ -35,8 +30,6 @@ public class Record4101<TPrevious> : TaxRecord, IRecord4101<TPrevious>
 
     [FieldFixedLength(10)]
     public string? cpr;
-    
-    public TPrevious GoBack() => _previous ?? throw new NullReferenceException("Previous record is null remember to set the previous record in the constructor");
     
     public IRecord4101<TPrevious> AddRecord4101(
         bool tilbagefoersel,
