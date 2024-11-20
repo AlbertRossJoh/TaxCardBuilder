@@ -43,6 +43,7 @@ public class Record8001<TPrevious> : TaxRecord, IRecord8001<TPrevious>
     public required string PersonPostby;
 
     public TPrevious GoBack() => _previous ?? throw new NullReferenceException("Previous record is null remember to set the previous record in the constructor");
+    
     public IRecord2111<TPrevious> AddRecord2111(IPIndholdsType ipIndholdsType, DateTime? ikraeftTraedelsesDato = null)
     {
         var child = new Record2111<TPrevious>(_previous)
