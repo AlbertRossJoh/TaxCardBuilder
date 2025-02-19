@@ -1,0 +1,17 @@
+using TaxCardFormat.Enums;
+using TaxCardFormat.RecordInterfaces.IRecord;
+
+namespace TaxCardFormat.RecordInterfaces.AddableRecords;
+
+public interface IRecord8001BuilderAddable<TCurrent>
+{
+    public TCurrent AddRecord8001(
+        DateTime foedselsdato,
+        Koen koen,
+        Landekoder landekoder,
+        string navn,
+        string adresse,
+        string postnummer,
+        string postby
+    );
+}
