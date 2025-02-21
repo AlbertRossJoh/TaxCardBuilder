@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <RootNamespace>ClassLibrary1</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="Types.fs" />
+        <Compile Include="MultiSet.fsi" />
+        <Compile Include="MultiSet.fs" />
+        <Compile Include="StateMonad.fs" />
+        <Compile Include="Validator.fs" />
+    </ItemGroup>
+
+</Project>
