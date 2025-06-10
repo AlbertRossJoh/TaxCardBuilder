@@ -1,3 +1,4 @@
+using TaxCardFormat.Builder;
 using TaxCardFormat.Enums;
 using TaxCardFormat.Records;
 using TaxCardTests.Helpers;
@@ -11,14 +12,15 @@ public class Record2101Test : RecordTestBase<Record2101<object>>
     public void BuildTaxCard2101_ExpectDataPresent()
     {
         // Arrange
+        var sut = new TaxFileBuilder();
         var cpr = "1234567890";
         var date = DateTime.Now;
         var skanvendeFra = DateTime.Now;
         var skatteKort = SkattekortType.Bikort;
-        Sut.AddRecord2101(date, cpr, skatteKort, skanvendeFra);
+        sut.AddRecord2101(date, cpr, skatteKort, skanvendeFra);
 
         // Act
-        var res = Sut.BuildString();
+        var res = sut.BuildString();
 
         // Assert
         var lbnr = _fieldRanges.FieldNameToRange[nameof(Record2101<object>.Lb_nr)];

@@ -1,3 +1,4 @@
+using TaxCardFormat.Builder;
 using TaxCardFormat.Enums;
 using Xunit;
 using TaxCardTests.Helpers;
@@ -11,13 +12,14 @@ public class Record9999Tests : RecordTestBase<Record9999>
     public void AddRecord9999_ShouldAddCorrectRecord()
     {
         // Arrange
-        Sut.AddRecord9999();
+        var sut = new TaxFileBuilder();
+        sut.AddRecord9999();
         var expectedLbNr = 1;
         var expectedRecNr = 9999;
         var expectedAntalRecords = 2;
             
         // Act
-        var resultString = Sut.BuildString();
+        var resultString = sut.BuildString();
             
         // Assert
         HelpersAssert.RangeEquals(
@@ -41,20 +43,22 @@ public class Record9999Tests : RecordTestBase<Record9999>
     public void AddRecord9999_ShouldHaveCorrectLbNr()
     {
         // Arrange
+        var sut = new TaxFileBuilder();
         var i = 0;
         for (; i < 9999; i++)
         {
-            Sut.AddRecord6001((decimal)Random.Shared.NextDouble(), FeltNummer.AmBidrag);
+            sut.AddRecord6001((decimal)Random.Shared.NextDouble(), FeltNummer.AmBidrag);
         }
-        Sut.AddRecord9999();
+        sut.AddRecord9999();
         var expectedLbNr = ++i;
         var expectedRecNr = 9999;
         var expectedAntalRecords = ++i;
             
             
         // Act
-        var result = Sut.BuildString();
+        var result = sut.BuildString();
         var resultString = result.Split()[^2];
+        
         // Assert
         HelpersAssert.RangeEquals(
             _fieldRanges.FieldNameToRange[nameof(Record9999.Lb_nr)], 

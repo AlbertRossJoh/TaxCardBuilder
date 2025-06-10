@@ -36,7 +36,7 @@ public class TaxFileBuilder2
             Dato_sendt = datoSendt,
             Klok_sendt = klokSendt,
             Indberetter_SE_nummer = indberetterSeNummer,
-            Indberetter_CVR_nummer = cvrNummer ?? "",
+            Indberetter_CVR_nummer = cvrNummer ?? "00000000",
             IndberetterType = (int)indberetterType,
             Edb_System = edbSystem,
             HovedindberetingsID = hovedIndberetningsId ?? new ShortId(),
@@ -60,42 +60,45 @@ public class TaxFileBuilder2
         };
 
     
-    public void Build_RecordList()
+    private MultiRecordEngine Build_RecordList()
     {
         if (FirstRecord == null) 
             throw new NullReferenceException("First record is null please call AddRecord1000 before building");
-        //Records = FirstRecord.ChildrenList.SelectMany(i => i.ChildrenList).ToList();
+        if (Records.Count > 0 && Engine != null) return Engine;
         Records = FirstRecord.Flatten((record, i) => record.Lb_nr = i + 1);
         var allTypes = Records.Select(s => s.GetType()).ToHashSet().ToArray();
         Engine = new MultiRecordEngine(allTypes);
+        return Engine;
     }
 
-    public void Build(StreamWriter writer) => Engine.WriteStream(writer, Records);
+    public void Build(StreamWriter writer)
+    {
+        Build_RecordList().WriteStream(writer, Records);   
+    }
 
     public Stream Build()
     {
         var ms = new MemoryStream();
         var sw = new StreamWriter(ms);
-        Engine.WriteStream(sw, Records);
-        sw.Flush();
+        Build_RecordList().WriteStream(sw, Records);
         ms.Position = 0;
         return ms;
     }
 
     public string BuildString()
     {
-        return Engine.WriteString(Records);
+        return Build_RecordList().WriteString(Records);
     }
     
     public void Build(Stream stream)
     {
         using var sw = new StreamWriter(stream);
-        Engine.WriteStream(sw, Records);
+        Build_RecordList().WriteStream(sw, Records);
     }
 
     public void Build(string filePath)
     {
         using var tw = File.CreateText(filePath);
-        Engine.WriteStream(tw, Records);
+        Build_RecordList().WriteStream(tw, Records);
     }
 }

@@ -1,3 +1,4 @@
+using TaxCardFormat.Builder;
 using TaxCardFormat.Enums;
 using TaxCardFormat.Records;
 using TaxCardTests.Helpers;
@@ -11,6 +12,7 @@ public class Record6000Test : RecordTestBase<Record6000<object>>
     public void BuildTaxCard6000_ExpectDataPresent()
     {
         // Arrange
+        var sut = new TaxFileBuilder();
         const string cpr = "1234567890";
         const string cvr_se = "09876543";
         const string medarbejderNr = "987654";
@@ -20,10 +22,10 @@ public class Record6000Test : RecordTestBase<Record6000<object>>
         const string produktionEnhedsnummer = "12345";
 
         // Act
-        Sut.AddRecord6000(cpr, cvr_se, medarbejderNr, tin, tin_landekode, indkomstArt, produktionEnhedsnummer);
+        sut.AddRecord6000(cpr, cvr_se, medarbejderNr, tin, tin_landekode, indkomstArt, produktionEnhedsnummer);
 
         // Build the string representation of the records
-        var result = Sut.BuildString();
+        var result = sut.BuildString();
 
         // Assert
         HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6000<object>.Lb_nr)], "0000001", result);

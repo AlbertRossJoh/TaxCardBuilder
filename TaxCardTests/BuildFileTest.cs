@@ -1,5 +1,5 @@
 using TaxCardFormat.Builder;
-using TaxCardFormat.DataTypes.IPIndholdstype;
+using TaxCardFormat.DataTypes;
 using TaxCardFormat.DataTypes.Loenoplysninger;
 using TaxCardFormat.Enums;
 using Xunit;
@@ -12,14 +12,14 @@ public class BuildFileTest
     public void BuildFile_ValidInput_BuildsFile()
     {
         var sut = new TaxFileBuilder2();
-        sut
+        var res = sut
             .AddRecord1000("12345678", true, SystemUsage.Eindkomst, IndberetterType.Virksomhed)
             .AddRecord2001("12345678", false)
             .AddRecord2101(DateTime.Now, "1234567890", SkattekortType.Bikort, DateTime.Now)
             .AddRecord8001(DateTime.Now, Koen.Mand, Landekoder.DK, "John Doe", "John Doe stræde", "0000", "by")
             .AddRecord3101(12, false, DateTime.Now, DateTime.Now, FeltNummer.AmBidrag)
-            .AddRecord4101(false)
-            .AddRecord5000(false, DateTime.Now, DateTime.Now, false, IndkomstType.Aindkomst)
+            .AddRecord4101(false, ShortId.New())
+            .AddRecord5000(false, DateTime.Now, DateTime.Now, false, IndkomstType.Aindkomst, ShortId.New())
             .AddRecord6000("1234567890", "12345678", "12345678910", "DBDKK", Landekoder.DK, IndkomstArt.aeldrecheck)
             .AddRecord6001(12, Vaerdisaet6001.Haedersgaver)
             .AddRecord6002(Vaerdisaet6002.Pinkode, "1234")

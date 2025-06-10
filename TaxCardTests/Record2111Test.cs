@@ -1,3 +1,4 @@
+using TaxCardFormat.Builder;
 using TaxCardFormat.DataTypes.IPIndholdstype;
 using TaxCardFormat.Records;
 using TaxCardTests.Helpers;
@@ -11,11 +12,12 @@ public class Record2111Test : RecordTestBase<Record2111<object>>
     public void BuildTaxCard2111_ExpectDataPresent_ContainsDate()
     {
         // Arrange
+        var sut = new TaxFileBuilder();
         var date = DateTime.Now;
-        Sut.AddRecord2111(new IP0100(N0100Enum.IkkeTidsbegraenset), date);
+        sut.AddRecord2111(new IP0100(N0100Enum.IkkeTidsbegraenset), date);
 
         // Act
-        var res = Sut.BuildString();
+        var res = sut.BuildString();
 
         // Assert
         var lbnr = _fieldRanges.FieldNameToRange[nameof(Record2111<object>.Lb_nr)];
@@ -35,10 +37,11 @@ public class Record2111Test : RecordTestBase<Record2111<object>>
     public void BuildTaxCard2111_ExpectDataPresent_NoDate()
     {
         // Arrange
-        Sut.AddRecord2111(new IP0100(N0100Enum.IkkeTidsbegraenset));
+        var sut = new TaxFileBuilder();
+        sut.AddRecord2111(new IP0100(N0100Enum.IkkeTidsbegraenset));
 
         // Act
-        var res = Sut.BuildString();
+        var res = sut.BuildString();
 
         // Assert
         var lbnr = _fieldRanges.FieldNameToRange[nameof(Record2111<object>.Lb_nr)];

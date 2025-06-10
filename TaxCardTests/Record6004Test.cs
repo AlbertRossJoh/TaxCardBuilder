@@ -1,3 +1,4 @@
+using TaxCardFormat.Builder;
 using TaxCardFormat.Enums;
 using TaxCardFormat.Records;
 using TaxCardTests.Helpers;
@@ -11,12 +12,13 @@ public class Record6004Test : RecordTestBase<Record6004<object>>
     public void BuildTaxCard6004_ExpectDataPresent()
     {
         // Arrange
+        var sut = new TaxFileBuilder();
         var feltNummer = Vaerdisaet6004.YRYdelsesperiode;
         const string fritekstfelt = "Some free text that fits in the field";
 
         // Act
-        Sut.AddRecord6004(feltNummer, fritekstfelt);
-        var result = Sut.BuildString();
+        sut.AddRecord6004(feltNummer, fritekstfelt);
+        var result = sut.BuildString();
 
         // Assert
         HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6004<object>.Lb_nr)], "0000001", result);

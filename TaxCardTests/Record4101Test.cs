@@ -1,3 +1,4 @@
+using TaxCardFormat.Builder;
 using TaxCardFormat.DataTypes;
 using TaxCardFormat.Records;
 using TaxCardTests.Helpers;
@@ -12,14 +13,15 @@ public class Record4101Test: RecordTestBase<Record4101<object>>
     public void BuildTaxCard4101_ExpectDataPresent()
     {
         // Arrange
+        var sut = new TaxFileBuilder();
         var indberetningsId = new ShortId();
         var referenceId = new ShortId();
         const char tilbagefoersel = 'J';
         const string cpr = "1234567890";
         
         // Act
-        Sut.AddRecord4101(true, indberetningsId, referenceId, cpr);
-        var result = Sut.BuildString();
+        sut.AddRecord4101(true, referenceId, indberetningsId, cpr);
+        var result = sut.BuildString();
         
         // Assert
         HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record4101<object>.Lb_nr)], "0000001", result);

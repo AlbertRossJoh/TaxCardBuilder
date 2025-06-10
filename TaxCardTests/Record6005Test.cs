@@ -1,3 +1,4 @@
+using TaxCardFormat.Builder;
 using TaxCardFormat.Enums;
 using TaxCardFormat.Records;
 using TaxCardTests.Helpers;
@@ -11,12 +12,13 @@ public class Record6005Test : RecordTestBase<Record6005<object>>
     public void BuildTaxCard6005_ExpectDataPresent()
     {
         // Arrange
+        var sut = new TaxFileBuilder();
         var feltNummer = AntalsFelt6005.AntalSoedage;
         var antal = -3.123M;
 
         // Act
-        Sut.AddRecord6005(feltNummer, antal);
-        var result = Sut.BuildString();
+        sut.AddRecord6005(feltNummer, antal);
+        var result = sut.BuildString();
 
         // Assert
         HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6005<object>.Lb_nr)], "0000001", result);

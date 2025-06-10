@@ -1,3 +1,4 @@
+using TaxCardFormat.Builder;
 using TaxCardFormat.Enums;
 using TaxCardFormat.Records;
 using Xunit;
@@ -11,6 +12,7 @@ public class Record8001Tests : RecordTestBase<Record8001<object>>
     public void AddRecord8001_ShouldAddCorrectlyFormattedRecord()
     {
         // Arrange
+        var sut = new TaxFileBuilder();
         var foedselsdato = new DateTime(1990, 1, 1);
         var koen = Koen.Mand;
         var landekoder = Landekoder.DK;
@@ -19,9 +21,9 @@ public class Record8001Tests : RecordTestBase<Record8001<object>>
         var postnummer = "1234";
         var postby = "Testby";
 
-        Sut.AddRecord8001(foedselsdato, koen, landekoder, navn, adresse, postnummer, postby);
+        sut.AddRecord8001(foedselsdato, koen, landekoder, navn, adresse, postnummer, postby);
 
-        var recordString = Sut.BuildString();
+        var recordString = sut.BuildString();
 
         // Assert
         var expectedLbNr = Padding.ZeroPad("1", _fieldRanges.FieldNameToRange[nameof(Record8001<object>.Lb_nr)]);

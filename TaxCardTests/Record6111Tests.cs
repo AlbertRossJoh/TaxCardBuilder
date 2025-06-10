@@ -1,3 +1,4 @@
+using TaxCardFormat.Builder;
 using TaxCardFormat.DataTypes.IPIndholdstype;
 using TaxCardFormat.Records;
 using TaxCardTests.Helpers;
@@ -11,6 +12,7 @@ public class Record6111Tests : RecordTestBase<Record6111<object>>
     public void Test_AddRecord6111_BuildString()
     {
         // Arrange
+        var sut = new TaxFileBuilder();
         var indholdsType = new IPIndholdsType(123, null);
         int antalEnheder = 10;
         decimal beloeb = 1234.567m;
@@ -23,8 +25,8 @@ public class Record6111Tests : RecordTestBase<Record6111<object>>
         var expectedFortegnBeloeb = "+";
 
         // Act
-        Sut.AddRecord6111(indholdsType, antalEnheder, beloeb);
-        var recordString = Sut.BuildString();
+        sut.AddRecord6111(indholdsType, antalEnheder, beloeb);
+        var recordString = sut.BuildString();
 
         // Assert
         HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6111<object>.IndholdsType)], expectedIndholdsType, recordString);

@@ -1,3 +1,4 @@
+using TaxCardFormat.Builder;
 using TaxCardFormat.Records;
 using TaxCardTests.Helpers;
 using Xunit;
@@ -11,14 +12,15 @@ public class Record6102Tests : RecordTestBase<Record6102<object>>
     public void AddRecord6102_ValidInput_BuildsCorrectString()
     {
         // Arrange
+        var sut = new TaxFileBuilder();
         var beloeb = 1234.56m;
         var feriedage = 1.23m;
         var ferieaar = 2023;
         var fratraedelsesDato = new DateTime(2023, 10, 10);
 
         // Act
-        Sut.AddRecord6102(beloeb, feriedage, ferieaar, fratraedelsesDato);
-        var result = Sut.BuildString();
+        sut.AddRecord6102(beloeb, feriedage, ferieaar, fratraedelsesDato);
+        var result = sut.BuildString();
 
         // Assert
         HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6102<object>.Lb_nr)], "0000001", result);

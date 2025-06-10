@@ -1,3 +1,4 @@
+using TaxCardFormat.Builder;
 using TaxCardFormat.Enums;
 using TaxCardFormat.Records;
 using TaxCardTests.Helpers;
@@ -11,12 +12,13 @@ namespace TaxCardTests
         public void BuildTaxCard6001_ExpectDataPresent()
         {
             // Arrange
+            var sut = new TaxFileBuilder();
             var amount = 789.123M;
             var amBidrag = FeltNummer.AmBidrag;
             
             // Act
-            Sut.AddRecord6001(amount, amBidrag);
-            var result = Sut.BuildString();
+            sut.AddRecord6001(amount, amBidrag);
+            var result = sut.BuildString();
             
             // Assert
             HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record6001<object>.Lb_nr)], "0000001", result);

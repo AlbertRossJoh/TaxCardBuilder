@@ -1,3 +1,4 @@
+using TaxCardFormat.Builder;
 using TaxCardTests.Helpers;
 using TaxCardFormat.Records;
 using Xunit;
@@ -10,14 +11,15 @@ public class Record6202Tests : RecordTestBase<Record6202<object>>
     public void AddRecord6202_ShouldAddRecordWithCorrectFields()
     {
         // Arrange
+        var sut = new TaxFileBuilder();
         decimal beloeb = 12345.678901m;
         decimal feriedage = 10.25m;
         int ferieaar = 2024;
         DateTime fratraedelsesDato = new DateTime(2024, 12, 31);
 
         // Act
-        Sut.AddRecord6202(beloeb, feriedage, ferieaar, fratraedelsesDato);
-        var resultString = Sut.BuildString();
+        sut.AddRecord6202(beloeb, feriedage, ferieaar, fratraedelsesDato);
+        var resultString = sut.BuildString();
 
         // Extract the integer and decimal parts
         var (amnt, decimals) = ExtractDecimalParts(beloeb);

@@ -13,6 +13,8 @@ public struct ShortId
 
     public ShortId()
         : this(Convert.ToBase64String(Guid.NewGuid().ToByteArray())[..^8]) { }
+    
+    public static ShortId New() => new ShortId();
 
     public override string ToString()
     {

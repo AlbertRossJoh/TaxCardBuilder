@@ -14,11 +14,12 @@ public class Record1000Test : RecordTestBase<Record1000>
     public void BuildTaxCard1000_ExpectDataPresent()
     {
         // Arrange
+        var sut = new TaxFileBuilder();
         var id = new ShortId();
         var seNr = "12345678";
         var indberetterType = IndberetterType.Virksomhed;
         var system = SystemUsage.Eindkomst;
-        Sut.AddRecord1000(
+        sut.AddRecord1000(
             seNr,
             true,
             system,
@@ -27,7 +28,7 @@ public class Record1000Test : RecordTestBase<Record1000>
         );
 
         // Act
-        var res = Sut.BuildString();
+        var res = sut.BuildString();
 
         // Assert
         HelpersAssert.Length(143, res);
@@ -78,7 +79,6 @@ public class Record1000Test : RecordTestBase<Record1000>
             .GoBack()
             .AddRecord2101(DateTime.Now, "1234567890", SkattekortType.Bikort, DateTime.Now);
             //.AddRecord5000(false, DateTime.Now, DateTime.Now, true, IndkomstType.Aindkomst);
-        sut.Build_RecordList();
         var res = sut.BuildString();
         
     }

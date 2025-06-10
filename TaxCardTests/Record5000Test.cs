@@ -1,3 +1,4 @@
+using TaxCardFormat.Builder;
 using TaxCardFormat.DataTypes;
 using TaxCardFormat.Enums;
 using TaxCardFormat.Records;
@@ -12,6 +13,7 @@ public class Record5000Test : RecordTestBase<Record5000<object>>
     public void BuildTaxCard5000_ExpectDataPresent()
     {
         // Arrange
+        var sut = new TaxFileBuilder();
         var indberetningsId = new ShortId();
         var referenceId = new ShortId();
         const bool rettelserTidlPeriode = true;
@@ -22,7 +24,7 @@ public class Record5000Test : RecordTestBase<Record5000<object>>
         GroenlandKommune? groenlandKommune = null;
 
         // Act
-        Sut.AddRecord5000(
+        sut.AddRecord5000(
             rettelserTidlPeriode,
             loenperiodeStart,
             loenperiodeSlut,
@@ -32,7 +34,7 @@ public class Record5000Test : RecordTestBase<Record5000<object>>
             referenceId,
             groenlandKommune
         );
-        var result = Sut.BuildString();
+        var result = sut.BuildString();
 
         // Assert
         HelpersAssert.RangeEquals(_fieldRanges.FieldNameToRange[nameof(Record5000<object>.Lb_nr)], "0000001", result);

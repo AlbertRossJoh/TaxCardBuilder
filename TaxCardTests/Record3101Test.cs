@@ -1,3 +1,4 @@
+using TaxCardFormat.Builder;
 using TaxCardFormat.DataTypes;
 using TaxCardFormat.Enums;
 using TaxCardFormat.Records;
@@ -12,13 +13,14 @@ public class Record3101Test : RecordTestBase<Record3101<object>>
     public void BuildTaxCard3101_ExpectDataPresent()
     {
         // Arrange
+        var sut = new TaxFileBuilder();
         var tmp = -123.321M;
         var dateStart = new DateTime(2020, 01, 01);
         var dateEnd = new DateTime(2020, 01, 02);
         var ambidrag = FeltNummer.AmBidrag;
         var indberetningsId = new ShortId();
         var referenceid = new ShortId();
-        Sut.AddRecord3101(
+        sut.AddRecord3101(
             tmp, 
             false, 
             dateStart, 
@@ -28,7 +30,7 @@ public class Record3101Test : RecordTestBase<Record3101<object>>
             referenceid);
 
         // Act
-        var res = Sut.BuildString();
+        var res = sut.BuildString();
 
         // Assert
         var lbnr = _fieldRanges.FieldNameToRange[nameof(Record3101<object>.Lb_nr)];

@@ -1,3 +1,4 @@
+using TaxCardFormat.Builder;
 using TaxCardFormat.Records;
 using TaxCardTests.Helpers;
 using Xunit;
@@ -12,11 +13,12 @@ public class Record2001Test : RecordTestBase<Record2001<object>>
     public void BuildTaxCard2001_ExpectDataPresent(bool ophoer)
     {
         // Arrange
+        var sut = new TaxFileBuilder();
         var seNr = "12345678";
-        Sut.AddRecord2001(seNr, ophoerHosLSB: ophoer);
+        sut.AddRecord2001(seNr, ophoerHosLSB: ophoer);
 
         // Act
-        var res = Sut.BuildString();
+        var res = sut.BuildString();
 
         // Assert
         var lbnr = _fieldRanges.FieldNameToRange[nameof(Record2001<object>.Lb_nr)];
